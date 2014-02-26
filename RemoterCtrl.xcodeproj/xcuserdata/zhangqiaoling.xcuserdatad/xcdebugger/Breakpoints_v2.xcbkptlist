@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RemoterCtrl/BIDSubViewController.m"
-            timestampString = "414403934.690257"
+            timestampString = "415090925.625623"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1302"
-            endingLineNumber = "1302"
+            startingLineNumber = "1303"
+            endingLineNumber = "1303"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RemoterCtrl/BIDSubViewController.m"
-            timestampString = "414403934.690257"
+            timestampString = "415090925.625623"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1304"
-            endingLineNumber = "1304"
+            startingLineNumber = "1305"
+            endingLineNumber = "1305"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RemoterCtrl/BIDViewController.m"
-            timestampString = "414991952.389977"
+            timestampString = "415091774.373864"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "222"
-            endingLineNumber = "222"
+            startingLineNumber = "291"
+            endingLineNumber = "291"
             landmarkName = "-initMenu"
             landmarkType = "5">
          </BreakpointContent>
@@ -170,13 +170,59 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RemoterCtrl/BIDViewController.m"
-            timestampString = "413874027.355977"
+            timestampString = "415091591.792446"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "72"
-            endingLineNumber = "72"
+            startingLineNumber = "79"
+            endingLineNumber = "79"
             landmarkName = "-decode_response:Forcmd:"
             landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RemoterCtrl/BIDViewController.m"
+            timestampString = "415091774.373864"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "334"
+            endingLineNumber = "334"
+            landmarkName = "-UPnPDBUpdated:"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[BIDViewController UPnPDBUpdated:]"
+                  moduleName = "RemoterCtrl"
+                  urlString = "file:///Users/zhangqiaoling/RemoterCtrl/RemoterCtrl/BIDViewController.m"
+                  timestampString = "415015781.820023"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "282"
+                  endingLineNumber = "282"
+                  offsetFromSymbolStart = "640">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[BIDViewController UPnPDBUpdated:]"
+                  moduleName = "RemoterCtrl"
+                  urlString = "file:///Users/zhangqiaoling/RemoterCtrl/RemoterCtrl/BIDViewController.m"
+                  timestampString = "415015781.8204"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "282"
+                  endingLineNumber = "282"
+                  offsetFromSymbolStart = "1884">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

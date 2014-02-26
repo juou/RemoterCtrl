@@ -19,11 +19,18 @@
 #define kMain_Tabbar_tag       5
 #define kShow_Label_tag        9
 #define kVer_Label_tag         10
+#define klog_Label_tag         11
 
 static NSMutableString *m_id;
 
 
-
+@interface BIDViewController (){
+    uint search_cnt; //for search count  @Jeanne.  2014.02.25
+    NSString *logstring;
+    BOOL searched_flag;  //for search icon.  @Jeanne. 2014.02.26
+    BOOL fadein_flag;    //for fade in flag.  @Jeanne. 2014.02.26
+}
+@end
 
 
 @implementation BIDViewController
@@ -107,22 +114,80 @@ static NSMutableString *m_id;
 //Jeanne. 2014. 02.17
 -(void)searchip
 {
-    NSLog(@"Search again!");
+    UILabel *logLabel = (id)[self.view viewWithTag:klog_Label_tag];
+    NSLog(@"Search again!,%d",search_cnt);
+    
+    
+    
+    if (!searched_flag) { //not searched yet
+        search_cnt++; //for search count  @Jeanne.  2014.02.25
+        logLabel.text = [NSString stringWithFormat:@"search cnt: %d",search_cnt];
+        if (logstring != nil) {
+            logLabel.text = logstring;
+        }
+        //logLabel.text = [NSString stringWithFormat:@"search cnt: %d",search_cnt];
+        [[[UPnPManager GetInstance] SSDP] searchSSDP];
+        [[[UPnPManager GetInstance] SSDP] searchSSDP];
+        [[[UPnPManager GetInstance] SSDP] searchSSDP];
+        [[[UPnPManager GetInstance] SSDP] searchSSDP];
+        [[[UPnPManager GetInstance] SSDP] searchSSDP];
+        [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(searchip) userInfo:nil repeats:NO];
+        
+    }
+    else{ //searched
+        if (fadein_flag) {
+            NSLog(@"fade out first!\n");
+            [MBProgressHUD fadeOutHUDInView:self.view withSuccessText:@"Device searched!"];
+            fadein_flag =FALSE;
+            [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(searchip) userInfo:nil repeats:NO];
+        }
+        else{
+            NSLog(@"Searched device, goto list!");
+            [self initMenu];
+
+        }
+    }
+    
+
+/*
     if ([MagicUrl isEqualToString:@"magicinit"])
     {
-      [[[UPnPManager GetInstance] SSDP] searchSSDP];
-      [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(searchip) userInfo:nil repeats:NO];
+        search_cnt++; //for search count  @Jeanne.  2014.02.25
+        logLabel.text = [NSString stringWithFormat:@"search cnt: %d",search_cnt];
+        if (logstring != nil) {
+            logLabel.text = logstring;
+        }
+        //logLabel.text = [NSString stringWithFormat:@"search cnt: %d",search_cnt];
+        [[[UPnPManager GetInstance] SSDP] searchSSDP];
+        [[[UPnPManager GetInstance] SSDP] searchSSDP];
+        [[[UPnPManager GetInstance] SSDP] searchSSDP];
+        [[[UPnPManager GetInstance] SSDP] searchSSDP];
+        [[[UPnPManager GetInstance] SSDP] searchSSDP];
+        [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(searchip) userInfo:nil repeats:NO];
     }
     else{
         NSLog(@"device has founded, do not need to search!");
     }
+ */
 }
 
 - (void)viewDidLoad
 {
+    UILabel *logLabel = (id)[self.view viewWithTag:klog_Label_tag];
+    UILabel *showLabel = (id)[self.view viewWithTag:kShow_Label_tag];
     [super viewDidLoad];
     
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    //for log.  @Jeanne. 2014.02.25
+    //自动折行设置
+    logLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    logLabel.numberOfLines = 0;
+    logLabel.textAlignment = NSTextAlignmentLeft;
+    [logLabel setText:@"test"];
+    search_cnt = 0; //for search count  @Jeanne.  2014.02.25
+    searched_flag = FALSE;  //for search icon.  @Jeanne. 2014.02.26
+    showLabel.hidden = TRUE;  //for fade effect.  @Jeanne. 2014.2.26
     
     //先初始化对象
     if (MagicUrl == nil) {
@@ -130,7 +195,6 @@ static NSMutableString *m_id;
     }
     m_id = [[NSMutableString alloc] init];
     self.menuProperty = [[BIDMenuProperty alloc] init];
-    //showLabel.text = @"Begin Searching...";
     
     //初始化config菜单 2014.02.12
     //==============================
@@ -163,18 +227,19 @@ static NSMutableString *m_id;
     
     //Search for UPnP Devices
     [[[UPnPManager GetInstance] SSDP] searchSSDP];
-    [[[UPnPManager GetInstance] SSDP] searchSSDP];
-    [[[UPnPManager GetInstance] SSDP] searchSSDP];
+    search_cnt = 1; //for search count  @Jeanne.  2014.02.25
+    //logLabel.text = [NSString stringWithFormat:@"search cnt: %d",search_cnt];
     //===============================================
     
     //init timer to broadcast
-    [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(searchip) userInfo:nil repeats:NO];
+    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(searchip) userInfo:nil repeats:NO];
     
     
     UITabBar *Tab = (id)[self.view viewWithTag:kMain_Tabbar_tag];
     Tab.hidden = TRUE;
     
-    
+    [MBProgressHUD fadeInHUDInView:self.view withText:@"Search for device..."];
+    fadein_flag = TRUE;    //for fade in flag.  @Jeanne. 2014.02.26
     
 }
 
@@ -183,14 +248,17 @@ static NSMutableString *m_id;
     UITabBar *Tab = (id)[self.view viewWithTag:kMain_Tabbar_tag];
     UILabel *showLabel = (id)[self.view viewWithTag:kShow_Label_tag];
     UILabel *verLabel = (id)[self.view viewWithTag:kVer_Label_tag];
+    UILabel *logLabel = (id)[self.view viewWithTag:klog_Label_tag];
+    
 
-    if (!([MagicUrl isEqualToString:@"magicinit"])) {
+    if (!([MagicUrl isEqualToString:@"magicinit"]))
+    {//if (found magic device) begin
         
-        client = [ILHTTPClient clientWithBaseURL:MagicUrl
-                                showingHUDInView:self.view];
+        client = [ILHTTPClient clientWithBaseURL:MagicUrl showingHUDInView:self.view];
         if(client.isNeedHUD == nil){
             client.isNeedHUD = [[NSMutableString alloc] initWithString:@"YES"];
         }
+        //client.isNeedHUD = [@"NO" mutableCopy];//2014.02.26
         
         [client getPath:@"/init"
              parameters:nil
@@ -217,6 +285,7 @@ static NSMutableString *m_id;
              
              showLabel.hidden = TRUE;
              verLabel.hidden = TRUE;
+             logLabel.hidden = TRUE;
              [self addChildViewController:self.subViewController];
              [self.view insertSubview:self.subViewController.view atIndex:1];
              Tab.hidden = FALSE;
@@ -227,7 +296,9 @@ static NSMutableString *m_id;
              NSLog(@"Error: %@", error);
          }];
         
-    }
+        //client.isNeedHUD = [@"YES" mutableCopy];//2014.02.26
+        
+    } //if (found magic device) end
 
 }
 
@@ -244,11 +315,22 @@ static NSMutableString *m_id;
 }
 
 -(void)UPnPDBUpdated:(UPnPDB*)sender{
-    
+
     BasicUPnPDevice *device;
-    NSLog(@"UPnPDBUpdated %lu", (unsigned long)[mDevices count]);
     unsigned long cnt = [mDevices count] ;
     unsigned long i;
+    NSString *oldstr;
+
+    NSLog(@"UPnPDBUpdated %lu", (unsigned long)[mDevices count]);
+
+    logstring = @"log:";
+    for (i=0; i < cnt; i++) {
+        device = [mDevices objectAtIndex:i];
+        oldstr = logstring;
+        logstring = [NSString stringWithFormat:@"%@d[%lu].name=%@,",oldstr,i,device.friendlyName];
+    }
+
+    
     for (i=0; i < cnt; i++) {
         device = [mDevices objectAtIndex:i];
         NSLog(@"device[%lu].friendname=%@",i,device.friendlyName);
@@ -259,8 +341,9 @@ static NSMutableString *m_id;
                 
                 MagicUrl = [[device.xmlLocation stringByReplacingOccurrencesOfString:kMagic_Device withString:@""]mutableCopy];
                 NSLog(@"Magicurl=%@",MagicUrl);
+                searched_flag = TRUE;  //for search icon.  @Jeanne. 2014.02.26
                 //[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(initMenu) userInfo:nil repeats:NO];
-                [self initMenu];
+                //[self initMenu];
             }
 
             break;
@@ -271,13 +354,15 @@ static NSMutableString *m_id;
                 
                 MagicUrl = [[device.xmlLocation stringByReplacingOccurrencesOfString:kMagic_Device_2 withString:@""]mutableCopy];
                 NSLog(@"Magicurl=%@",MagicUrl);
+                searched_flag = TRUE;  //for search icon.  @Jeanne. 2014.02.26
                 //[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(initMenu) userInfo:nil repeats:NO];
-                [self initMenu];
+                //[self initMenu];
             }
             
             break;
         }
     }
+    
     //[menuView performSelectorOnMainThread : @ selector(reloadData) withObject:nil waitUntilDone:YES];
 }
 

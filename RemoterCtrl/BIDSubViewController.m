@@ -1277,6 +1277,7 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     client = [ILHTTPClient clientWithBaseURL:self.toMagicUrl
                             showingHUDInView:self.view];
 
+    //client.isNeedHUD = [@"NO" mutableCopy];//2014.02.26
     
     
     //Reset menu display ctrl @Jeanne. 2014.01.29

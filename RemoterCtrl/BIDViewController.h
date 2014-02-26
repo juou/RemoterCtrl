@@ -33,4 +33,5 @@
 -(void)decode_response:(NSString *)response Forcmd: (NSInteger)cmd;
 -(void)searchip;
 
+
 @end

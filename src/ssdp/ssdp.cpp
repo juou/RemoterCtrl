@@ -226,10 +226,8 @@ int SSDP::Search(){
 	if(mMulticastSocket != INVALID_SOCKET){
         //jy request send 3time @Jeanne.2014.02.19
 		sendto(mMulticastSocket, buf, strlen(buf), 0, (struct sockaddr*)&mDstaddr , sizeof(struct sockaddr));
-        //sleep(1);
-        //sendto(mMulticastSocket, buf, strlen(buf), 0, (struct sockaddr*)&mDstaddr , sizeof(struct sockaddr));
-        //sleep(1);
-        //sendto(mMulticastSocket, buf, strlen(buf), 0, (struct sockaddr*)&mDstaddr , sizeof(struct sockaddr));
+        printf("test for search 1\n");
+
 	}else{
 		printf("invalid socket\n");
 	}
