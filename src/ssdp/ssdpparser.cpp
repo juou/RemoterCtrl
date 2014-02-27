@@ -176,11 +176,15 @@ int SSDPParser::Parse(struct sockaddr* sender, u8* buf, u32 len){
 		
 		if(msg->GetType() == mType){
 			if(msg->CanProcess(mHeaders) == 1){
+                //printf("Jeanne: can be process\n");  //Jeanne. 2014.02.26
 				ret = msg->Process(sender, mHeaders);
 				if(ret != 1){ //0=ok,-1=error,1=not for me, continue...
 					break;
 				}
 			}
+            else{
+                //printf("Jeanne: can not be process\n");  //Jeanne. 2014.02.26
+            }
 		}
 	}
 	

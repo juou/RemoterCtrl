@@ -66,12 +66,14 @@ int SSDPSearchResp::Process(struct sockaddr* sender, std::vector<SSDP_HTTP_HEADE
 	//Get the Device USN (Unique Service Name)	
 	ret=GetHeaderValueFromCollection(msgheaders, (u8*)"USN", 3, &usn, &usnlen);
 	if(ret != 0 || usnlen<=0){
+        //printf("Jeanne: GetHeaderValueFromCollection failed\n");  //Jeanne. 2014.02.26
 		ret = -1;
 		goto EXIT;
 	}
 	
 	ret = ParseUSN(usn, usnlen, &uuid);
 	if(ret < 0){
+        //printf("Jeanne: ParseUSN failed\n");  //Jeanne. 2014.02.26
 		goto EXIT; //Unknown format
 	}
 	
@@ -133,12 +135,20 @@ int SSDPSearchResp::Process(struct sockaddr* sender, std::vector<SSDP_HTTP_HEADE
 		
 		//Inform the observers
 		if(uuid.isdevice || uuid.isrootdevice){
+            //printf("Jeanne: mDB->DeviceUpdate: %s\n",device->location.c_str());  //Jeanne.  2014.02.26
 			mDB->DeviceUpdate(device);
 		}else if(uuid.isservice){
+            //printf("Jeanne: mDB->ServiceUpdate: %s\n",device->location.c_str());  //Jeanne.  2014.02.26
 			mDB->ServiceUpdate(device);
 		}
+        else{
+            //printf("Jeanne Error: NO idevice/rootdevice/service\n"); //Jeanne.  2014.02.26
+        }
 		
 	}
+    else{
+        //printf("Jeanne: [device == NULL && cache >= 0] == false\n"); //Jeanne.  2014.02.26
+    }
 	
 	//always update cache control
 	if(device != NULL && cache >= 0){

@@ -278,7 +278,7 @@
 	while(1){
 		pool = [[NSAutoreleasePool alloc] init];
 		if([readyForDescription count] > 0){
-		//	NSLog(@"process queue httpThread:(id)argument, %d", [readyForDescription count]);
+		//NSLog(@"process queue httpThread:(id)argument, %d", [readyForDescription count]); //jeanne. 2014.02.26
 			BasicUPnPDevice *upnpdevice;
 			//NSEnumerator *descenum = [readyForDescription objectEnumerator];
 			//while(upnpdevice = [descenum nextObject]){
@@ -288,7 +288,7 @@
 				int ret = [upnpdevice loadDeviceDescriptionFromXML];
 				if(ret == 0){
 					[self lock];
-					//NSLog(@"httpThread upnpdevice, location=%@", [upnpdevice xmlLocation]);
+					//NSLog(@"httpThread upnpdevice, location=%@", [upnpdevice xmlLocation]);  //jeanne. 2014.02.26
 					
 					//Inform the listeners so they know the rootDevices array might change
 					UPnPDBObserver *obs;
@@ -309,6 +309,10 @@
 					
 					[self unlock];
 				}
+                else{
+                    //printf("Jeanne: ret error!\n"); //jeanne. 2014.02.26
+                    //printf("baseurl:%s\n",[upnpdevice.baseURLString cStringUsingEncoding:NSASCIIStringEncoding]);
+                }
 				[readyForDescription removeObjectAtIndex:0];
 				
 			}				

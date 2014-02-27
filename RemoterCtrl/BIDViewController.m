@@ -15,6 +15,7 @@
 
 #define kMagic_Device   @":52525/root_XXYY.xml"
 #define kMagic_Device_2   @":52525/root_XXYY_S.xml"
+#define kMagic_AirMusic_Device  @"/irdevice.xml"
 
 #define kMain_Tabbar_tag       5
 #define kShow_Label_tag        9
@@ -29,6 +30,8 @@ static NSMutableString *m_id;
     NSString *logstring;
     BOOL searched_flag;  //for search icon.  @Jeanne. 2014.02.26
     BOOL fadein_flag;    //for fade in flag.  @Jeanne. 2014.02.26
+    NSArray *devicename; //for multi devices found.  @Jeanne. 2014.02.26
+    NSArray *deviceurl;  //for multi devices found.  @Jeanne. 2014.02.26
 }
 @end
 
@@ -116,6 +119,63 @@ static NSMutableString *m_id;
 {
     UILabel *logLabel = (id)[self.view viewWithTag:klog_Label_tag];
     NSLog(@"Search again!,%d",search_cnt);
+    SSDPDBDevice_ObjC *ssdbdevice;
+    int i;
+
+/*
+    if ([mDevices count]) { //there is device
+        BasicUPnPDevice *device;
+        int cnt;
+        int i;
+        cnt = [mDevices count];
+        for (i=0; i < cnt; i++) {
+            device = [mDevices objectAtIndex:i];
+            NSLog(@"d[%d].url= %@",i,device.xmlLocation);
+        }
+    }
+ */
+    if (search_cnt > 2) { //wait 3s to get the ssdp device
+        if ([mSSDPObjCDevices count]) {
+            NSLog(@"ssdp device count: %d",[mSSDPObjCDevices count]);
+            for (i=0; i< [mSSDPObjCDevices count]; i++) {
+                ssdbdevice = [mSSDPObjCDevices objectAtIndex:i];
+                NSLog(@"ssdb[%d].location:%@",i,ssdbdevice.location);
+                if([ssdbdevice.location rangeOfString:kMagic_AirMusic_Device].location !=NSNotFound) {
+                    NSLog(@"Found Magic device : %d",i);
+                    if ([MagicUrl isEqualToString:@"magicinit"]) {
+                        MagicUrl = [[ssdbdevice.location stringByReplacingOccurrencesOfString:kMagic_AirMusic_Device withString:@""]mutableCopy];
+                        NSLog(@"Magicurl=%@",MagicUrl);
+                        searched_flag = TRUE;  //for search icon.  @Jeanne. 2014.02.26
+                    }
+                    
+                    break;
+                }// end if
+                else if([ssdbdevice.location rangeOfString:kMagic_Device].location !=NSNotFound) {
+                    NSLog(@"Found Magic device : %d",i);
+                    if ([MagicUrl isEqualToString:@"magicinit"]) {
+                        MagicUrl = [[ssdbdevice.location stringByReplacingOccurrencesOfString:kMagic_Device withString:@""]mutableCopy];
+                        NSLog(@"Magicurl=%@",MagicUrl);
+                        searched_flag = TRUE;  //for search icon.  @Jeanne. 2014.02.26
+                    }
+                    
+                    break;
+                }// end if
+                else if([ssdbdevice.location rangeOfString:kMagic_Device_2].location !=NSNotFound) {
+                    NSLog(@"Found Magic device : %d",i);
+                    if ([MagicUrl isEqualToString:@"magicinit"]) {
+                        MagicUrl = [[ssdbdevice.location stringByReplacingOccurrencesOfString:kMagic_Device_2 withString:@""]mutableCopy];
+                        NSLog(@"Magicurl=%@",MagicUrl);
+                        searched_flag = TRUE;  //for search icon.  @Jeanne. 2014.02.26
+                    }
+                    
+                    break;
+                }// end if
+                
+                
+            } //end for
+        }
+    }
+
     
     
     
@@ -129,8 +189,9 @@ static NSMutableString *m_id;
         [[[UPnPManager GetInstance] SSDP] searchSSDP];
         [[[UPnPManager GetInstance] SSDP] searchSSDP];
         [[[UPnPManager GetInstance] SSDP] searchSSDP];
-        [[[UPnPManager GetInstance] SSDP] searchSSDP];
-        [[[UPnPManager GetInstance] SSDP] searchSSDP];
+        //[[[UPnPManager GetInstance] SSDP] searchSSDP];
+        //[[[UPnPManager GetInstance] SSDP] searchSSDP];
+        
         [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(searchip) userInfo:nil repeats:NO];
         
     }
@@ -147,28 +208,6 @@ static NSMutableString *m_id;
 
         }
     }
-    
-
-/*
-    if ([MagicUrl isEqualToString:@"magicinit"])
-    {
-        search_cnt++; //for search count  @Jeanne.  2014.02.25
-        logLabel.text = [NSString stringWithFormat:@"search cnt: %d",search_cnt];
-        if (logstring != nil) {
-            logLabel.text = logstring;
-        }
-        //logLabel.text = [NSString stringWithFormat:@"search cnt: %d",search_cnt];
-        [[[UPnPManager GetInstance] SSDP] searchSSDP];
-        [[[UPnPManager GetInstance] SSDP] searchSSDP];
-        [[[UPnPManager GetInstance] SSDP] searchSSDP];
-        [[[UPnPManager GetInstance] SSDP] searchSSDP];
-        [[[UPnPManager GetInstance] SSDP] searchSSDP];
-        [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(searchip) userInfo:nil repeats:NO];
-    }
-    else{
-        NSLog(@"device has founded, do not need to search!");
-    }
- */
 }
 
 - (void)viewDidLoad
@@ -178,6 +217,16 @@ static NSMutableString *m_id;
     [super viewDidLoad];
     
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    //for multi devices found.  @Jeanne. 2014.02.26
+    //------------------------------------------
+    if (devicename == nil) {
+        devicename = [[NSArray alloc] init];
+    }
+    if (deviceurl == nil) {
+        deviceurl = [[NSArray alloc] init];
+    }
+    //------------------------------------------
     
     //for log.  @Jeanne. 2014.02.25
     //自动折行设置
@@ -228,11 +277,13 @@ static NSMutableString *m_id;
     //Search for UPnP Devices
     [[[UPnPManager GetInstance] SSDP] searchSSDP];
     search_cnt = 1; //for search count  @Jeanne.  2014.02.25
-    //logLabel.text = [NSString stringWithFormat:@"search cnt: %d",search_cnt];
     //===============================================
     
+    mSSDPObjCDevices = [[UPnPManager GetInstance] SSDP].SSDPObjCDevices;  //Get ssdp device.  @Jeanne. 2014.02.27
+
+    
     //init timer to broadcast
-    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(searchip) userInfo:nil repeats:NO];
+    [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(searchip) userInfo:nil repeats:NO];
     
     
     UITabBar *Tab = (id)[self.view viewWithTag:kMain_Tabbar_tag];
@@ -315,6 +366,7 @@ static NSMutableString *m_id;
 }
 
 -(void)UPnPDBUpdated:(UPnPDB*)sender{
+/*
 
     BasicUPnPDevice *device;
     unsigned long cnt = [mDevices count] ;
@@ -323,31 +375,32 @@ static NSMutableString *m_id;
 
     NSLog(@"UPnPDBUpdated %lu", (unsigned long)[mDevices count]);
 
-    logstring = @"log:";
+    logstring = @"";
     for (i=0; i < cnt; i++) {
         device = [mDevices objectAtIndex:i];
         oldstr = logstring;
         logstring = [NSString stringWithFormat:@"%@d[%lu].name=%@,",oldstr,i,device.friendlyName];
     }
+    
+    
 
     
     for (i=0; i < cnt; i++) {
         device = [mDevices objectAtIndex:i];
         NSLog(@"device[%lu].friendname=%@",i,device.friendlyName);
         NSLog(@"device[%lu].xmlLocation=%@",i,device.xmlLocation);
+        
         if([device.xmlLocation rangeOfString:kMagic_Device].location !=NSNotFound) {
             NSLog(@"Found Magic device : %lu",i);
             if ([MagicUrl isEqualToString:@"magicinit"]) {
-                
                 MagicUrl = [[device.xmlLocation stringByReplacingOccurrencesOfString:kMagic_Device withString:@""]mutableCopy];
                 NSLog(@"Magicurl=%@",MagicUrl);
                 searched_flag = TRUE;  //for search icon.  @Jeanne. 2014.02.26
-                //[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(initMenu) userInfo:nil repeats:NO];
-                //[self initMenu];
             }
 
             break;
         }
+    
         else if([device.xmlLocation rangeOfString:kMagic_Device_2].location !=NSNotFound) {
             NSLog(@"Found Magic device : %lu",i);
             if ([MagicUrl isEqualToString:@"magicinit"]) {
@@ -355,13 +408,12 @@ static NSMutableString *m_id;
                 MagicUrl = [[device.xmlLocation stringByReplacingOccurrencesOfString:kMagic_Device_2 withString:@""]mutableCopy];
                 NSLog(@"Magicurl=%@",MagicUrl);
                 searched_flag = TRUE;  //for search icon.  @Jeanne. 2014.02.26
-                //[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(initMenu) userInfo:nil repeats:NO];
-                //[self initMenu];
             }
             
             break;
         }
     }
+ */
     
     //[menuView performSelectorOnMainThread : @ selector(reloadData) withObject:nil waitUntilDone:YES];
 }

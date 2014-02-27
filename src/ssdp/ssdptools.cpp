@@ -58,6 +58,7 @@ int GetHeaderValueFromCollection(vector<SSDP_HTTP_HEADER*> headers, u8* fieldnam
 	if(found){
 		*value=hdr->fieldvalue;
 		*len=hdr->fieldvaluelen;
+        //printf("Jeanne found: %s\n",hdr->fieldvalue);
 	}else{
 		ret =-1;
 	}
