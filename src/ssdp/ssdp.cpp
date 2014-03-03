@@ -37,8 +37,23 @@
 #include <fcntl.h>
 #include "ssdp.h"
 #include "tools.h"
+//Add to filter receive msg.  Jeanne. 2014.02.27
+#include <stdio.h>
+#include <string.h>
 
-
+//Add to filter receive msg.  Jeanne. 2014.02.27
+bool SSDP::IsIncludestr(char *deststr, char * sourcestr)
+{
+    char *p;
+    p = strstr(deststr, sourcestr);
+    
+    if (p) {
+        return true;
+    }
+    else{
+        return false;
+    }
+}
 
 
 SSDP::SSDP():mMulticastSocket(INVALID_SOCKET), mUnicastSocket(INVALID_SOCKET), mReadLoop(0), mTTL(2), mOS("mac/1.0"), mProduct("upnpx/1.0"){
@@ -279,7 +294,9 @@ std::string mProcuct;
 
 int SSDP::ReadLoop(){
 	int ret = 0;
-	mReadLoop = 1;
+	mReadLoop = 1;      
+	int sock_9999,optval;
+	struct sockaddr_in Srcaddr_9999;
 	
 	struct timeval timeout;
 	timeout.tv_sec = 5;
@@ -287,11 +304,40 @@ int SSDP::ReadLoop(){
 	
 	u8 buf[4096];
 	int bufsize = 4096;
+    
+    //Add to filter receive msg.  Jeanne. 2014.02.27
+    char magic_device[50] = "/irdevice.xml";
+    bool matchflag;
 	
 	struct sockaddr_in sender;
 	socklen_t senderlen = sizeof(struct sockaddr);
 	
-    int maxsock = mMulticastSocket>mUnicastSocket?mMulticastSocket:mUnicastSocket;
+	
+	// jy@2014/02/27 add for recv from port 9999
+	sock_9999 = socket(PF_INET, SOCK_DGRAM, 0);
+	//STATNVAL(sock_9999, INVALID_SOCKET, EXIT);
+	
+	//Set nonblocking
+	optval = fcntl( sock_9999, F_GETFL, 0 );
+	//STATNVAL(optval, -1,  CLEAN_AND_EXIT);
+	ret = fcntl(sock_9999, F_SETFL, optval | O_NONBLOCK);
+	//STATNVAL(ret, -1,  CLEAN_AND_EXIT);
+	
+	memset( &Srcaddr_9999,0,sizeof(Srcaddr_9999) );
+	Srcaddr_9999.sin_family = PF_INET;
+	Srcaddr_9999.sin_port = htons(9999); 
+	Srcaddr_9999.sin_addr.s_addr = INADDR_ANY; //Default nic    
+	//Bind to all interface(s)
+	ret = bind(sock_9999, (struct sockaddr*)&Srcaddr_9999, sizeof(struct sockaddr));
+	if(ret < 0 && (errno == EACCES || errno == EADDRINUSE))
+		printf("address in use\n");
+	//STATVAL(ret, 0, CLEAN_AND_EXIT);
+	// jy@2014/02/27 add for recv from port 9999
+
+	
+    int maxsock = mMulticastSocket>mUnicastSocket?mMulticastSocket:mUnicastSocket;   
+     maxsock = maxsock> sock_9999?maxsock:sock_9999;
+    
     
 	//Read UDP answers
 	while(mReadLoop){
@@ -306,7 +352,11 @@ int SSDP::ReadLoop(){
 		FD_SET(mMulticastSocket, &mExceptionFDS);
 		FD_SET(mUnicastSocket, &mReadFDS);
 		FD_SET(mUnicastSocket, &mWriteFDS);
-		FD_SET(mUnicastSocket, &mExceptionFDS);
+		FD_SET(mUnicastSocket, &mExceptionFDS);           
+		
+		FD_SET(sock_9999, &mReadFDS);
+		FD_SET(sock_9999, &mWriteFDS);
+		FD_SET(sock_9999, &mExceptionFDS);
 		        
         timeout.tv_sec = 5;
         timeout.tv_usec = 0;
@@ -326,10 +376,42 @@ int SSDP::ReadLoop(){
 				ret = recvfrom(mMulticastSocket, buf, bufsize, 0, (struct sockaddr*)&sender, &senderlen);
 				if(ret != SOCKET_ERROR){
 					//Be sure to only deliver full messages (!)
-                    //printf("%s\n",buf); //Jeanne. 2914.02.26  for test
-					IncommingMessage((struct sockaddr*)&sender, buf, ret);
+                    //Add to filter receive msg.  Jeanne. 2014.02.27
+                    matchflag = IsIncludestr((char *)buf,magic_device);
+                    if (matchflag) { //it is magic device respons
+                        //printf("%s\n",buf); //Jeanne. 2914.02.26  for test
+                        IncommingMessage((struct sockaddr*)&sender, buf, ret);
+                    }
+                    else{
+                        //printf("Not match magic device!\n");
+                    }
+
 				}
 			}
+			
+			// jy@2014/02/27 add for recv from port 9999
+			if(FD_ISSET(sock_9999, &mExceptionFDS)){
+				printf("Error on sock_9999, continue\n");
+			}
+            if(FD_ISSET(sock_9999, &mReadFDS)){
+				//Data
+				//printf("Data\n");
+				ret = recvfrom(sock_9999, buf, bufsize, 0, (struct sockaddr*)&sender, &senderlen);
+				if(ret != SOCKET_ERROR){
+					//Be sure to only deliver full messages (!)
+                    //Add to filter receive msg.  Jeanne. 2014.02.27
+                    matchflag = IsIncludestr((char *)buf,magic_device);
+                    if (matchflag) { //it is magic device respons
+                        //printf("%s\n",buf); //Jeanne. 2914.02.26  for test
+                        IncommingMessage((struct sockaddr*)&sender, buf, ret);
+                    }
+                    else{
+                        //printf("Not match magic device!\n");
+                    }
+
+				}
+			}
+			
             //Unicast
             if(FD_ISSET(mUnicastSocket, &mExceptionFDS)){
 				printf("Error on Unicast socket, continue\n");
@@ -340,14 +422,30 @@ int SSDP::ReadLoop(){
 				ret = recvfrom(mUnicastSocket, buf, bufsize, 0, (struct sockaddr*)&sender, &senderlen);
 				if(ret != SOCKET_ERROR){
 					//Be sure to only deliver full messages (!)
+                    
+                    //Add to filter receive msg.  Jeanne. 2014.02.27
+                    matchflag = IsIncludestr((char *)buf,magic_device);
+                    if (matchflag) { //it is magic device respons
+                        //printf("%s\n",buf); //Jeanne. 2914.02.26  for test
+                        IncommingMessage((struct sockaddr*)&sender, buf, ret);
+                    }
+                    else{
+                        //printf("Not match magic device!\n");
+                    }
                     //printf("%s\n",buf); //Jeanne. 2914.02.26 for test
-					IncommingMessage((struct sockaddr*)&sender, buf, ret);
+					//IncommingMessage((struct sockaddr*)&sender, buf, ret);
 				}
 			}
 
 		}
 	}
+    
+    
+
 EXIT:
+
+	if(sock_9999 > 0)
+		close(sock_9999);
 	return ret;
 }
 

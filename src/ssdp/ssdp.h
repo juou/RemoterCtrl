@@ -87,6 +87,7 @@ private:
 private:
 	int ReadLoop();
 	int IncommingMessage(struct sockaddr* sender, u8* buf, u32 len);
+    bool IsIncludestr(char *deststr, char * sourcestr); //Add to filter receive msg.  Jeanne. 2014.02.27
 private:
 	static void* sReadLoop(void* data);
 private:

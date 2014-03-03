@@ -39,7 +39,6 @@
 #include "upnp.h"
 #include <vector>
 
-
 /***
  * C/C++
  */
@@ -85,6 +84,7 @@ private:
 
         mWrapper = new SSDPDB_Observer_wrapper(self);
     }
+    
 
 	return self;
 }

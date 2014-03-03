@@ -13,8 +13,8 @@
 #import "BIDSubViewController.h"
 #import "UPnPManager.h"
 
-#define kMagic_Device   @":52525/root_XXYY.xml"
-#define kMagic_Device_2   @":52525/root_XXYY_S.xml"
+//#define kMagic_Device   @":52525/root_XXYY.xml"
+//#define kMagic_Device_2   @":52525/root_XXYY_S.xml"
 #define kMagic_AirMusic_Device  @"/irdevice.xml"
 
 #define kMain_Tabbar_tag       5
@@ -150,6 +150,7 @@ static NSMutableString *m_id;
                     
                     break;
                 }// end if
+                /*
                 else if([ssdbdevice.location rangeOfString:kMagic_Device].location !=NSNotFound) {
                     NSLog(@"Found Magic device : %d",i);
                     if ([MagicUrl isEqualToString:@"magicinit"]) {
@@ -170,6 +171,7 @@ static NSMutableString *m_id;
                     
                     break;
                 }// end if
+                 */
                 
                 
             } //end for
