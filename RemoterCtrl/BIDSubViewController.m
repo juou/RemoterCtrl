@@ -48,6 +48,8 @@
 static NSMutableArray *Items;
 static NSMutableArray *PresetItems;
 static NSString *CellIdentifier = @"Cell";
+//Paul Request: in main menu, items should be on fix pos. Jeanne. 2014.03.03
+static NSMutableArray *FixMainMenuItems;
 
 BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
 {
@@ -73,6 +75,44 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
 @end
 
 @implementation BIDSubViewController
+
+//Paul Request: in main menu, items should be on fix pos. Jeanne. 2014.03.03
+-(void)MakeMainMenuItem
+{
+    NSString *item_subid = [[NSString alloc] init];
+    BIDItemCell *itemCell;
+    int mainmenu_subid[3] = {uiLOCATIONRADIO_MENU,uiINTERNET_RADIO_MENU,uiUPNP_MENU};
+    int i,cnt;
+    BOOL foundflag;
+    
+    if ([FixMainMenuItems count] != 0) {
+        [FixMainMenuItems removeAllObjects];
+    }
+    
+    
+    for (i= 0; i<3; i++) {
+        item_subid = [NSString stringWithFormat:@"%d",mainmenu_subid[i]];
+        
+        foundflag = FALSE;
+        for(cnt = 0; cnt < [Items count]; cnt++)
+        {
+            itemCell = [Items objectAtIndex:cnt];
+            if ([itemCell.submenuId isEqualToString:item_subid]) {
+                foundflag = TRUE;
+                break;
+            }
+        }
+        
+        if (foundflag == TRUE) {
+            //add itemcell to main menu
+            [FixMainMenuItems addObject:itemCell];
+        }
+        
+    }
+    
+    NSLog(@"MakeMainMenuItem OK");
+    
+}
 
 -(IBAction)CancelPressed
 {
@@ -260,6 +300,7 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     UITabBar *tabBar =(id)[parentView viewWithTag:kMain_Tabbar_tag];           //main menu, other menu
     UIButton *PresetButton;                                            //internet menu, play menu
     NSString *internetRadioId = [[NSString alloc] initWithFormat:@"%d",uiINTERNET_RADIO_MENU];
+    NSString *upnpId = [[NSString alloc] initWithFormat:@"%d",uiUPNP_MENU];   //Fix Bug:UPnP時,加入preset應無功能  @Jeanne. 2014.03.03
     int i;
     NSInteger tag;
     BOOL Preset_hideflag,PrtPlay_hideflag;
@@ -271,9 +312,10 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     
     
     //Set Preset play Button flag
+    //Fix Bug:UPnP時,加入preset應無功能  @Jeanne. 2014.03.03
     //================================================================
-    if((3 == index)&&(FALSE ==SearchInputFlag))
-    {//play menu,
+    if((3 == index)&&(FALSE ==SearchInputFlag)&&(!([self.menuProperty.menuId isEqualToString:upnpId])))
+    {//play menu, and not in upnp
         PrtPlay_hideflag = FALSE;
     }
     else
@@ -1087,6 +1129,19 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
          [Items removeAllObjects];
          [self decode_menu:response Forcmd:0];
          
+         //Paul Request: in main menu, items should be on fix pos. Jeanne. 2014.03.03
+         //*****************************************************
+         if ([self.menuProperty.menuId isEqualToString:@"1"])
+         {
+             if ([FixMainMenuItems count] == 0) {
+                 [self MakeMainMenuItem];
+             }
+             else{
+                 NSLog(@"main menu has already init!");
+             }
+            
+         }
+         //*****************************************************
          
          [tableView reloadData];
          tabBar.selectedItem = nil;
@@ -1273,6 +1328,10 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     if(self.menuProperty.menuItemCnt ==nil){
         self.menuProperty.menuItemCnt =[[NSNumber alloc] init];
     }
+    //Paul Request: in main menu, items should be on fix pos. Jeanne. 2014.03.03
+    if (FixMainMenuItems == nil) {
+        FixMainMenuItems = [[NSMutableArray alloc] initWithCapacity:0];
+    }
     
     client = [ILHTTPClient clientWithBaseURL:self.toMagicUrl
                             showingHUDInView:self.view];
@@ -1331,7 +1390,16 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
 #pragma mark -Table View Data Source Methods
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [Items count];
+    //Paul Request: in main menu, items should be on fix pos. Jeanne. 2014.03.03
+    if([self.menuProperty.menuId isEqualToString:@"1"])
+    {//main menu
+        return [FixMainMenuItems count];
+    }
+    else
+    {//other menu
+        return [Items count];
+    }
+    
 }//tableView:tableView numberOfRowsInSection:section
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -1349,11 +1417,22 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    BIDItemCell *itemCell = [Items objectAtIndex:indexPath.row];
+    BIDItemCell *itemCell;// = [Items objectAtIndex:indexPath.row];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     UIImage *bgImage;// = [UIImage imageNamed:@"bar_bg"];
-    UIImage *bglistImage = [UIImage imageNamed:@"bk_list"];
+    //Paul request to black bg.  @Jeanne. 2014.03.03
+    //UIImage *bglistImage = [UIImage imageNamed:@"bk_list"];
     NSString *internetRadioId = [[NSString alloc] initWithFormat:@"%d",uiINTERNET_RADIO_MENU];
+    
+    //Paul Request: in main menu, items should be on fix pos. Jeanne. 2014.03.03
+    if([self.menuProperty.menuId isEqualToString:@"1"])
+    {//main menu
+        itemCell = [FixMainMenuItems objectAtIndex:indexPath.row];
+    }
+    else
+    {//other menu
+        itemCell = [Items objectAtIndex:indexPath.row];
+    }
     
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
@@ -1429,7 +1508,8 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     cell.textLabel.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
     //cell.textLabel.frame = CGRectMake(50, 5, 200, 20);
     cell.textLabel.font = [UIFont systemFontOfSize:17];
-    tableView.backgroundColor = [UIColor colorWithPatternImage:bglistImage];
+    //Paul request to black bg.  @Jeanne. 2014.03.03
+    //tableView.backgroundColor = [UIColor colorWithPatternImage:bglistImage];
     return cell;
 }//tableView:tableView cellForRowAtIndexPath:indexPath
 
@@ -1545,7 +1625,8 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     UILabel *label = [[UILabel alloc] init];
     BIDItemCell *itemCell;
     NSString *itemStr;
-
+    
+    //modified from 'pos' to 'Preset'    @Jeanne.  2014.03.03
     if(row < 5)
     {
         if(row < [PresetItems count])
@@ -1554,16 +1635,16 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
             
             if([itemCell.status isEqualToString:@"emptyfile"])
             {
-               itemStr = [[NSString alloc] initWithFormat:@"Add to pos %d",row+1];
+               itemStr = [[NSString alloc] initWithFormat:@"Add to Preset %d",row+1];
             }
             else
             {
-               itemStr = [[NSString alloc] initWithFormat:@"Replace pos %d: %@",row+1,itemCell.name];
+               itemStr = [[NSString alloc] initWithFormat:@"Replace Preset %d: %@",row+1,itemCell.name];
             }
             
         }
         else{
-            itemStr = [[NSString alloc] initWithFormat:@"Add to pos %d",row+1];
+            itemStr = [[NSString alloc] initWithFormat:@"Add to Preset %d",row+1];
         }
     }
     else

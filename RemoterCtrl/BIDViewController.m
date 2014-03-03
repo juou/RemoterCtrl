@@ -502,7 +502,7 @@ static NSMutableString *m_id;
         
         item.enabled = FALSE;
         homeitem.enabled = TRUE;
-        homeitem.image = [UIImage imageNamed:@"left"];
+        homeitem.image = [UIImage imageNamed:@"left_tab"];
     }
     
 }

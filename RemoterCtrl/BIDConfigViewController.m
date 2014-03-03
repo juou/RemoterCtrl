@@ -12,10 +12,12 @@
 #import "ILHTTPClient.h"
 
 
-
-#define kwifi_Label_tag       4
-#define kwifi_Button_tag      5
-#define kbg_Button_tag        6
+#define kdlnabg_image_tag         4
+#define kdlnaname_Button_tag      5
+#define kbg_Button_tag            6
+#define krename_Label_tag         7
+#define kSave_Button_tag          8
+#define kCancel_Button_tag        9
 
 @interface BIDConfigViewController (){
     ILHTTPClient *client;   // http client
@@ -24,6 +26,92 @@
 @end
 
 @implementation BIDConfigViewController
+
+-(void) DisplayRenameMenu:(NSInteger)bDispFlag
+{
+    UIImageView *dlnabgImage = (id)[self.view viewWithTag:kdlnabg_image_tag];
+    UIButton *bgButton =(id)[self.view viewWithTag:kbg_Button_tag];
+    UIButton *SaveButton =(id)[self.view viewWithTag:kSave_Button_tag];
+    UIButton *CancelButton =(id)[self.view viewWithTag:kCancel_Button_tag];
+    UILabel *RenameLabel =(id)[self.view viewWithTag:krename_Label_tag];
+
+    if (1 == bDispFlag) { //Display Rename menu
+        dlnabgImage.hidden = FALSE;
+        bgButton.hidden = FALSE;
+        SaveButton.hidden = FALSE;
+        CancelButton.hidden = FALSE;
+        RenameLabel.hidden = FALSE;
+        if (self.dlna_name != nil) {
+            self.rename_field.text = self.dlna_name;
+        }
+        self.rename_field.hidden = FALSE;
+    }
+    else
+    {
+        dlnabgImage.hidden = TRUE;
+        bgButton.hidden = TRUE;
+        SaveButton.hidden = TRUE;
+        CancelButton.hidden = TRUE;
+        RenameLabel.hidden = TRUE;
+        self.rename_field.hidden = TRUE;
+    }
+}
+
+-(IBAction)textFieldDoneEditing:(id)sender
+{
+    [self.rename_field resignFirstResponder];
+    [sender resignFirstResponder];
+}
+
+-(IBAction)SaveButtonPressed
+{
+    UIButton *dlnaButton =(id)[self.view viewWithTag:kdlnaname_Button_tag];
+    NSString *newname = [[NSString alloc] initWithString:[self.rename_field.text stringByReplacingOccurrencesOfString:@" " withString:@"%20"]];
+    if (!([self.rename_field.text isEqualToString:@""]))
+    {//save the new name to device
+        NSString *setdlnanamecmd = [[NSString alloc] initWithFormat:@"/setdlnaname?name=%@",newname];
+        
+        NSLog(@"Set dlna name to device!");
+        //set dlna name  @Jeanne. 2014.03.03
+        //=========================================
+        client.isNeedHUD = [@"NO" mutableCopy];
+        [client getPath:setdlnanamecmd
+             parameters:nil
+            loadingText:nil
+            successText:nil
+                success:^(AFHTTPRequestOperation *operation, NSString *response)
+         {
+             NSLog(@"set dlnaname response: %@", response);
+             
+         }
+                failure:^(AFHTTPRequestOperation *operation, NSError *error)
+         {
+             NSLog(@"Error: %@", error);
+         }];
+        client.isNeedHUD = [@"YES" mutableCopy];
+        //=========================================
+    }
+    
+    //close the rename menu
+    NSLog(@"Close the rename menu after 500ms");
+    self.dlna_name = [self.rename_field.text mutableCopy];
+    [dlnaButton setTitle:self.rename_field.text forState:UIControlStateNormal];
+    [self.rename_field resignFirstResponder];
+    [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(CancelButtonPressed) userInfo:nil repeats:NO];
+    
+    
+}
+-(IBAction)CancelButtonPressed
+{
+    NSLog(@"CancelButtonPressed");
+    [self.rename_field resignFirstResponder];
+    [self DisplayRenameMenu: 0]; // hide Rename Menu
+}
+-(IBAction)dlnaRenameButtonPressed
+{
+    //show Rename Menu
+    [self DisplayRenameMenu: 1];
+}
 
 -(void) SWUpdate
 {
@@ -140,11 +228,14 @@
 
 }
 
+//move to tab menu.  @Jeanne. 2014.03.03
+/*
 -(IBAction)WifiButtonPressed
 {//
     NSString *strUrl = [self.wifiSettingUrl stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:strUrl]];
 }
+*/
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -155,16 +246,44 @@
     return self;
 }
 
+-(void) decodedlna_response:(NSString *)response
+{
+    char *p;
+    char dl_name[50];
+    const char *str = [response UTF8String];
+    memset(dl_name, 0, sizeof(dl_name));
+    
+    //Get menu id
+    p =strstr(str, "<name>");
+    if(p)
+    {
+        for (int i = 6; (p[i]!=0)&&(p[i]!='<'); i++) {
+            dl_name[i-6] = p[i];
+        }
+    }
+    
+    NSString *name=[NSString stringWithCString:dl_name encoding:NSUTF8StringEncoding];
+    
+    if (self.dlna_name == nil) {
+        self.dlna_name = [[NSMutableString alloc] initWithString:name];
+    }
+    else{
+        self.dlna_name = [name mutableCopy];
+    }
+    
+    NSLog(@"dlname=%@",self.dlna_name);
+    
+}
+
 -(void)viewWillAppear:(BOOL)animated
 {
-    UILabel *wifiLabel = (id)[self.view viewWithTag:kwifi_Label_tag];
-    UIButton *wifiButton =(id)[self.view viewWithTag:kwifi_Button_tag];
-    NSString *wifitext;  //test only @Jeanne.  2014.02.13
+    UIButton *dlnaButton =(id)[self.view viewWithTag:kdlnaname_Button_tag];
+    //NSString *wifitext;  //test only @Jeanne.  2014.02.13
     //test only
-    wifitext = [[NSString alloc] initWithFormat:@"    Wifi url: %@",self.wifiSettingUrl];
-    [wifiButton setTitle:wifitext forState:UIControlStateNormal];
+    //wifitext = [[NSString alloc] initWithFormat:@"    Wifi url: %@",self.wifiSettingUrl];
+    //[wifiButton setTitle:wifitext forState:UIControlStateNormal];
     
-    
+    /* move to main tab menu  @Jeanne 2014.03.03
     //set wifi setting hide or display.  2014.02.12
     if ([self.wifiSetFlag isEqualToString:@"YES"]) {
         wifiLabel.hidden = FALSE;
@@ -174,6 +293,41 @@
         wifiLabel.hidden = TRUE;
         wifiButton.hidden = TRUE;
     }
+    */
+    
+    if (client == nil) {
+        client = [ILHTTPClient clientWithBaseURL:self.toMagicUrl
+                                showingHUDInView:self.view];
+    }
+    
+    //get dlna name  @Jeanne. 2014.03.03
+    //=========================================
+    client.isNeedHUD = [@"NO" mutableCopy];
+    [client getPath:@"/getdlnaname"
+         parameters:nil
+        loadingText:nil
+        successText:nil
+            success:^(AFHTTPRequestOperation *operation, NSString *response)
+     {
+         NSLog(@"get dlnaname response: %@", response);
+         [self decodedlna_response:response];
+         if (self.dlna_name != nil) {
+             //[dlnaButton setTitleEdgeInsets:UIEdgeInsetsMake(4, 14, 0, 0)];
+             [dlnaButton setTitle:self.dlna_name forState:UIControlStateNormal];
+         }
+         
+     }
+            failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         NSLog(@"Error: %@", error);
+         if (self.dlna_name != nil) {
+             [dlnaButton setTitle:self.dlna_name forState:UIControlStateNormal];
+         }
+     }];
+    client.isNeedHUD = [@"YES" mutableCopy];
+    //=========================================
+    
+    
 }
 
 - (void)viewDidLoad

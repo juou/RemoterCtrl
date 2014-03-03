@@ -16,7 +16,8 @@
 @property (copy, nonatomic) NSMutableString *toMagicUrl;
 @property (weak, nonatomic) IBOutlet UITextField *SearchField;
 @property (strong,nonatomic) IBOutlet UIPickerView *singlePicker;
-
+//Paul Request: in main menu, items should be on fix pos. Jeanne. 2014.03.03
+//@property (copy, nonatomic) NSMutableArray *FixMainMenuItems;
 
 -(void) menu_disp_ctrl:(int)index;
 -(IBAction)backgroundTap:(id)sender;
