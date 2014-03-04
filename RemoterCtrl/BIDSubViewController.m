@@ -12,11 +12,14 @@
 #import "ILHTTPClient.h"
 #import "BIDItemCell.h"
 
+//Add for wifisetting on tabbar.  @Jeanne. 2014.03.04
+#define kMain_Tabbar_tag       5
+#define kMain_2_Tabbar_tag     100
+
 #define kMenu_Tableview_tag    1
 #define kBack_Button_tag       2
 #define kMute_Button_tag       3
 #define kVol_Slider_tag        4
-#define kMain_Tabbar_tag       5
 #define kPlay_Label_tag        6
 #define kPlayname_Label_tag    7
 #define kRadio_image_tag       8
@@ -127,19 +130,17 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     
 }
 
--(IBAction)AddPressed
+-(void)AddPresetprocess
 {
     NSInteger row = [self.singlePicker selectedRowInComponent:0];
-    NSLog(@"Select row: %d",row);
-    
     if (![playitemid isEqualToString:@"noplayid"])
     {
         NSString *setFavcmd;
         if (5 == row) {
-          setFavcmd = [[NSString alloc] initWithFormat:@"/setfav?id=%@&item=%@&favpos=0",self.menuProperty.menuId,playitemid];
+            setFavcmd = [[NSString alloc] initWithFormat:@"/setfav?id=%@&item=%@&favpos=0",self.menuProperty.menuId,playitemid];
         }
         else{
-          setFavcmd = [[NSString alloc] initWithFormat:@"/setfav?id=%@&item=%@&favpos=%d",self.menuProperty.menuId,playitemid,row+1];
+            setFavcmd = [[NSString alloc] initWithFormat:@"/setfav?id=%@&item=%@&favpos=%d",self.menuProperty.menuId,playitemid,row+1];
         }
         NSLog(@"CMD: %@",setFavcmd);
         [client getPath:setFavcmd
@@ -152,7 +153,7 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
              if([response rangeOfString:@"OK"].location !=NSNotFound)
              {//update ok
                  UIAlertView *alert = [[UIAlertView alloc]
-                                       initWithTitle:@"Preset prcess"
+                                       initWithTitle:@"Preset process"
                                        message:@"Add to preset successful!"
                                        delegate:nil
                                        cancelButtonTitle:@"OK"
@@ -161,18 +162,29 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
              }
              else if([response rangeOfString:@"FAIL"].location !=NSNotFound)
              {
-
+                 NSString *Failreson;
+                 
+                 if([response rangeOfString:@"EXIST"].location !=NSNotFound){
+                     Failreson = @"Add to preset failed!\nThis station has already in preset list.";
+                 }else if([response rangeOfString:@"FULL"].location !=NSNotFound){
+                     Failreson = @"Add to preset failed!\nThe preset list is full.";
+                 }else if([response rangeOfString:@"NO_SUCH_STATION"].location !=NSNotFound){
+                     Failreson = @"Add to preset failed!\nNo such station.";
+                 }else{
+                     Failreson = @"Add to preset failed!";
+                 }
+                 
                  [MBProgressHUD fadeOutHUDInView:self.view withSuccessText:nil];
                  UIAlertView *alert = [[UIAlertView alloc]
-                                       initWithTitle:@"Preset prcess"
-                                       message:@"Add to preset failed!"
+                                       initWithTitle:@"Preset process"
+                                       message:Failreson
                                        delegate:nil
                                        cancelButtonTitle:@"OK"
                                        otherButtonTitles:nil];
                  [alert show];
              }
-             [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(refresh_presetbtn) userInfo:nil repeats:NO];
-             //[self refresh_presetbtn]; //test delay
+             //[NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(refresh_presetbtn) userInfo:nil repeats:NO];
+             [self refresh_presetbtn]; //test delay
              [self CancelPressed];
              
          }
@@ -182,6 +194,43 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
              [self CancelPressed];
          }];
     }
+    
+}
+
+-(IBAction)AddPressed
+{
+    NSInteger row = [self.singlePicker selectedRowInComponent:0];
+    BIDItemCell *itemCell;
+    BOOL AddDirectly = FALSE;
+    
+    NSLog(@"Select row: %d",row);
+    
+    if (row < 5) {//on pos 0-4
+        itemCell = [PresetItems objectAtIndex:row];
+        if([itemCell.status isEqualToString:@"emptyfile"])
+        {
+            AddDirectly = TRUE;
+        }
+    }
+    else if(5 == row)
+    {
+       AddDirectly = TRUE;
+    }
+    
+    if (TRUE == AddDirectly)
+    {
+        [self AddPresetprocess]; //do add preset process.  @Jeanne. 2014.03.04
+    }
+    else{//need to replace
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle:@"My Favorite"
+                              message:@"This preset is already exist, do you want to overwrite it?"
+                              delegate:self
+                              cancelButtonTitle:@"No"
+                              otherButtonTitles:@"Yes", nil];
+        [alert show];
+    }
+
 }
 
 -(IBAction)AddPresetButtonPressed
@@ -297,7 +346,8 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     UIImageView *AlbumImage = (id)[self.view viewWithTag:kAlbum_image_tag];             //play menu
     UILabel *playinfoLabel = (id)[self.view viewWithTag:kPlayinfo_Label_tag];            //play menu
     UIView *parentView = self.parentViewController.view;
-    UITabBar *tabBar =(id)[parentView viewWithTag:kMain_Tabbar_tag];           //main menu, other menu
+    UITabBar *tabBar;// =(id)[parentView viewWithTag:kMain_Tabbar_tag];           //main menu, other menu
+    //Add for wifisetting on tabbar.  @Jeanne. 2014.03.04
     UIButton *PresetButton;                                            //internet menu, play menu
     NSString *internetRadioId = [[NSString alloc] initWithFormat:@"%d",uiINTERNET_RADIO_MENU];
     NSString *upnpId = [[NSString alloc] initWithFormat:@"%d",uiUPNP_MENU];   //Fix Bug:UPnP時,加入preset應無功能  @Jeanne. 2014.03.03
@@ -309,6 +359,14 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     UIButton *SearchButton = (id)[self.view viewWithTag:kSearch_Button_tag];  //New Search Menu
 
     NSString *myfavId = [[NSString alloc] initWithFormat:@"%d",uiFAVEX_MENU];
+    
+    
+    //Add for wifisetting on tabbar.  @Jeanne. 2014.03.04
+    if ([self.wifiSetFlag isEqualToString:@"YES"]) { //include wifi setting
+        tabBar =(id)[parentView viewWithTag:kMain_2_Tabbar_tag];
+    }else{//not include wifi setting
+        tabBar =(id)[parentView viewWithTag:kMain_Tabbar_tag];
+    }
     
     
     //Set Preset play Button flag
@@ -1095,11 +1153,18 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
 -(void) refresh_menu
 {
     UIView *parentView = self.parentViewController.view;
-    UITabBar *tabBar =(id)[parentView viewWithTag:kMain_Tabbar_tag];                     //main menu, other menu
+    UITabBar *tabBar;// =(id)[parentView viewWithTag:kMain_Tabbar_tag];                     //main menu, other menu
     UITableView *tableView = (id)[self.view viewWithTag:kMenu_Tableview_tag];
     //UIButton *button = (id)[self.view viewWithTag:kBack_Button_tag];
     //get current menu list cmd
     NSString *path = [[NSString alloc] initWithFormat:@"/list?id=%@&start=1&count=250",self.menuProperty.menuId];
+    
+    //Add for wifisetting on tabbar.  @Jeanne. 2014.03.04
+    if ([self.wifiSetFlag isEqualToString:@"YES"]) { //include wifi setting
+        tabBar =(id)[parentView viewWithTag:kMain_2_Tabbar_tag];
+    }else{//not include wifi setting
+        tabBar =(id)[parentView viewWithTag:kMain_Tabbar_tag];
+    }
     
     //tabBar.hidden = FALSE; //for set in menu_disp_ctrl @Jeanne. 2014.01.29
     
@@ -1349,25 +1414,6 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     SearchInputFlag = FALSE; //2014.02.11  add for New search menu
     playitemid = [@"noplayid" mutableCopy]; //2014.02.18
     AddPresetFlag = FALSE;  //2014.02.18
-    
-    /*
-    [client getPath:@"/list?id=1&start=1&count=250"
-         parameters:nil
-        loadingText:nil
-        successText:nil
-            success:^(AFHTTPRequestOperation *operation, NSString *response)
-     {
-         //NSLog(@"response: %@", response);
-         [self decode_menu:response Forcmd:0]; //0:list cmd decode
-         [tableView reloadData];
-         
-         
-     }
-            failure:^(AFHTTPRequestOperation *operation, NSError *error)
-     {
-         NSLog(@"Error: %@", error);
-     }];
-     */
     
     //Refresh main menu
     [self refresh_menu];
@@ -1657,6 +1703,20 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     label.textAlignment = NSTextAlignmentLeft;
     return label;
     //return itemStr;
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"click button: %d (1: Yes, 0: NO)",buttonIndex);
+    
+    if (1 == buttonIndex) {
+        NSLog(@"do add preset process.");
+        [self AddPresetprocess]; //do add preset process.  @Jeanne. 2014.03.04
+    }
+    else{
+        NSLog(@"Cancel it!");
+        [self CancelPressed];
+    }
 }
 
 @end

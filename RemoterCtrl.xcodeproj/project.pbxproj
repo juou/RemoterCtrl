@@ -54,6 +54,9 @@
 		94C840B8188654BF0050730A /* icon_80.png in Resources */ = {isa = PBXBuildFile; fileRef = 94C840B7188654BF0050730A /* icon_80.png */; };
 		94C840BA188654C90050730A /* icon_120.png in Resources */ = {isa = PBXBuildFile; fileRef = 94C840B9188654C90050730A /* icon_120.png */; };
 		94C840BC18865E5D0050730A /* icon_58.png in Resources */ = {isa = PBXBuildFile; fileRef = 94C840BB18865E5D0050730A /* icon_58.png */; };
+		94CCD41718C59D22005BEB2D /* wifi_setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 94CCD41618C59D22005BEB2D /* wifi_setting.png */; };
+		94CCD41918C5BF29005BEB2D /* btn_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 94CCD41818C5BF29005BEB2D /* btn_back.png */; };
+		94CCD41B18C5CAB9005BEB2D /* btn_preset_s_click.png in Resources */ = {isa = PBXBuildFile; fileRef = 94CCD41A18C5CAB9005BEB2D /* btn_preset_s_click.png */; };
 		94D09A061898A0A90099F90C /* LocalRadio_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 94D09A031898A0A90099F90C /* LocalRadio_icon.png */; };
 		94D09A081898A0A90099F90C /* Radio_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 94D09A051898A0A90099F90C /* Radio_icon.png */; };
 		94D09A0A1898C5070099F90C /* MediaCenter_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 94D09A091898C5070099F90C /* MediaCenter_icon.png */; };
@@ -151,6 +154,9 @@
 		94C840B7188654BF0050730A /* icon_80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_80.png; sourceTree = "<group>"; };
 		94C840B9188654C90050730A /* icon_120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_120.png; sourceTree = "<group>"; };
 		94C840BB18865E5D0050730A /* icon_58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_58.png; sourceTree = "<group>"; };
+		94CCD41618C59D22005BEB2D /* wifi_setting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wifi_setting.png; sourceTree = "<group>"; };
+		94CCD41818C5BF29005BEB2D /* btn_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_back.png; sourceTree = "<group>"; };
+		94CCD41A18C5CAB9005BEB2D /* btn_preset_s_click.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_preset_s_click.png; sourceTree = "<group>"; };
 		94D09A031898A0A90099F90C /* LocalRadio_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LocalRadio_icon.png; sourceTree = "<group>"; };
 		94D09A051898A0A90099F90C /* Radio_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Radio_icon.png; sourceTree = "<group>"; };
 		94D09A091898C5070099F90C /* MediaCenter_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MediaCenter_icon.png; sourceTree = "<group>"; };
@@ -235,6 +241,9 @@
 		94B3752D187E9585007E1975 /* icon */ = {
 			isa = PBXGroup;
 			children = (
+				94CCD41A18C5CAB9005BEB2D /* btn_preset_s_click.png */,
+				94CCD41818C5BF29005BEB2D /* btn_back.png */,
+				94CCD41618C59D22005BEB2D /* wifi_setting.png */,
 				94B2A20C18C4B9B500EFBC25 /* left_tab.png */,
 				94B2A20A18C480D400EFBC25 /* btn_msg.png */,
 				94B2A20818C47E0700EFBC25 /* dlnarename_bg.png */,
@@ -522,6 +531,7 @@
 				94B122FB18A9C3BD00CA3FF0 /* Service.png in Resources */,
 				94B122FF18A9FCE400CA3FF0 /* bar_notice.png in Resources */,
 				943C4DF918A89C0300643A7A /* bar_top.png in Resources */,
+				94CCD41B18C5CAB9005BEB2D /* btn_preset_s_click.png in Resources */,
 				943C4DF718A8763A00643A7A /* BIDConfigViewController.xib in Resources */,
 				94F7DA90187A9CBE0008A500 /* 37x-Checkmark.png in Resources */,
 				94B122F918A9C3BD00CA3FF0 /* MyFavorite.png in Resources */,
@@ -547,8 +557,10 @@
 				9441D9331895EBCE0034D528 /* radio.png in Resources */,
 				94F7DA3D187A9BE20008A500 /* InfoPlist.strings in Resources */,
 				9441D9371895ECE30034D528 /* bar_play_middle.png in Resources */,
+				94CCD41918C5BF29005BEB2D /* btn_back.png in Resources */,
 				94F7DA91187A9CBE0008A500 /* 37x-Checkmark@2x.png in Resources */,
 				94BC632F187BA7E50038D7C4 /* BIDSubViewController.xib in Resources */,
+				94CCD41718C59D22005BEB2D /* wifi_setting.png in Resources */,
 				94D09A061898A0A90099F90C /* LocalRadio_icon.png in Resources */,
 				94D09A081898A0A90099F90C /* Radio_icon.png in Resources */,
 				943C4E0618A9007500643A7A /* btn_add.png in Resources */,

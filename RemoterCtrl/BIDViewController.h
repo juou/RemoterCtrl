@@ -26,6 +26,7 @@
 @property (strong, nonatomic) BIDMenuProperty *menuProperty;
 @property (strong, nonatomic) BIDSubViewController *subViewController;
 @property (strong, nonatomic) BIDConfigViewController *configViewController;
+@property (copy, nonatomic) NSMutableString *wifiSettingUrl;
 
 //protocol UPnPDBObserver
 -(void)UPnPDBWillUpdate:(UPnPDB*)sender;

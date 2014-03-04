@@ -18,6 +18,7 @@
 #define kMagic_AirMusic_Device  @"/irdevice.xml"
 
 #define kMain_Tabbar_tag       5
+#define kMain_2_Tabbar_tag     100
 #define kShow_Label_tag        9
 #define kVer_Label_tag         10
 #define klog_Label_tag         11
@@ -72,6 +73,7 @@ static NSMutableString *m_id;
     }
     NSString *wifiurl = [NSString stringWithCString:url encoding:NSUTF8StringEncoding];
     self.configViewController.wifiSettingUrl = [wifiurl mutableCopy];
+    self.wifiSettingUrl = [wifiurl mutableCopy]; //Jeanne. 2014.03.04
     NSLog(@"wifiSetUrl: %@",self.configViewController.wifiSettingUrl);
     
     //init result
@@ -288,8 +290,8 @@ static NSMutableString *m_id;
     [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(searchip) userInfo:nil repeats:NO];
     
     
-    UITabBar *Tab = (id)[self.view viewWithTag:kMain_Tabbar_tag];
-    Tab.hidden = TRUE;
+    //UITabBar *Tab = (id)[self.view viewWithTag:kMain_Tabbar_tag];
+    //Tab.hidden = TRUE;
     
     [MBProgressHUD fadeInHUDInView:self.view withText:@"Search for device..."];
     fadein_flag = TRUE;    //for fade in flag.  @Jeanne. 2014.02.26
@@ -299,6 +301,7 @@ static NSMutableString *m_id;
 -(void)initMenu
 {
     UITabBar *Tab = (id)[self.view viewWithTag:kMain_Tabbar_tag];
+    UITabBar *Tab_2 = (id)[self.view viewWithTag:kMain_2_Tabbar_tag];  //Add for wifisetting on tabbar.  @Jeanne. 2014.03.04
     UILabel *showLabel = (id)[self.view viewWithTag:kShow_Label_tag];
     UILabel *verLabel = (id)[self.view viewWithTag:kVer_Label_tag];
     UILabel *logLabel = (id)[self.view viewWithTag:klog_Label_tag];
@@ -341,7 +344,15 @@ static NSMutableString *m_id;
              logLabel.hidden = TRUE;
              [self addChildViewController:self.subViewController];
              [self.view insertSubview:self.subViewController.view atIndex:1];
-             Tab.hidden = FALSE;
+             
+             //Add for wifisetting on tabbar.  @Jeanne. 2014.03.04
+             self.subViewController.wifiSetFlag = self.configViewController.wifiSetFlag;
+             if ([self.configViewController.wifiSetFlag isEqualToString:@"YES"]) {
+                 Tab_2.hidden = FALSE;
+             }
+             else{
+                 Tab.hidden = FALSE;
+             }
              
          }
                 failure:^(AFHTTPRequestOperation *operation, NSError *error)
@@ -427,6 +438,7 @@ static NSMutableString *m_id;
     UITabBarItem *homeitem = [tabBar.items objectAtIndex:0];
     
     tabBar.selectedItem = nil;
+    
 
     if (item.tag == 1) {
         NSLog(@"Home key Selected!!!\n");
@@ -503,6 +515,15 @@ static NSMutableString *m_id;
         item.enabled = FALSE;
         homeitem.enabled = TRUE;
         homeitem.image = [UIImage imageNamed:@"left_tab"];
+    }
+    else if(item.tag == 4){ //wifi setting
+        
+        NSLog(@"Wifi setting Pressed!!!\n");
+        
+        NSString *strUrl = [self.wifiSettingUrl stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
+        NSLog(@"strUrl=%@",strUrl);
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:strUrl]];
+        
     }
     
 }
