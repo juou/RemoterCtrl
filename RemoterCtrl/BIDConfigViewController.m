@@ -27,6 +27,13 @@
 
 @implementation BIDConfigViewController
 
+//2014.03.05
+-(IBAction)RescanPressed
+{
+    NSLog(@"Rescan pressed!");
+    [self.view removeFromSuperview];
+}
+
 -(void) DisplayRenameMenu:(NSInteger)bDispFlag
 {
     UIImageView *dlnabgImage = (id)[self.view viewWithTag:kdlnabg_image_tag];

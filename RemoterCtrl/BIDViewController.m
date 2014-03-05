@@ -22,6 +22,9 @@
 #define kShow_Label_tag        9
 #define kVer_Label_tag         10
 #define klog_Label_tag         11
+#define kurl_TableView_tag     101
+
+static NSString *CellIdentifier = @"Cell";
 
 static NSMutableString *m_id;
 
@@ -29,102 +32,126 @@ static NSMutableString *m_id;
 @interface BIDViewController (){
     uint search_cnt; //for search count  @Jeanne.  2014.02.25
     NSString *logstring;
-    BOOL searched_flag;  //for search icon.  @Jeanne. 2014.02.26
+    Byte searched_flag;  //for search icon.  @Jeanne. 2014.02.26
     BOOL fadein_flag;    //for fade in flag.  @Jeanne. 2014.02.26
-    NSArray *devicename; //for multi devices found.  @Jeanne. 2014.02.26
-    NSArray *deviceurl;  //for multi devices found.  @Jeanne. 2014.02.26
+    NSMutableDictionary *devicenames; //for multi devices found.  @Jeanne. 2014.02.26
+    NSMutableArray *deviceurls;  //for multi devices found.  @Jeanne. 2014.02.26
 }
 @end
 
 
 @implementation BIDViewController
 
--(void) decode_response:(NSString *)response Forcmd: (NSInteger)cmd
+//0: decode init
+//1: decode friendly name
+-(void) decode_response:(NSString *)response Forcmd: (NSInteger)cmd Forpos:(NSInteger)pos
 {
     char *p;
-    char id[4],url[50];
+    char id[4],url[50],name[50];
     const char *str = [response UTF8String];
     memset(id, 0, sizeof(id));
     memset(url, 0, sizeof(url));
+    memset(name, 0, sizeof(name));
     int i;
     NSInteger result;
     
-    //Get menu id
-    p =strstr(str, "<id>");
-    if(p)
-    {
-        for (int i = 4; (p[i]!=0)&&(p[i]!='<'); i++) {
-            id[i-4] = p[i];
-        }
-    }
-    
-    NSString *menuid=[NSString stringWithCString:id encoding:NSUTF8StringEncoding];
-    NSLog(@"Menuid=%@",menuid);
-    
-    [m_id setString:menuid];
-    
-    //Get wifi set url
-    p =strstr(str, "<wifi_set_url>");
-    if(p)
-    {
-        for (int i = 14; (p[i]!=0)&&(p[i]!='<'); i++) {
-            url[i-14] = p[i];
-        }
-    }
-    NSString *wifiurl = [NSString stringWithCString:url encoding:NSUTF8StringEncoding];
-    self.configViewController.wifiSettingUrl = [wifiurl mutableCopy];
-    self.wifiSettingUrl = [wifiurl mutableCopy]; //Jeanne. 2014.03.04
-    NSLog(@"wifiSetUrl: %@",self.configViewController.wifiSettingUrl);
-    
-    //init result
-    result = 1;
-    
-    //将.分隔的字符串转换成数组
-	NSArray *array1 = [self.configViewController.wifiSettingUrl componentsSeparatedByString:@"."];
-	//NSLog(@"array1:%@",array1);
-    
-    //将.分隔的字符串转换成数组
-	NSArray *array2 = [MagicUrl componentsSeparatedByString:@"."];
-	//NSLog(@"array2:%@",array2);
-    
-    if (([array1 count] < 3)||([array2 count] < 3)){
-        result = 0;
-    }
-    else{
-        NSString *astring1;
-        NSString *astring2;
-        for (i=0; i<3; i++) {
-           astring1 = [array1 objectAtIndex:i];
-           astring2 = [array2 objectAtIndex:i];
-           //NSLog(@"str1:%@\nstr2:%@\n",astring1,astring2);
-            
-            if ([astring1 caseInsensitiveCompare:astring2] != NSOrderedSame) {
-                result = 0;
-                break;
+    if (cmd == 0)
+    {  //0: decode init
+        //Get menu id
+        p =strstr(str, "<id>");
+        if(p)
+        {
+            for (int i = 4; (p[i]!=0)&&(p[i]!='<'); i++) {
+                id[i-4] = p[i];
             }
         }
+        
+        NSString *menuid=[NSString stringWithCString:id encoding:NSUTF8StringEncoding];
+        NSLog(@"Menuid=%@",menuid);
+        
+        [m_id setString:menuid];
+        
+        //Get wifi set url
+        p =strstr(str, "<wifi_set_url>");
+        if(p)
+        {
+            for (int i = 14; (p[i]!=0)&&(p[i]!='<'); i++) {
+                url[i-14] = p[i];
+            }
+        }
+        NSString *wifiurl = [NSString stringWithCString:url encoding:NSUTF8StringEncoding];
+        self.configViewController.wifiSettingUrl = [wifiurl mutableCopy];
+        self.wifiSettingUrl = [wifiurl mutableCopy]; //Jeanne. 2014.03.04
+        NSLog(@"wifiSetUrl: %@",self.configViewController.wifiSettingUrl);
+        
+        //init result
+        result = 1;
+        
+        //将.分隔的字符串转换成数组
+        NSArray *array1 = [self.configViewController.wifiSettingUrl componentsSeparatedByString:@"."];
+        //NSLog(@"array1:%@",array1);
+        
+        //将.分隔的字符串转换成数组
+        NSArray *array2 = [MagicUrl componentsSeparatedByString:@"."];
+        //NSLog(@"array2:%@",array2);
+        
+        if (([array1 count] < 3)||([array2 count] < 3)){
+            result = 0;
+        }
+        else{
+            NSString *astring1;
+            NSString *astring2;
+            for (i=0; i<3; i++) {
+                astring1 = [array1 objectAtIndex:i];
+                astring2 = [array2 objectAtIndex:i];
+                //NSLog(@"str1:%@\nstr2:%@\n",astring1,astring2);
+                
+                if ([astring1 caseInsensitiveCompare:astring2] != NSOrderedSame) {
+                    result = 0;
+                    break;
+                }
+            }
+        }
+        
+        //set wifi setting flag
+        if(0 == result){
+            self.configViewController.wifiSetFlag = [@"NO" mutableCopy];
+        }
+        else{
+            self.configViewController.wifiSetFlag = [@"YES" mutableCopy];
+        }
+        NSLog(@"wifiSetFlag:%@\n",self.configViewController.wifiSetFlag);
     }
-    
-    //set wifi setting flag
-    if(0 == result){
-        self.configViewController.wifiSetFlag = [@"NO" mutableCopy];
+    else if(cmd == 1)
+    {//decode friendly name
+        //Get friendly name
+        p =strstr(str, "<friendlyName>");
+        if(p)
+        {
+            for (int i = 14; (p[i]!=0)&&(p[i]!='<'); i++) {
+                name[i-14] = p[i];
+            }
+        }
+        
+        NSString *fname=[NSString stringWithCString:name encoding:NSUTF8StringEncoding];
+        NSString *keypos = [NSString stringWithFormat:@"%d",pos];
+        NSLog(@"fname=%@",fname);
+        
+        [devicenames setObject:fname forKey:keypos];
     }
-    else{
-        self.configViewController.wifiSetFlag = [@"YES" mutableCopy];
-    }
-    NSLog(@"wifiSetFlag:%@\n",self.configViewController.wifiSetFlag);
-    
 }
 
 //Jeanne. 2014. 02.17
 -(void)searchip
 {
     UILabel *logLabel = (id)[self.view viewWithTag:klog_Label_tag];
+    UITableView *urlTable = (id)[self.view viewWithTag:kurl_TableView_tag];
     NSLog(@"Search again!,%d",search_cnt);
     SSDPDBDevice_ObjC *ssdbdevice;
+    NSString *deviceurl;
     int i;
 
-/*
+    /*
     if ([mDevices count]) { //there is device
         BasicUPnPDevice *device;
         int cnt;
@@ -134,54 +161,38 @@ static NSMutableString *m_id;
             device = [mDevices objectAtIndex:i];
             NSLog(@"d[%d].url= %@",i,device.xmlLocation);
         }
-    }
- */
-    if (search_cnt > 2) { //wait 3s to get the ssdp device
-        if ([mSSDPObjCDevices count]) {
-            NSLog(@"ssdp device count: %d",[mSSDPObjCDevices count]);
-            for (i=0; i< [mSSDPObjCDevices count]; i++) {
-                ssdbdevice = [mSSDPObjCDevices objectAtIndex:i];
-                NSLog(@"ssdb[%d].location:%@",i,ssdbdevice.location);
-                if([ssdbdevice.location rangeOfString:kMagic_AirMusic_Device].location !=NSNotFound) {
-                    NSLog(@"Found Magic device : %d",i);
-                    if ([MagicUrl isEqualToString:@"magicinit"]) {
-                        MagicUrl = [[ssdbdevice.location stringByReplacingOccurrencesOfString:kMagic_AirMusic_Device withString:@""]mutableCopy];
-                        NSLog(@"Magicurl=%@",MagicUrl);
-                        searched_flag = TRUE;  //for search icon.  @Jeanne. 2014.02.26
-                    }
+    }*/
+ 
+    if (!searched_flag) {
+        if (search_cnt > 2) { //wait 3s to get the ssdp device
+            if ([mSSDPObjCDevices count]) {
+                NSLog(@"ssdp device count: %d",[mSSDPObjCDevices count]);
+                for (i=0; i< [mSSDPObjCDevices count]; i++) {
+                    ssdbdevice = [mSSDPObjCDevices objectAtIndex:i];
+                    NSLog(@"ssdb[%d].location:%@",i,ssdbdevice.location);
+                    if([ssdbdevice.location rangeOfString:kMagic_AirMusic_Device].location !=NSNotFound) {
+                        NSLog(@"Found Magic device : %d",i);
+                        /*
+                         if ([MagicUrl isEqualToString:@"magicinit"]) {
+                         MagicUrl = [[ssdbdevice.location stringByReplacingOccurrencesOfString:kMagic_AirMusic_Device withString:@""]mutableCopy];
+                         NSLog(@"Magicurl=%@",MagicUrl);
+                         searched_flag = TRUE;  //for search icon.  @Jeanne. 2014.02.26
+                         }
+                         break;
+                         */
+                        deviceurl = [ssdbdevice.location stringByReplacingOccurrencesOfString:kMagic_AirMusic_Device withString:@""];
+                        [deviceurls addObject:deviceurl];
+                        //[deviceurls addObject:deviceurl]; //test
+                        searched_flag = 1;  //for search icon.  @Jeanne. 2014.02.26
+                        
+                    }// end if
                     
-                    break;
-                }// end if
-                /*
-                else if([ssdbdevice.location rangeOfString:kMagic_Device].location !=NSNotFound) {
-                    NSLog(@"Found Magic device : %d",i);
-                    if ([MagicUrl isEqualToString:@"magicinit"]) {
-                        MagicUrl = [[ssdbdevice.location stringByReplacingOccurrencesOfString:kMagic_Device withString:@""]mutableCopy];
-                        NSLog(@"Magicurl=%@",MagicUrl);
-                        searched_flag = TRUE;  //for search icon.  @Jeanne. 2014.02.26
-                    }
-                    
-                    break;
-                }// end if
-                else if([ssdbdevice.location rangeOfString:kMagic_Device_2].location !=NSNotFound) {
-                    NSLog(@"Found Magic device : %d",i);
-                    if ([MagicUrl isEqualToString:@"magicinit"]) {
-                        MagicUrl = [[ssdbdevice.location stringByReplacingOccurrencesOfString:kMagic_Device_2 withString:@""]mutableCopy];
-                        NSLog(@"Magicurl=%@",MagicUrl);
-                        searched_flag = TRUE;  //for search icon.  @Jeanne. 2014.02.26
-                    }
-                    
-                    break;
-                }// end if
-                 */
-                
-                
-            } //end for
-        }
+                } //end for
+            }//end if ([mSSDPObjCDevices count])
+        }//end if (search_cnt > 2)
+        
     }
 
-    
-    
     
     if (!searched_flag) { //not searched yet
         search_cnt++; //for search count  @Jeanne.  2014.02.25
@@ -193,8 +204,6 @@ static NSMutableString *m_id;
         [[[UPnPManager GetInstance] SSDP] searchSSDP];
         [[[UPnPManager GetInstance] SSDP] searchSSDP];
         [[[UPnPManager GetInstance] SSDP] searchSSDP];
-        //[[[UPnPManager GetInstance] SSDP] searchSSDP];
-        //[[[UPnPManager GetInstance] SSDP] searchSSDP];
         
         [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(searchip) userInfo:nil repeats:NO];
         
@@ -207,10 +216,60 @@ static NSMutableString *m_id;
             [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(searchip) userInfo:nil repeats:NO];
         }
         else{
-            NSLog(@"Searched device, goto list!");
-            [self initMenu];
 
-        }
+            if ([deviceurls count] > 1) {
+                if (1 == searched_flag) {
+                    NSLog(@"Search multi devices, select which on first!\n");
+                    //Get friendly name first.
+                    //========================================
+                    for (i=0; i < [deviceurls count]; i++) {
+                        deviceurl = [deviceurls objectAtIndex:i];
+                        NSLog(@"Get Friendly name from(%d): %@",i,deviceurl);
+                        
+                        client = [ILHTTPClient clientWithBaseURL:deviceurl showingHUDInView:self.view];
+                        client.isNeedHUD = [@"NO" mutableCopy];//2014.02.26
+                        [client getPath:kMagic_AirMusic_Device
+                             parameters:nil
+                            loadingText:nil
+                            successText:nil
+                                success:^(AFHTTPRequestOperation *operation, NSString *response)
+                         {
+                             NSLog(@"get friendly name response(%d): %@", i,response);
+                             [self decode_response:response Forcmd:1 Forpos:i];
+                             
+                         }
+                             failure:^(AFHTTPRequestOperation *operation, NSError *error)
+                         {
+                             NSLog(@"Error: %@", error);
+                         }];
+                        client.isNeedHUD = [@"YES" mutableCopy];//2014.02.26
+                    }
+                    //========================================
+                    
+
+                    searched_flag = 2;  //go into select menu
+                    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(searchip) userInfo:nil repeats:NO];
+                }
+                else if(2 == searched_flag){ //waiting for device name
+                    NSInteger urlcnt,namecnt;
+                    urlcnt = [deviceurls count];
+                    namecnt = [devicenames count];
+                    if ((urlcnt == namecnt)&& (urlcnt != 0)) {
+                        NSLog(@"Get all friendy name!");
+                        [urlTable reloadData];
+                        urlTable.hidden = FALSE;
+                    }else{
+                        NSLog(@"waiting for decode");
+                        [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(searchip) userInfo:nil repeats:NO];
+                    }
+                }
+            }
+            else{
+                    NSLog(@"Searched 1 device, goto list!");
+                    MagicUrl = [[deviceurls objectAtIndex:0] mutableCopy];
+                    [self initMenu];
+            }//end if ([deviceurls count] > 1) else
+        } //end if (fadein_flag) else
     }
 }
 
@@ -224,11 +283,11 @@ static NSMutableString *m_id;
     
     //for multi devices found.  @Jeanne. 2014.02.26
     //------------------------------------------
-    if (devicename == nil) {
-        devicename = [[NSArray alloc] init];
+    if (devicenames == nil) {
+        devicenames = [[NSMutableDictionary alloc] init];
     }
-    if (deviceurl == nil) {
-        deviceurl = [[NSArray alloc] init];
+    if (deviceurls == nil) {
+        deviceurls = [[NSMutableArray alloc] initWithCapacity:0];
     }
     //------------------------------------------
     
@@ -239,7 +298,7 @@ static NSMutableString *m_id;
     logLabel.textAlignment = NSTextAlignmentLeft;
     [logLabel setText:@"test"];
     search_cnt = 0; //for search count  @Jeanne.  2014.02.25
-    searched_flag = FALSE;  //for search icon.  @Jeanne. 2014.02.26
+    searched_flag = 0;  //for search icon.  @Jeanne. 2014.02.26
     showLabel.hidden = TRUE;  //for fade effect.  @Jeanne. 2014.2.26
     
     //先初始化对象
@@ -298,6 +357,15 @@ static NSMutableString *m_id;
     
 }
 
+-(void)Rescandevice
+{
+    [MBProgressHUD fadeInHUDInView:self.view withText:@"Search for device..."];
+    fadein_flag = TRUE;    //for fade in flag.  @Jeanne. 2014.02.26
+    search_cnt = 0; //for search count  @Jeanne.  2014.02.25
+    //init timer to broadcast
+    [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(searchip) userInfo:nil repeats:NO];
+}
+
 -(void)initMenu
 {
     UITabBar *Tab = (id)[self.view viewWithTag:kMain_Tabbar_tag];
@@ -323,7 +391,7 @@ static NSMutableString *m_id;
                 success:^(AFHTTPRequestOperation *operation, NSString *response)
          {
              NSLog(@"response: %@", response);
-             [self decode_response:response Forcmd:0];
+             [self decode_response:response Forcmd:0 Forpos:0];
              
              self.menuProperty.menuId = [[NSMutableString alloc] initWithFormat: @"%@",m_id];
              NSLog(@"m_id=%@",m_id);
@@ -529,4 +597,59 @@ static NSMutableString *m_id;
     }
     
 }
+
+#pragma mark -Table View Data Source Methods
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [deviceurls count];
+    
+}//tableView:tableView numberOfRowsInSection:section
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    UIImage *bgImage= [UIImage imageNamed:@"bar_bg"];
+    NSString *str;
+    NSString *poskey = [NSString stringWithFormat:@"%d",indexPath.row];
+    
+    str = [devicenames objectForKey:poskey];
+    
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.textLabel.text = str;
+    cell.textLabel.textColor = [UIColor colorWithRed:255 green:255 blue:255 alpha:1];
+    cell.textLabel.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
+    cell.backgroundColor = [UIColor colorWithPatternImage:bgImage];
+    //cell.textLabel.font = [UIFont systemFontOfSize:17];
+
+    return cell;
+}//tableView:tableView cellForRowAtIndexPath:indexPath
+
+#pragma mark -Table View Delegate Methods
+
+//tableView didSelectRowAtIndexPath:会在一行被选中时调用，告诉用户要单击细节展开按钮而不是选中行
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *str;
+    str = [deviceurls objectAtIndex:indexPath.row];
+    
+    NSLog(@"Select url: %@",str);
+
+    //取消选中项
+    [tableView deselectRowAtIndexPath:[tableView indexPathForSelectedRow] animated:YES];
+    
+    //hid table first
+    tableView.hidden = TRUE;
+    
+    //set magic url
+    MagicUrl = [str mutableCopy];
+    [self initMenu];
+    
+
+
+    
+}
+
 @end

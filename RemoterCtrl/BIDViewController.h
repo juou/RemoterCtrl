@@ -14,7 +14,7 @@
 #import "UPnPDB.h"
 #import "ILHTTPClient.h"
 
-@interface BIDViewController : UIViewController <UPnPDBObserver,UITabBarDelegate>
+@interface BIDViewController : UIViewController <UPnPDBObserver,UITabBarDelegate,UITableViewDataSource,UITableViewDelegate>
 {
     NSArray *mDevices; //BasicUPnPDevice*
     ILHTTPClient *client;   // http client
@@ -32,8 +32,8 @@
 -(void)UPnPDBWillUpdate:(UPnPDB*)sender;
 -(void)UPnPDBUpdated:(UPnPDB*)sender;
 -(void)initMenu;
--(void)decode_response:(NSString *)response Forcmd: (NSInteger)cmd;
+-(void) decode_response:(NSString *)response Forcmd: (NSInteger)cmd Forpos:(NSInteger)pos;
 -(void)searchip;
-
+-(void)Rescandevice;
 
 @end

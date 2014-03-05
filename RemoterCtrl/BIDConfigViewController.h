@@ -24,6 +24,7 @@
 -(IBAction)CancelButtonPressed;
 -(IBAction)dlnaRenameButtonPressed;
 -(IBAction)textFieldDoneEditing:(id)sender;
+-(IBAction)RescanPressed;
 -(void) SWUpdate;
 -(void) decodedlna_response:(NSString *)response;
 @end

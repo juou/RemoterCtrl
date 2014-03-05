@@ -29,15 +29,15 @@
                                 <color key="textColor" red="0.98865025750000002" green="1" blue="0.97379772040000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="10" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="2014.03.05.14:45   1.0.12" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pcb-io-cFt">
-                                <rect key="frame" x="60" y="484" width="200" height="35"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="10" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="2014.03.05.18:45  testonly 1.0.12" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pcb-io-cFt">
+                                <rect key="frame" x="32" y="484" width="259" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" red="0.98865025750000002" green="1" blue="0.97379772040000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.98865025750000002" green="1" blue="0.97379772040000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="11" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="sdd" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="263" translatesAutoresizingMaskIntoConstraints="NO" id="w4j-wv-6TV">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="11" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="sdd" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="263" translatesAutoresizingMaskIntoConstraints="NO" id="w4j-wv-6TV">
                                 <rect key="frame" x="25" y="328" width="263" height="148"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" red="0.98865025750000002" green="1" blue="0.97379772040000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -45,27 +45,6 @@
                                 <color key="textColor" red="0.98865025750000002" green="1" blue="0.97379772040000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tabBar hidden="YES" tag="5" contentMode="scaleToFill" fixedFrame="YES" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="LbS-1U-pCS">
-                                <rect key="frame" x="0.0" y="519" width="320" height="49"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <color key="backgroundColor" name="controlDarkShadowColor" catalog="System" colorSpace="catalog"/>
-                                <items>
-                                    <tabBarItem tag="1" enabled="NO" title="" image="home.png" id="oMb-3r-pnc">
-                                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-4"/>
-                                    </tabBarItem>
-                                    <tabBarItem tag="2" enabled="NO" image="play.png" id="lei-XE-30h">
-                                        <inset key="imageInsets" minX="0.0" minY="5" maxX="0.0" maxY="-5"/>
-                                    </tabBarItem>
-                                    <tabBarItem tag="3" title="" image="config.png" id="okH-lk-Pg7">
-                                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
-                                    </tabBarItem>
-                                </items>
-                                <color key="barTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="selectedImageTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <outlet property="delegate" destination="vXZ-lx-hvc" id="GTE-ic-dAC"/>
-                                </connections>
-                            </tabBar>
                             <tabBar hidden="YES" tag="100" contentMode="scaleToFill" fixedFrame="YES" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="Rqq-cs-F0Y">
                                 <rect key="frame" x="0.0" y="519" width="320" height="49"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -90,6 +69,40 @@
                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="t2i-MT-qfN"/>
                                 </connections>
                             </tabBar>
+                            <tabBar hidden="YES" tag="5" contentMode="scaleToFill" fixedFrame="YES" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="LbS-1U-pCS">
+                                <rect key="frame" x="0.0" y="519" width="320" height="49"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <color key="backgroundColor" name="controlDarkShadowColor" catalog="System" colorSpace="catalog"/>
+                                <items>
+                                    <tabBarItem tag="1" enabled="NO" title="" image="home.png" id="oMb-3r-pnc">
+                                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-4"/>
+                                    </tabBarItem>
+                                    <tabBarItem tag="2" enabled="NO" image="play.png" id="lei-XE-30h">
+                                        <inset key="imageInsets" minX="0.0" minY="5" maxX="0.0" maxY="-5"/>
+                                    </tabBarItem>
+                                    <tabBarItem tag="3" title="" image="config.png" id="okH-lk-Pg7">
+                                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                                    </tabBarItem>
+                                </items>
+                                <color key="barTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="selectedImageTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <outlet property="delegate" destination="vXZ-lx-hvc" id="GTE-ic-dAC"/>
+                                </connections>
+                            </tabBar>
+                            <tableView hidden="YES" clipsSubviews="YES" tag="101" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" indicatorStyle="black" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="8Xj-Pv-uFc">
+                                <rect key="frame" x="0.0" y="46" width="320" height="473"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="sectionIndexColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="sectionIndexTrackingBackgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="vXZ-lx-hvc" id="d6j-Xw-Igm"/>
+                                    <outlet property="delegate" destination="vXZ-lx-hvc" id="AQ3-Jw-fJe"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -104,7 +117,7 @@
         <image name="config.png" width="32" height="32"/>
         <image name="home.png" width="32" height="32"/>
         <image name="play.png" width="32" height="32"/>
-        <image name="start.png" width="720" height="1280"/>
+        <image name="start.png" width="320" height="568"/>
         <image name="wifi_setting.png" width="35" height="35"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
