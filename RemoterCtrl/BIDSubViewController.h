@@ -36,7 +36,7 @@
 -(void) decode_menu:(NSString *)response Forcmd: (NSInteger)cmd;
 -(void) refresh_menu;
 -(void) getPlayInfo;
--(void) refresh_presetbtn;
+-(void) refresh_presetbtn:(NSString *) clickNo;
 -(void) clearSearchFlag;
 
 @end

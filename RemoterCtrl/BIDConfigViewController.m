@@ -217,7 +217,7 @@
     
     UIAlertView *alert = [[UIAlertView alloc]
                           initWithTitle:@"AirMusic Control App"
-                          message:@"Version 1.0.11\nCopyright@2014 mediaU.\nAll rights reserved.\n2014.02.27"
+                          message:@"Version 1.0.12\nCopyright@2014 mediaU.\nAll rights reserved.\n2014.03.05"
                           delegate:nil
                           cancelButtonTitle:@"OK"
                           otherButtonTitles:nil];

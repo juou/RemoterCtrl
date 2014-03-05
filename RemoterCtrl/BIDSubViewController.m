@@ -48,6 +48,8 @@
 #define kPrtAdd_Button_tag             35
 #define kPrtCancel_Button_tag          36
 
+#define kNOCLOCK     @"NOCLICK"
+
 static NSMutableArray *Items;
 static NSMutableArray *PresetItems;
 static NSString *CellIdentifier = @"Cell";
@@ -183,8 +185,15 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
                                        otherButtonTitles:nil];
                  [alert show];
              }
-             //[NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(refresh_presetbtn) userInfo:nil repeats:NO];
-             [self refresh_presetbtn]; //test delay
+
+             NSString *clickno;
+             if (row < 5) {
+                 clickno = [[NSString alloc] initWithFormat:@"%d",row];
+             }
+             else{
+                 clickno = kNOCLOCK;
+             }
+             [self refresh_presetbtn:clickno];
              [self CancelPressed];
              
          }
@@ -728,6 +737,11 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
              [self decode_menu:response Forcmd:6]; //6:playhotkey
              //Reset menu display ctrl @Jeanne. 2014.01.29
              playName.text = itemCell.name; //set play name
+             
+             NSString *clickno;
+             clickno = [[NSString alloc] initWithFormat:@"%d", (hotkey-1)];
+             [self refresh_presetbtn:clickno];
+             
              [self menu_disp_ctrl:3];  //play menu ctrl
              [self getPlayInfo];
              
@@ -1304,12 +1318,24 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     return self;
 }
 
--(void) refresh_presetbtn
+- (void)onTimer:(NSTimer *)timer
+{
+    NSString *clickNo = [[timer userInfo] objectForKey:@"clickNo"];
+    [self refresh_presetbtn:clickNo];
+}
+
+-(void) refresh_presetbtn:(NSString *) clickNo
 {
     UIImage *bgImage = [UIImage imageNamed:@"btn_preset_h.png"];
     UIImage *disbgImage = [UIImage imageNamed:@"btn_preset_h_dis.png"];
     UIImage *playbgImage = [UIImage imageNamed:@"btn_preset_s.png"];
     UIImage *playdisbgImage = [UIImage imageNamed:@"btn_preset_s_dis.png"];
+    UIImage *playclickbgImage = [UIImage imageNamed:@"btn_preset_s_click.png"];
+    UIButton *PresetaddButton = (id)[self.view viewWithTag:kPrtPlay_Add_Button_tag];
+    UIImage *addbgImage = [UIImage imageNamed:@"btn_add.png"];
+    UIImage *adddisbgImage = [UIImage imageNamed:@"btn_add_dis.png"];
+    NSString *PresetListId = [[NSString alloc] initWithFormat:@"%d",uiFAVEX_MENU];
+    
     
     NSLog(@"refresh preset btn!");
     client.isNeedHUD = [@"NO" mutableCopy];
@@ -1337,26 +1363,53 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
              if (i>= itemcnt) {
                  PresetButton.backgroundColor = [UIColor colorWithPatternImage:disbgImage];
                  PresetButton.enabled = FALSE;
+                 [PresetButton setTitleColor:[UIColor grayColor]forState:UIControlStateNormal];
                  PrtPlayButton.backgroundColor = [UIColor colorWithPatternImage:playdisbgImage];
                  PrtPlayButton.enabled = FALSE;
+                 [PrtPlayButton setTitleColor:[UIColor grayColor]forState:UIControlStateNormal];
              }
              else{
                  itemCell = [PresetItems objectAtIndex:i];
                  if ([itemCell.status isEqualToString:@"emptyfile"])
                  {
-                    PresetButton.backgroundColor = [UIColor colorWithPatternImage:disbgImage];
-                    PresetButton.enabled = FALSE;
-                    PrtPlayButton.backgroundColor = [UIColor colorWithPatternImage:playdisbgImage];
-                    PrtPlayButton.enabled = FALSE;
+                     PresetButton.backgroundColor = [UIColor colorWithPatternImage:disbgImage];
+                     PresetButton.enabled = FALSE;
+                     [PresetButton setTitleColor:[UIColor grayColor]forState:UIControlStateNormal];
+                     PrtPlayButton.backgroundColor = [UIColor colorWithPatternImage:playdisbgImage];
+                     PrtPlayButton.enabled = FALSE;
+                     [PrtPlayButton setTitleColor:[UIColor grayColor]forState:UIControlStateNormal];
                  }
                  else{
                     PresetButton.backgroundColor = [UIColor colorWithPatternImage:bgImage];
                     PresetButton.enabled = TRUE;
+                    [PresetButton setTitleColor:[UIColor whiteColor]forState:UIControlStateNormal];
                     PrtPlayButton.backgroundColor = [UIColor colorWithPatternImage:playbgImage];
                     PrtPlayButton.enabled = TRUE;
+                    [PrtPlayButton setTitleColor:[UIColor whiteColor]forState:UIControlStateNormal];
                  }
              }
              
+             if (![clickNo isEqualToString:kNOCLOCK]) {
+                 int intString = [clickNo intValue];
+                 if (i == intString) { //set this preset as click
+                     PrtPlayButton.backgroundColor = [UIColor colorWithPatternImage:playclickbgImage];
+                     PrtPlayButton.enabled = TRUE;
+                     [PrtPlayButton setTitleColor:[UIColor yellowColor]forState:UIControlStateNormal];
+                 }
+             }
+             
+         }//end for
+         
+         //process add key
+         if ((![clickNo isEqualToString:kNOCLOCK])
+             ||[self.menuProperty.menuId isEqualToString:PresetListId])
+         { //select or in preset menu
+             PresetaddButton.backgroundColor = [UIColor colorWithPatternImage:adddisbgImage];
+             PresetaddButton.enabled = FALSE;
+         }
+         else{
+             PresetaddButton.backgroundColor = [UIColor colorWithPatternImage:addbgImage];
+             PresetaddButton.enabled = TRUE;
          }
          
          
@@ -1419,8 +1472,11 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     [self refresh_menu];
     
     //Refresh preset btn
-    //[self refresh_presetbtn];
-    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(refresh_presetbtn) userInfo:nil repeats:NO];
+    NSString *clickno;
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+    clickno = kNOCLOCK;
+    [dict setObject:clickno forKey:@"clickNo"];
+    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(onTimer:) userInfo:dict repeats:NO];
     
      
     
@@ -1570,6 +1626,7 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     NSString *playstncmd = [[NSString alloc] initWithFormat:@"/play_stn?id=%@",itemCell.submenuId];
     NSString *NewSearchMenuId = [[NSString alloc] initWithFormat:@"%d",uiNEWSEARCHRADIOEX_MENU];
     NSString *internetRadioId = [[NSString alloc] initWithFormat:@"%d",uiINTERNET_RADIO_MENU];
+    NSString *PresetListId = [[NSString alloc] initWithFormat:@"%d",uiFAVEX_MENU];
 
     //取消选中项
     [tableView deselectRowAtIndexPath:[tableView indexPathForSelectedRow] animated:YES];
@@ -1594,6 +1651,19 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
              playName.text = itemCell.name; //set play name
              [self menu_disp_ctrl:3];  //play menu ctrl
              [self getPlayInfo];
+             //Refresh preset
+             if([self.menuProperty.menuId isEqualToString:PresetListId]) { //in preset list
+                 NSString *clickno;
+                 if (indexPath.row < 5) {
+                     clickno = [[NSString alloc] initWithFormat:@"%d", indexPath.row];
+                 }else{
+                     clickno = kNOCLOCK;
+                 }
+                 [self refresh_presetbtn:clickno];
+             }
+             else{
+                 [self refresh_presetbtn:kNOCLOCK];
+             }
              
          }
                 failure:^(AFHTTPRequestOperation *operation, NSError *error)

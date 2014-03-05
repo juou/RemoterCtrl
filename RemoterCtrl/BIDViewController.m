@@ -342,8 +342,6 @@ static NSMutableString *m_id;
              showLabel.hidden = TRUE;
              verLabel.hidden = TRUE;
              logLabel.hidden = TRUE;
-             [self addChildViewController:self.subViewController];
-             [self.view insertSubview:self.subViewController.view atIndex:1];
              
              //Add for wifisetting on tabbar.  @Jeanne. 2014.03.04
              self.subViewController.wifiSetFlag = self.configViewController.wifiSetFlag;
@@ -353,6 +351,10 @@ static NSMutableString *m_id;
              else{
                  Tab.hidden = FALSE;
              }
+             
+             [self addChildViewController:self.subViewController];
+             [self.view insertSubview:self.subViewController.view atIndex:1];
+             
              
          }
                 failure:^(AFHTTPRequestOperation *operation, NSError *error)
