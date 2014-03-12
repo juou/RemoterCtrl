@@ -373,7 +373,7 @@ int SSDP::ReadLoop(){
             if(FD_ISSET(mMulticastSocket, &mReadFDS)){
 				//Data
 				//printf("Data\n");
-				ret = recvfrom(mMulticastSocket, buf, bufsize, 0, (struct sockaddr*)&sender, &senderlen);
+				ret = (int)recvfrom(mMulticastSocket, buf, bufsize, 0, (struct sockaddr*)&sender, &senderlen);
 				if(ret != SOCKET_ERROR){
 					//Be sure to only deliver full messages (!)
                     //Add to filter receive msg.  Jeanne. 2014.02.27
@@ -396,7 +396,7 @@ int SSDP::ReadLoop(){
             if(FD_ISSET(sock_9999, &mReadFDS)){
 				//Data
 				//printf("Data\n");
-				ret = recvfrom(sock_9999, buf, bufsize, 0, (struct sockaddr*)&sender, &senderlen);
+				ret = (int)recvfrom(sock_9999, buf, bufsize, 0, (struct sockaddr*)&sender, &senderlen);
 				if(ret != SOCKET_ERROR){
 					//Be sure to only deliver full messages (!)
                     //Add to filter receive msg.  Jeanne. 2014.02.27
@@ -419,7 +419,7 @@ int SSDP::ReadLoop(){
             if(FD_ISSET(mUnicastSocket, &mReadFDS)){
 				//Data
 				//printf("1Data\n");
-				ret = recvfrom(mUnicastSocket, buf, bufsize, 0, (struct sockaddr*)&sender, &senderlen);
+				ret = (int)recvfrom(mUnicastSocket, buf, bufsize, 0, (struct sockaddr*)&sender, &senderlen);
 				if(ret != SOCKET_ERROR){
 					//Be sure to only deliver full messages (!)
                     

@@ -17,12 +17,12 @@
 //#define kMagic_Device_2   @":52525/root_XXYY_S.xml"
 #define kMagic_AirMusic_Device  @"/irdevice.xml"
 
-#define kMain_Tabbar_tag       5
+#define kMain_Tabbar_tag       101
 #define kMain_2_Tabbar_tag     100
 #define kShow_Label_tag        9
 #define kVer_Label_tag         10
 #define klog_Label_tag         11
-#define kurl_TableView_tag     101
+#define kurl_TableView_tag     102
 
 static NSString *CellIdentifier = @"Cell";
 
@@ -134,7 +134,7 @@ static NSMutableString *m_id;
         }
         
         NSString *fname=[NSString stringWithCString:name encoding:NSUTF8StringEncoding];
-        NSString *keypos = [NSString stringWithFormat:@"%d",pos];
+        NSString *keypos = [NSString stringWithFormat:@"%ld",(long)pos];
         NSLog(@"fname=%@",fname);
         
         [devicenames setObject:fname forKey:keypos];
@@ -166,7 +166,7 @@ static NSMutableString *m_id;
     if (!searched_flag) {
         if (search_cnt > 2) { //wait 3s to get the ssdp device
             if ([mSSDPObjCDevices count]) {
-                NSLog(@"ssdp device count: %d",[mSSDPObjCDevices count]);
+                NSLog(@"ssdp device count: %lu",(unsigned long)[mSSDPObjCDevices count]);
                 for (i=0; i< [mSSDPObjCDevices count]; i++) {
                     ssdbdevice = [mSSDPObjCDevices objectAtIndex:i];
                     NSLog(@"ssdb[%d].location:%@",i,ssdbdevice.location);
@@ -273,6 +273,7 @@ static NSMutableString *m_id;
     }
 }
 
+
 - (void)viewDidLoad
 {
     UILabel *logLabel = (id)[self.view viewWithTag:klog_Label_tag];
@@ -355,13 +356,80 @@ static NSMutableString *m_id;
     [MBProgressHUD fadeInHUDInView:self.view withText:@"Search for device..."];
     fadein_flag = TRUE;    //for fade in flag.  @Jeanne. 2014.02.26
     
+    //Check rescan flag
+    NSString *flag = @"NO";
+    [self addObserver:self forKeyPath:@"RESCAN" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:NULL];
+    [self setValue:flag forKey:@"RESCAN"];
+    
+}
+
+//如果FirstViewController中的变量name的值变化执行下面
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if([keyPath isEqualToString:@"RESCAN"])
+    {
+        NSLog(@"observer name is %@",[self valueForKey:@"RESCAN"]);
+        if ([RESCAN isEqualToString:@"YES"]) {
+            //Set Rescan process
+            [self Rescandevice];
+        }
+    }
 }
 
 -(void)Rescandevice
 {
+    UITableView *urlTable = (id)[self.view viewWithTag:kurl_TableView_tag];
+    UITabBar *Tab = (id)[self.view viewWithTag:kMain_Tabbar_tag];
+    UITabBar *Tab_2 = (id)[self.view viewWithTag:kMain_2_Tabbar_tag];
+    UITabBarItem *Tabitem;
+    int i;
+    //UITabBarItem *homeitem =
+    NSLog(@"Recan devices!");
     [MBProgressHUD fadeInHUDInView:self.view withText:@"Search for device..."];
     fadein_flag = TRUE;    //for fade in flag.  @Jeanne. 2014.02.26
     search_cnt = 0; //for search count  @Jeanne.  2014.02.25
+    searched_flag = 0;  //for search icon.  @Jeanne. 2014.02.26
+    [devicenames removeAllObjects]; //for multi devices found.  @Jeanne. 2014.02.26
+    [deviceurls removeAllObjects];  //for multi devices found.  @Jeanne. 2014.02.26
+    MagicUrl = [@"magicinit" mutableCopy];
+    //Add for force refresh after rescan.  @Jeanne. 2014.03.06
+    self.subViewController.ForceRefreshFlag =[@"YES" mutableCopy];
+    urlTable.hidden = TRUE;
+    
+    //init Tabbar
+    Tab.hidden = TRUE;
+    Tab_2.hidden = TRUE;
+    for (i = 0; i < [Tab.items count]; i++) {
+        Tabitem = [Tab.items objectAtIndex:i];
+
+        switch (i) {
+            case 0:
+                Tabitem.image = [UIImage imageNamed:@"home"];
+            case 1:
+                Tabitem.enabled = FALSE;
+                break;
+                
+            default:
+                Tabitem.enabled = TRUE;
+                break;
+        }
+    }
+    
+    for (i = 0; i < [Tab_2.items count]; i++) {
+        Tabitem = [Tab_2.items objectAtIndex:i];
+        
+        switch (i) {
+            case 0:
+                Tabitem.image = [UIImage imageNamed:@"home"];
+            case 1:
+                Tabitem.enabled = FALSE;
+                break;
+                
+            default:
+                Tabitem.enabled = TRUE;
+                break;
+        }
+    }
     //init timer to broadcast
     [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(searchip) userInfo:nil repeats:NO];
 }
@@ -402,10 +470,14 @@ static NSMutableString *m_id;
                  self.subViewController = [[BIDSubViewController alloc] initWithNibName:@"BIDSubViewController" bundle:nil];
                  
              }
+             else{
+ 
+             }
              
              if (self.subViewController.toMagicUrl == nil) {
                  self.subViewController.toMagicUrl = [[NSMutableString alloc] initWithString:MagicUrl];
              }
+             self.subViewController.toMagicUrl = MagicUrl; //2014.03.06 for rescan
              
              showLabel.hidden = TRUE;
              verLabel.hidden = TRUE;
@@ -580,6 +652,7 @@ static NSMutableString *m_id;
         }
         
         [self.subViewController.view removeFromSuperview];
+        [self addChildViewController:self.configViewController]; //2014.03.06
         [self.view insertSubview:self.configViewController.view atIndex:1];
         
         item.enabled = FALSE;
@@ -610,7 +683,7 @@ static NSMutableString *m_id;
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     UIImage *bgImage= [UIImage imageNamed:@"bar_bg"];
     NSString *str;
-    NSString *poskey = [NSString stringWithFormat:@"%d",indexPath.row];
+    NSString *poskey = [NSString stringWithFormat:@"%ld",(long)indexPath.row];
     
     str = [devicenames objectForKey:poskey];
     

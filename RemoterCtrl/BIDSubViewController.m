@@ -13,7 +13,7 @@
 #import "BIDItemCell.h"
 
 //Add for wifisetting on tabbar.  @Jeanne. 2014.03.04
-#define kMain_Tabbar_tag       5
+#define kMain_Tabbar_tag       101
 #define kMain_2_Tabbar_tag     100
 
 #define kMenu_Tableview_tag    1
@@ -76,6 +76,8 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     BOOL SearchInputFlag;  //2014.02.11
     NSMutableString *playitemid;
     BOOL AddPresetFlag;    //2014.02.18
+    BOOL RefreshPresetFlag;  //2014.03.07
+    BOOL PresetPressedFlag;  //2014.03.07
 }
 @end
 
@@ -142,7 +144,7 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
             setFavcmd = [[NSString alloc] initWithFormat:@"/setfav?id=%@&item=%@&favpos=0",self.menuProperty.menuId,playitemid];
         }
         else{
-            setFavcmd = [[NSString alloc] initWithFormat:@"/setfav?id=%@&item=%@&favpos=%d",self.menuProperty.menuId,playitemid,row+1];
+            setFavcmd = [[NSString alloc] initWithFormat:@"/setfav?id=%@&item=%@&favpos=%d",self.menuProperty.menuId,playitemid,(int)row+1];
         }
         NSLog(@"CMD: %@",setFavcmd);
         [client getPath:setFavcmd
@@ -161,6 +163,17 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
                                        cancelButtonTitle:@"OK"
                                        otherButtonTitles:nil];
                  [alert show];
+                 
+                 //update preset btn, after sucess
+                 NSString *clickno;
+                 if (row < 5) {
+                     clickno = [[NSString alloc] initWithFormat:@"%ld",(long)row];
+                 }
+                 else{
+                     clickno = kNOCLOCK;
+                 }
+                 [self refresh_presetbtn:clickno SyncFromdevice:@"YES"];  //Jeanne. 2014.03.07
+
              }
              else if([response rangeOfString:@"FAIL"].location !=NSNotFound)
              {
@@ -185,15 +198,7 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
                                        otherButtonTitles:nil];
                  [alert show];
              }
-
-             NSString *clickno;
-             if (row < 5) {
-                 clickno = [[NSString alloc] initWithFormat:@"%d",row];
-             }
-             else{
-                 clickno = kNOCLOCK;
-             }
-             [self refresh_presetbtn:clickno];
+             
              [self CancelPressed];
              
          }
@@ -212,7 +217,7 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     BIDItemCell *itemCell;
     BOOL AddDirectly = FALSE;
     
-    NSLog(@"Select row: %d",row);
+    NSLog(@"Select row: %ld",(long)row);
     
     if (row < 5) {//on pos 0-4
         itemCell = [PresetItems objectAtIndex:row];
@@ -367,7 +372,7 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     UIImageView *SearchImage = (id)[self.view viewWithTag:kSearch_image_tag];     //New Search Menu
     UIButton *SearchButton = (id)[self.view viewWithTag:kSearch_Button_tag];  //New Search Menu
 
-    NSString *myfavId = [[NSString alloc] initWithFormat:@"%d",uiFAVEX_MENU];
+    //NSString *myfavId = [[NSString alloc] initWithFormat:@"%d",uiFAVEX_MENU];
     
     
     //Add for wifisetting on tabbar.  @Jeanne. 2014.03.04
@@ -393,6 +398,9 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
         tag = kPrtPlay_1_Button_tag + i;
         PresetButton = (id)[self.view viewWithTag:tag];
         PresetButton.hidden = PrtPlay_hideflag;
+        
+        //it will be process in presetBtn_update.  @Jeanne. 2014.03.10
+        /*
         if (i==5)
         {//preset add button
             UIImage *addbgImage = [UIImage imageNamed:@"btn_add.png"];
@@ -408,6 +416,7 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
                 PresetButton.enabled = TRUE;
             }
         }
+         */
     }
     //================================================================
     
@@ -625,7 +634,7 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
             Volslider.enabled = TRUE;
         }
         
-        int progress = lroundf(Volslider.value); //获取滑块当前值，四舍五入
+        int progress = (int)lroundf(Volslider.value); //获取滑块当前值，四舍五入
         NSString *setVolcmd = [[NSString alloc] initWithFormat:@"/setvol?vol=%d&mute=%d",progress,muteFlag];
         
         NSLog(@"%@",setVolcmd);
@@ -656,7 +665,7 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
 
 -(IBAction)volChange:(UISlider *)sender
 {
-    int progress = lroundf(sender.value); //获取滑块当前值，四舍五入
+    int progress = (int)lroundf(sender.value); //获取滑块当前值，四舍五入
     NSString *setVolcmd = [[NSString alloc] initWithFormat:@"/setvol?vol=%d&mute=0",progress];
     
     
@@ -720,10 +729,12 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     }
     
     
-    NSLog(@" Preset Button Pressed: %d",hotkey);
+    NSLog(@" Preset Button Pressed: %ld",(long)hotkey);
 
-    playhotkeycmd = [[NSString alloc] initWithFormat:@"/playhotkey?key=%d",hotkey];
+    playhotkeycmd = [[NSString alloc] initWithFormat:@"/playhotkey?key=%ld",(long)hotkey];
     itemCell = [PresetItems objectAtIndex:hotkey-1];
+    
+    PresetPressedFlag = TRUE;  //2014.03.10.  Add for Preset pressed
     
     //Playhotkey cmd
 
@@ -739,15 +750,19 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
              playName.text = itemCell.name; //set play name
              
              NSString *clickno;
-             clickno = [[NSString alloc] initWithFormat:@"%d", (hotkey-1)];
-             [self refresh_presetbtn:clickno];
+             clickno = [[NSString alloc] initWithFormat:@"%d", (int)(hotkey-1)];
+             [self presetBtn_update:clickno];  //2014.03.07 donot need to sync from device
              
              [self menu_disp_ctrl:3];  //play menu ctrl
-             [self getPlayInfo];
+             
+             PresetPressedFlag = FALSE;  //2014.03.10.  Add for Preset pressed
+             NSLog(@"PresetPressed get info after 2sec");
+             [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(getPlayInfo) userInfo:nil repeats:NO];
              
          }
                 failure:^(AFHTTPRequestOperation *operation, NSError *error)
          {
+             PresetPressedFlag = FALSE;  //2014.03.10.  Add for Preset pressed
              NSLog(@"Error: %@", error);
          }];
     
@@ -926,8 +941,6 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     else if(4==cmd){  // 4: playinfo
         NSString *playStatus;
         
-        //for test
-        //[self setradioImage];
         
         //get item status
         memset(status, 0, sizeof(status));
@@ -1265,8 +1278,9 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
 -(void) getPlayInfo
 {
     UILabel *playLabel = (id)[self.view viewWithTag:kPlay_Label_tag];
-    if (AddPresetFlag == TRUE)
+    if ((AddPresetFlag == TRUE)||(RefreshPresetFlag == TRUE)||(PresetPressedFlag == TRUE)) //2014.03.07 add refresh flag, presetPressed
     {
+        NSLog(@"In preset: add=%d, refresh=%d,pressed=%d",AddPresetFlag,RefreshPresetFlag,PresetPressedFlag);
         [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(getPlayInfo) userInfo:nil repeats:NO];
     }
     else if (playLabel.hidden == FALSE) {
@@ -1299,6 +1313,7 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
         }
 
         //Restart get playinfo timer
+        //NSLog(@"In playing getinfo after 3sec");
         [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(getPlayInfo) userInfo:nil repeats:NO];
     }
     else{
@@ -1321,10 +1336,10 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
 - (void)onTimer:(NSTimer *)timer
 {
     NSString *clickNo = [[timer userInfo] objectForKey:@"clickNo"];
-    [self refresh_presetbtn:clickNo];
+    [self refresh_presetbtn:clickNo SyncFromdevice:@"YES"];
 }
 
--(void) refresh_presetbtn:(NSString *) clickNo
+-(void) presetBtn_update: (NSString *)clickNo
 {
     UIImage *bgImage = [UIImage imageNamed:@"btn_preset_h.png"];
     UIImage *disbgImage = [UIImage imageNamed:@"btn_preset_h_dis.png"];
@@ -1335,98 +1350,155 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     UIImage *addbgImage = [UIImage imageNamed:@"btn_add.png"];
     UIImage *adddisbgImage = [UIImage imageNamed:@"btn_add_dis.png"];
     NSString *PresetListId = [[NSString alloc] initWithFormat:@"%d",uiFAVEX_MENU];
+    NSInteger tag,itemcnt,playtag;
+    UIButton *PresetButton,*PrtPlayButton;
+    int i;
+    BIDItemCell *itemCell;
     
-    
-    NSLog(@"refresh preset btn!");
-    client.isNeedHUD = [@"NO" mutableCopy];
-    [client getPath:@"/hotkeylist"
-         parameters:nil
-        loadingText:nil
-        successText:nil
-            success:^(AFHTTPRequestOperation *operation, NSString *response)
-     {
-         NSInteger tag,itemcnt,playtag;
-         UIButton *PresetButton,*PrtPlayButton;
-         int i;
-         BIDItemCell *itemCell;
-         //NSLog(@"response: %@", response);
-         //remove table objects first
-         [PresetItems removeAllObjects];
-         [self decode_menu:response Forcmd:5]; // 5: hotkeylist
-         itemcnt =[PresetItems count];
-         
-         for (i = 0; i < 5; i++) {
-             tag = kPreset_1_Button_tag + i;
-             playtag = kPrtPlay_1_Button_tag + i;
-             PresetButton = (id)[self.view viewWithTag:tag];
-             PrtPlayButton = (id)[self.view viewWithTag:playtag];
-             if (i>= itemcnt) {
-                 PresetButton.backgroundColor = [UIColor colorWithPatternImage:disbgImage];
-                 PresetButton.enabled = FALSE;
-                 [PresetButton setTitleColor:[UIColor grayColor]forState:UIControlStateNormal];
-                 PrtPlayButton.backgroundColor = [UIColor colorWithPatternImage:playdisbgImage];
-                 PrtPlayButton.enabled = FALSE;
-                 [PrtPlayButton setTitleColor:[UIColor grayColor]forState:UIControlStateNormal];
-             }
-             else{
-                 itemCell = [PresetItems objectAtIndex:i];
-                 if ([itemCell.status isEqualToString:@"emptyfile"])
-                 {
-                     PresetButton.backgroundColor = [UIColor colorWithPatternImage:disbgImage];
-                     PresetButton.enabled = FALSE;
-                     [PresetButton setTitleColor:[UIColor grayColor]forState:UIControlStateNormal];
-                     PrtPlayButton.backgroundColor = [UIColor colorWithPatternImage:playdisbgImage];
-                     PrtPlayButton.enabled = FALSE;
-                     [PrtPlayButton setTitleColor:[UIColor grayColor]forState:UIControlStateNormal];
-                 }
-                 else{
-                    PresetButton.backgroundColor = [UIColor colorWithPatternImage:bgImage];
+    NSLog(@"presetBtn_update: clickNo=%@",clickNo);
+
+    itemcnt =[PresetItems count];
+        
+    for (i = 0; i < 5; i++)
+    {
+            tag = kPreset_1_Button_tag + i;
+            playtag = kPrtPlay_1_Button_tag + i;
+            PresetButton = (id)[self.view viewWithTag:tag];
+            PrtPlayButton = (id)[self.view viewWithTag:playtag];
+            if (i>= itemcnt) {
+                [PresetButton setBackgroundImage:disbgImage forState:UIControlStateNormal];
+                PresetButton.enabled = FALSE;
+                [PresetButton setTitleColor:[UIColor grayColor]forState:UIControlStateNormal];
+                
+                [PrtPlayButton setBackgroundImage:playdisbgImage forState:UIControlStateNormal];
+                PrtPlayButton.enabled = FALSE;
+                [PrtPlayButton setTitleColor:[UIColor grayColor]forState:UIControlStateNormal];
+            }
+            else{
+                itemCell = [PresetItems objectAtIndex:i];
+                if ([itemCell.status isEqualToString:@"emptyfile"])
+                {
+                    [PresetButton setBackgroundImage:disbgImage forState:UIControlStateNormal];
+                    PresetButton.enabled = FALSE;
+                    [PresetButton setTitleColor:[UIColor grayColor]forState:UIControlStateNormal];
+                    
+                    [PrtPlayButton setBackgroundImage:playdisbgImage forState:UIControlStateNormal];
+                    PrtPlayButton.enabled = FALSE;
+                    [PrtPlayButton setTitleColor:[UIColor grayColor]forState:UIControlStateNormal];
+                }
+                else{
+                    [PresetButton setBackgroundImage:bgImage forState:UIControlStateNormal];
                     PresetButton.enabled = TRUE;
-                    [PresetButton setTitleColor:[UIColor whiteColor]forState:UIControlStateNormal];
-                    PrtPlayButton.backgroundColor = [UIColor colorWithPatternImage:playbgImage];
+                    [PresetButton setTitleColor:[UIColor colorWithRed:17.0/255 green:207.0/255 blue:255.0/255 alpha:1] forState:UIControlStateNormal];
+                    
+                    [PrtPlayButton setBackgroundImage:playbgImage forState:UIControlStateNormal];
                     PrtPlayButton.enabled = TRUE;
-                    [PrtPlayButton setTitleColor:[UIColor whiteColor]forState:UIControlStateNormal];
-                 }
-             }
-             
-             if (![clickNo isEqualToString:kNOCLOCK]) {
-                 int intString = [clickNo intValue];
-                 if (i == intString) { //set this preset as click
-                     PrtPlayButton.backgroundColor = [UIColor colorWithPatternImage:playclickbgImage];
-                     PrtPlayButton.enabled = TRUE;
-                     [PrtPlayButton setTitleColor:[UIColor yellowColor]forState:UIControlStateNormal];
-                 }
-             }
-             
-         }//end for
-         
-         //process add key
-         if ((![clickNo isEqualToString:kNOCLOCK])
-             ||[self.menuProperty.menuId isEqualToString:PresetListId])
-         { //select or in preset menu
-             PresetaddButton.backgroundColor = [UIColor colorWithPatternImage:adddisbgImage];
-             PresetaddButton.enabled = FALSE;
-         }
-         else{
-             PresetaddButton.backgroundColor = [UIColor colorWithPatternImage:addbgImage];
-             PresetaddButton.enabled = TRUE;
-         }
-         
-         
-     }
-            failure:^(AFHTTPRequestOperation *operation, NSError *error)
-     {
-         NSLog(@"Error: %@", error);
-     }];
-     client.isNeedHUD = [@"YES" mutableCopy];
+                    [PrtPlayButton setTitleColor:[UIColor colorWithRed:17.0/255 green:207.0/255 blue:255.0/255 alpha:1] forState:UIControlStateNormal];
+                }
+            }
+            
+            if (![clickNo isEqualToString:kNOCLOCK]) {
+                int intString = [clickNo intValue];
+                if (i == intString) { //set this preset as click
+                    [PrtPlayButton setBackgroundImage:playclickbgImage forState:UIControlStateNormal];
+                    PrtPlayButton.enabled = TRUE;
+                    [PrtPlayButton setTitleColor:[UIColor yellowColor]forState:UIControlStateNormal];
+                }
+            }
+            
+    }//end for
+        
+    //process add key
+    if ((![clickNo isEqualToString:kNOCLOCK])
+        ||[self.menuProperty.menuId isEqualToString:PresetListId])
+    { //select or in preset menu
+        PresetaddButton.backgroundColor = [UIColor colorWithPatternImage:adddisbgImage];
+        PresetaddButton.enabled = FALSE;
+    }
+    else{
+        PresetaddButton.backgroundColor = [UIColor colorWithPatternImage:addbgImage];
+        PresetaddButton.enabled = TRUE;
+    }
     
 }
 
+-(void) refresh_presetbtn:(NSString *)clickNo SyncFromdevice:(NSString *)Flag
+{
+    NSLog(@"refresh preset btn!");
+
+    if ([Flag isEqualToString:@"NO"])
+    { //do not sync from device.
+        [self presetBtn_update:clickNo];
+    }
+    else{
+        RefreshPresetFlag = TRUE;  //2014.03.07
+        client.isNeedHUD = [@"NO" mutableCopy];
+        [client getPath:@"/hotkeylist"
+                parameters:nil
+                loadingText:nil
+                successText:nil
+                success:^(AFHTTPRequestOperation *operation, NSString *response)
+                {
+                    //NSLog(@"response: %@", response);
+                    //remove table objects first
+                    [PresetItems removeAllObjects];
+                    [self decode_menu:response Forcmd:5]; // 5: hotkeylist
+                    [self presetBtn_update:clickNo];
+                    RefreshPresetFlag = FALSE;  //2014.03.07
+                }
+                failure:^(AFHTTPRequestOperation *operation, NSError *error)
+                {
+                     NSLog(@"Error: %@", error);
+                    [self presetBtn_update:clickNo];
+                    RefreshPresetFlag = FALSE;  //2014.03.07
+                }
+         ];
+        client.isNeedHUD = [@"YES" mutableCopy];
+    }
+    
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    UITableView *tableView = (id)[self.view viewWithTag:kMenu_Tableview_tag];
+    //Add for force refresh after rescan.  @Jeanne. 2014.03.06
+    if ([self.ForceRefreshFlag isEqualToString:@"YES"]) { //Reinit something
+        self.ForceRefreshFlag = [@"NO" mutableCopy];
+        NSLog(@"For ForceRefreshFlag, reinit something!");
+        
+        self.menuProperty.menuId = [@"1" mutableCopy];
+        
+        client = [ILHTTPClient clientWithBaseURL:self.toMagicUrl
+                                showingHUDInView:self.view];
+        
+        //Reset menu display ctrl @Jeanne. 2014.01.29
+        //[self menu_disp_ctrl:1];  //main menu ctrl
+        
+        
+        volSettingFlag = FALSE;  //2014.01.26.  Init vol set flag
+        muteFlag = FALSE;        //2014.01.26.
+        [self init_playinfo];    //2014.02.07. init play info
+        SearchInputFlag = FALSE; //2014.02.11  add for New search menu
+        playitemid = [@"noplayid" mutableCopy]; //2014.02.18
+        AddPresetFlag = FALSE;  //2014.02.18
+        RefreshPresetFlag = FALSE;  //2014.03.07
+        tableView.hidden = TRUE; //hide first. 2014.03.06
+        //Refresh main menu
+        [self refresh_menu];
+        
+        //Refresh preset btn
+        NSString *clickno;
+        NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+        clickno = kNOCLOCK;
+        [dict setObject:clickno forKey:@"clickNo"];
+        [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(onTimer:) userInfo:dict repeats:NO];
+        
+    }
+}
 
 
 - (void)viewDidLoad
 {
-    //UITableView *tableView = (id)[self.view viewWithTag:kMenu_Tableview_tag];
     
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -1467,6 +1539,8 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     SearchInputFlag = FALSE; //2014.02.11  add for New search menu
     playitemid = [@"noplayid" mutableCopy]; //2014.02.18
     AddPresetFlag = FALSE;  //2014.02.18
+    RefreshPresetFlag = FALSE;  //2014.03.07
+    PresetPressedFlag = FALSE;  //2014.03.10.  Add for Preset pressed
     
     //Refresh main menu
     [self refresh_menu];
@@ -1499,7 +1573,13 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     }
     else
     {//other menu
-        return [Items count];
+        if ([Items count]) {
+            return [Items count];
+        }
+        else{
+            return 1;  //if is empty, show empty item.  @Jeanne. 2014.03.10
+        }
+        
     }
     
 }//tableView:tableView numberOfRowsInSection:section
@@ -1533,7 +1613,10 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     }
     else
     {//other menu
-        itemCell = [Items objectAtIndex:indexPath.row];
+        //if is empty, show empty item.  @Jeanne. 2014.03.10
+        if ([Items count]) {
+            itemCell = [Items objectAtIndex:indexPath.row];
+        }
     }
     
     if (cell == nil) {
@@ -1603,8 +1686,14 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
         cell.imageView.image = nil;
         bgImage = [UIImage imageNamed:@"bar_bg"];
     }
-
-    cell.textLabel.text = itemCell.name;
+    
+    //if is empty, show empty item.  @Jeanne. 2014.03.10
+    if (itemCell == nil) {
+        cell.textLabel.text = @"Empty";
+    }
+    else{
+        cell.textLabel.text = itemCell.name;
+    }
     cell.backgroundColor = [UIColor colorWithPatternImage:bgImage];
     cell.textLabel.textColor = [UIColor colorWithRed:255 green:255 blue:255 alpha:1];
     cell.textLabel.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
@@ -1621,102 +1710,136 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UILabel *playName = (id)[self.view viewWithTag:kPlayname_Label_tag];                //play menu
-    BIDItemCell *itemCell = [Items objectAtIndex:indexPath.row];
-    NSString *gochildcmd = [[NSString alloc] initWithFormat:@"/gochild?id=%@",itemCell.submenuId];
-    NSString *playstncmd = [[NSString alloc] initWithFormat:@"/play_stn?id=%@",itemCell.submenuId];
+    BIDItemCell *itemCell;// = [Items objectAtIndex:indexPath.row];
+    NSString *gochildcmd;// = [[NSString alloc] initWithFormat:@"/gochild?id=%@",itemCell.submenuId];
+    NSString *playstncmd;// = [[NSString alloc] initWithFormat:@"/play_stn?id=%@",itemCell.submenuId];
     NSString *NewSearchMenuId = [[NSString alloc] initWithFormat:@"%d",uiNEWSEARCHRADIOEX_MENU];
     NSString *internetRadioId = [[NSString alloc] initWithFormat:@"%d",uiINTERNET_RADIO_MENU];
     NSString *PresetListId = [[NSString alloc] initWithFormat:@"%d",uiFAVEX_MENU];
-
+    
+    //Paul Request: in main menu, items should be on fix pos. Jeanne. 2014.03.03
+    if([self.menuProperty.menuId isEqualToString:@"1"])
+    {//main menu
+        itemCell = [FixMainMenuItems objectAtIndex:indexPath.row];
+    }
+    else
+    {//other menu
+        //if is empty, show empty item.  @Jeanne. 2014.03.10
+        if ([Items count]) {
+            itemCell = [Items objectAtIndex:indexPath.row];
+        }
+    }
+    
     //取消选中项
     [tableView deselectRowAtIndexPath:[tableView indexPathForSelectedRow] animated:YES];
     
-    if ([itemCell.status isEqualToString:@"file"]) {//it's a file,goto play info
+    if (itemCell != nil) {
+        gochildcmd = [[NSString alloc] initWithFormat:@"/gochild?id=%@",itemCell.submenuId];
+        playstncmd = [[NSString alloc] initWithFormat:@"/play_stn?id=%@",itemCell.submenuId];
         
-        //get play stn itemid
-        //将_分隔的字符串转换成数组
-        NSArray *array1 = [itemCell.submenuId componentsSeparatedByString:@"_"];
-        playitemid = [array1 objectAtIndex:1];
-        NSLog(@"playitemid = %@",playitemid);
-        
-        [client getPath:playstncmd
-             parameters:nil
-            loadingText:nil
-            successText:nil
-                success:^(AFHTTPRequestOperation *operation, NSString *response)
-         {
-             //NSLog(@"playstn response: %@", response);
-             [self decode_menu:response Forcmd:3]; //3:playstn decode
-             //Reset menu display ctrl @Jeanne. 2014.01.29
-             playName.text = itemCell.name; //set play name
-             [self menu_disp_ctrl:3];  //play menu ctrl
-             [self getPlayInfo];
-             //Refresh preset
-             if([self.menuProperty.menuId isEqualToString:PresetListId]) { //in preset list
-                 NSString *clickno;
-                 if (indexPath.row < 5) {
-                     clickno = [[NSString alloc] initWithFormat:@"%d", indexPath.row];
-                 }else{
-                     clickno = kNOCLOCK;
+        if ([itemCell.status isEqualToString:@"file"]) {//it's a file,goto play info
+            
+            //get play stn itemid
+            //将_分隔的字符串转换成数组
+            NSArray *array1 = [itemCell.submenuId componentsSeparatedByString:@"_"];
+            playitemid = [array1 objectAtIndex:1];
+            NSLog(@"playitemid = %@",playitemid);
+            
+            [client getPath:playstncmd
+                 parameters:nil
+                loadingText:nil
+                successText:nil
+                    success:^(AFHTTPRequestOperation *operation, NSString *response)
+             {
+                 //NSLog(@"playstn response: %@", response);
+                 [self decode_menu:response Forcmd:3]; //3:playstn decode
+                 //Reset menu display ctrl @Jeanne. 2014.01.29
+                 playName.text = itemCell.name; //set play name
+                 [self menu_disp_ctrl:3];  //play menu ctrl
+                 NSLog(@"did select!");
+                 [self getPlayInfo];
+                 //Refresh preset
+                 if([self.menuProperty.menuId isEqualToString:PresetListId]) { //in preset list
+                     NSString *clickno;
+                     if (indexPath.row < 5) {
+                         clickno = [[NSString alloc] initWithFormat:@"%ld", (long)indexPath.row];
+                     }else{
+                         clickno = kNOCLOCK;
+                     }
+                     //not need to sync again from device.  @Jeanne. 2014.03.07
+                     [self presetBtn_update:clickno];
                  }
-                 [self refresh_presetbtn:clickno];
+                 else{
+                     //not need to sync again from device.  @Jeanne. 2014.03.07
+                     [self presetBtn_update:kNOCLOCK];
+                 }
+                 
              }
-             else{
-                 [self refresh_presetbtn:kNOCLOCK];
-             }
-             
-         }
-                failure:^(AFHTTPRequestOperation *operation, NSError *error)
-         {
-             NSLog(@"Error: %@", error);
-         }];
-
-        
-    }
-    else if ([itemCell.status isEqualToString:@"content"])
-    {//it's content
-        
-        //2014.02.11. Add for New Search menu
-        if(([self.menuProperty.menuId isEqualToString:internetRadioId])
-           &&([itemCell.submenuId isEqualToString:NewSearchMenuId])
-           )
-        {//will be go to New Search Menu, goto input first
-            SearchInputFlag = TRUE;
-            self.SearchField.text = @"";
-            [self menu_disp_ctrl:2]; //other menu ctrl
+                    failure:^(AFHTTPRequestOperation *operation, NSError *error)
+             {
+                 NSLog(@"Error: %@", error);
+             }];
+            
+            
         }
-        else
-        {
-    
-            [client getPath:gochildcmd
-                    parameters:nil
+        else if ([itemCell.status isEqualToString:@"content"])
+        {//it's content
+            
+            //2014.02.11. Add for New Search menu
+            if(([self.menuProperty.menuId isEqualToString:internetRadioId])
+               &&([itemCell.submenuId isEqualToString:NewSearchMenuId])
+               )
+            {//will be go to New Search Menu, goto input first
+                SearchInputFlag = TRUE;
+                self.SearchField.text = @"";
+                [self menu_disp_ctrl:2]; //other menu ctrl
+            }
+            else
+            {
+                
+                [client getPath:gochildcmd
+                     parameters:nil
                     loadingText:nil
                     successText:nil
-                    success:^(AFHTTPRequestOperation *operation, NSString *response)
-                    {
-                        //NSLog(@"response: %@", response);
-                        [self decode_menu:response Forcmd:2]; //2:gochild decode
-                        [self refresh_menu];
-         
-                    }
-                    failure:^(AFHTTPRequestOperation *operation, NSError *error)
-                    {
-                        NSLog(@"Error: %@", error);
-                    }
-            ];
+                        success:^(AFHTTPRequestOperation *operation, NSString *response)
+                 {
+                     //NSLog(@"response: %@", response);
+                     [self decode_menu:response Forcmd:2]; //2:gochild decode
+                     [self refresh_menu];
+                     
+                 }
+                        failure:^(AFHTTPRequestOperation *operation, NSError *error)
+                 {
+                     NSLog(@"Error: %@", error);
+                 }
+                 ];
+            }
         }
-    }
-    else if ([itemCell.status isEqualToString:@"emptyfile"])
-    {//it's empty file
-        UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle:@"Empty File"
-                                    message:@"It's empty file!"
-                                   delegate:nil
-                          cancelButtonTitle:@"OK,I knew."
-                          otherButtonTitles:nil];
-        [alert show];
+        else if ([itemCell.status isEqualToString:@"emptyfile"])
+        {//it's empty file
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle:@"Empty File"
+                                  message:@"It's empty file!"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK,I knew."
+                                  otherButtonTitles:nil];
+            [alert show];
+            
+        }
 
     }
+    else{ //it is empty list.  @Jeanne. 2014.03.10
+        
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle:@"Empty File"
+                              message:@"It's empty file!"
+                              delegate:nil
+                              cancelButtonTitle:@"OK,I knew."
+                              otherButtonTitles:nil];
+        [alert show];
+        
+    }
+    
     
 }
 
@@ -1751,16 +1874,16 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
             
             if([itemCell.status isEqualToString:@"emptyfile"])
             {
-               itemStr = [[NSString alloc] initWithFormat:@"Add to Preset %d",row+1];
+               itemStr = [[NSString alloc] initWithFormat:@"Add to Preset %d",(int)(row+1)];
             }
             else
             {
-               itemStr = [[NSString alloc] initWithFormat:@"Replace Preset %d: %@",row+1,itemCell.name];
+               itemStr = [[NSString alloc] initWithFormat:@"Replace Preset %d: %@",(int)(row+1),itemCell.name];
             }
             
         }
         else{
-            itemStr = [[NSString alloc] initWithFormat:@"Add to Preset %d",row+1];
+            itemStr = [[NSString alloc] initWithFormat:@"Add to Preset %d",(int)(row+1)];
         }
     }
     else
@@ -1777,7 +1900,7 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    NSLog(@"click button: %d (1: Yes, 0: NO)",buttonIndex);
+    NSLog(@"click button: %ld (1: Yes, 0: NO)",(long)buttonIndex);
     
     if (1 == buttonIndex) {
         NSLog(@"do add preset process.");

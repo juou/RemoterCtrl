@@ -18,6 +18,10 @@
 		943C4E0618A9007500643A7A /* btn_add.png in Resources */ = {isa = PBXBuildFile; fileRef = 943C4E0218A9007500643A7A /* btn_add.png */; };
 		943C4E0718A9007500643A7A /* btn_preset_h_dis.png in Resources */ = {isa = PBXBuildFile; fileRef = 943C4E0318A9007500643A7A /* btn_preset_h_dis.png */; };
 		943C4E0818A9007500643A7A /* btn_preset_s_dis.png in Resources */ = {isa = PBXBuildFile; fileRef = 943C4E0418A9007500643A7A /* btn_preset_s_dis.png */; };
+		943CFF5E18C851D900FB81F6 /* icon_29.png in Resources */ = {isa = PBXBuildFile; fileRef = 943CFF5A18C851D900FB81F6 /* icon_29.png */; };
+		943CFF5F18C851D900FB81F6 /* icon_40.png in Resources */ = {isa = PBXBuildFile; fileRef = 943CFF5B18C851D900FB81F6 /* icon_40.png */; };
+		943CFF6018C851D900FB81F6 /* icon_76.png in Resources */ = {isa = PBXBuildFile; fileRef = 943CFF5C18C851D900FB81F6 /* icon_76.png */; };
+		943CFF6118C851D900FB81F6 /* icon_152.png in Resources */ = {isa = PBXBuildFile; fileRef = 943CFF5D18C851D900FB81F6 /* icon_152.png */; };
 		9441D9331895EBCE0034D528 /* radio.png in Resources */ = {isa = PBXBuildFile; fileRef = 9441D9321895EBCE0034D528 /* radio.png */; };
 		9441D9351895EBDD0034D528 /* album.png in Resources */ = {isa = PBXBuildFile; fileRef = 9441D9341895EBDD0034D528 /* album.png */; };
 		9441D9371895ECE30034D528 /* bar_play_middle.png in Resources */ = {isa = PBXBuildFile; fileRef = 9441D9361895ECE30034D528 /* bar_play_middle.png */; };
@@ -115,6 +119,10 @@
 		943C4E0218A9007500643A7A /* btn_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_add.png; sourceTree = "<group>"; };
 		943C4E0318A9007500643A7A /* btn_preset_h_dis.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_preset_h_dis.png; sourceTree = "<group>"; };
 		943C4E0418A9007500643A7A /* btn_preset_s_dis.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_preset_s_dis.png; sourceTree = "<group>"; };
+		943CFF5A18C851D900FB81F6 /* icon_29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_29.png; sourceTree = "<group>"; };
+		943CFF5B18C851D900FB81F6 /* icon_40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_40.png; sourceTree = "<group>"; };
+		943CFF5C18C851D900FB81F6 /* icon_76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_76.png; sourceTree = "<group>"; };
+		943CFF5D18C851D900FB81F6 /* icon_152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_152.png; sourceTree = "<group>"; };
 		9441D9321895EBCE0034D528 /* radio.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = radio.png; sourceTree = "<group>"; };
 		9441D9341895EBDD0034D528 /* album.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = album.png; sourceTree = "<group>"; };
 		9441D9361895ECE30034D528 /* bar_play_middle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bar_play_middle.png; sourceTree = "<group>"; };
@@ -241,6 +249,10 @@
 		94B3752D187E9585007E1975 /* icon */ = {
 			isa = PBXGroup;
 			children = (
+				943CFF5A18C851D900FB81F6 /* icon_29.png */,
+				943CFF5B18C851D900FB81F6 /* icon_40.png */,
+				943CFF5C18C851D900FB81F6 /* icon_76.png */,
+				943CFF5D18C851D900FB81F6 /* icon_152.png */,
 				94CCD41A18C5CAB9005BEB2D /* btn_preset_s_click.png */,
 				94CCD41818C5BF29005BEB2D /* btn_back.png */,
 				94CCD41618C59D22005BEB2D /* wifi_setting.png */,
@@ -486,7 +498,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = BID;
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Jeanne;
 				TargetAttributes = {
 					94F7DA2E187A9BE20008A500 = {
@@ -525,6 +537,7 @@
 				9441D9391895ECF50034D528 /* radio_bk.png in Resources */,
 				94B122FA18A9C3BD00CA3FF0 /* RadioMusic.png in Resources */,
 				94B122FD18A9FA3800CA3FF0 /* search.png in Resources */,
+				943CFF5F18C851D900FB81F6 /* icon_40.png in Resources */,
 				94C840B8188654BF0050730A /* icon_80.png in Resources */,
 				9475DC8E188E4F1500AD1792 /* play.png in Resources */,
 				9475DC90188E657A00AD1792 /* left.png in Resources */,
@@ -543,6 +556,7 @@
 				94D09A0C1898CA840099F90C /* start.png in Resources */,
 				9475DC8C188E4D0000AD1792 /* config.png in Resources */,
 				94F7DA4B187A9BE20008A500 /* Images.xcassets in Resources */,
+				943CFF6118C851D900FB81F6 /* icon_152.png in Resources */,
 				94B122F818A9C3BD00CA3FF0 /* LocalRadio.png in Resources */,
 				943C4E0518A9007500643A7A /* btn_add_dis.png in Resources */,
 				94B3752F187E9585007E1975 /* home.png in Resources */,
@@ -560,11 +574,13 @@
 				94CCD41918C5BF29005BEB2D /* btn_back.png in Resources */,
 				94F7DA91187A9CBE0008A500 /* 37x-Checkmark@2x.png in Resources */,
 				94BC632F187BA7E50038D7C4 /* BIDSubViewController.xib in Resources */,
+				943CFF6018C851D900FB81F6 /* icon_76.png in Resources */,
 				94CCD41718C59D22005BEB2D /* wifi_setting.png in Resources */,
 				94D09A061898A0A90099F90C /* LocalRadio_icon.png in Resources */,
 				94D09A081898A0A90099F90C /* Radio_icon.png in Resources */,
 				943C4E0618A9007500643A7A /* btn_add.png in Resources */,
 				945F11F5189547E7008BF222 /* btn_stop.png in Resources */,
+				943CFF5E18C851D900FB81F6 /* icon_29.png in Resources */,
 				945F11F7189548AF008BF222 /* bar_play_bottom.png in Resources */,
 				94F7DA46187A9BE20008A500 /* Main.storyboard in Resources */,
 				945F11F11894ECB6008BF222 /* vol.png in Resources */,
@@ -664,7 +680,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -703,7 +718,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -735,8 +749,7 @@
 		94F7DA62187A9BE20008A500 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon_ipad;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = RemoterCtrl/RemoterCtrl.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Sandy Chen (75CFMPERRK)";
@@ -768,11 +781,11 @@
 		94F7DA63187A9BE20008A500 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon_ipad;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = RemoterCtrl/RemoterCtrl.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Sandy Chen (75CFMPERRK)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Sandy Chen (75CFMPERRK)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/zhangqiaoling/RemoterCtrl,
@@ -802,7 +815,6 @@
 		94F7DA65187A9BE20008A500 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/RemoterCtrl.app/RemoterCtrl";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -825,7 +837,6 @@
 		94F7DA66187A9BE20008A500 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/RemoterCtrl.app/RemoterCtrl";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",

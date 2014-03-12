@@ -1,0 +1,19 @@
+ double[ok]1.     設置中加入Rename功能
+
+ double[ok]2.     UPnP時,加入preset應無功能
+
+ double[ok]3. 加入preset時,會show Add to pos 2,能否改成Add to Preset 2(和Android App一致)
+
+ double[ok]4.     Station加入Preset後,1,2,3..無改變顏色,麻煩再確認 
+
+[NG]5.     App畫面在iPad mini應全畫面或放在中間(現在是在左上方)   －－不处理
+
+[ok]6.     麻煩home page, Local Radio放在Internet Radio上面(和Android App一致)
+
+double[ok]7.    最上面的back  iCon是否能寬一點,這樣比較好按 
+
+[ok]8.     Playing station時,album照片好像還初不來
+
+ double[ok]9.     WiFi setting是否能獨立一個iCon(和Android App一致),放在Setting右邊
+
+ double[ok]10.  App背景麻煩改成全黑(現在事漸層),和Android一致.

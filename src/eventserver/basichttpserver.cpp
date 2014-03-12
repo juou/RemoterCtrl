@@ -179,7 +179,7 @@ int BasicHTTPServer::DataToSend(int *len, unsigned char **buf){
 	//Request line	
 	if(returnCode == 200){
 		sprintf((char*)*buf, "HTTP/1.1 200 OK\r\n\r\n");
-		*len = strlen((char*)*buf);
+		*len = (int)strlen((char*)*buf);
 		return *len;
 	}
 	

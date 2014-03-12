@@ -81,7 +81,7 @@
 	}
 	[body appendFormat:@"</u:%@>", soapAction];
 	[body appendFormat:@"</s:Body></s:Envelope>"];
-	len = [body length];
+	len = (int)[body length];
 
 	//Construct the HTML POST 
 	NSMutableURLRequest* urlRequest=[NSMutableURLRequest requestWithURL:actionURL
@@ -108,7 +108,7 @@
 	
 	//Check the Server Return Code @TODO
 	if([urlResponse statusCode] != 200){
-		ret = 0-[urlResponse statusCode];	
+		ret = (int)(0-[urlResponse statusCode]);
 		NSString *rsp = [[NSString  alloc] initWithData:resp encoding:NSUTF8StringEncoding];
 		[rsp release];
 	}else{

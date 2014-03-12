@@ -1,0 +1,16 @@
+    1）ap mode链接比较慢  10s
+      jy那边验证3-5s，属于正常情况，需要继续跟进
+[ok]2）preset 短按，mute按  
+      有改进需继续验证
+[ok]3）upnp写空
+[ok]4）preset的图标
+[ok]5）logo图片小一些
+[ok]6)另外, Album圖旁邊顯示的資訊，文字用別的顏色看起來會比較好一點
+[ok]7)  主菜单2个list实际颠倒 
+        需要stn平台验证。
+    8）增加rescan功能以及搜索到多个device可选择其中一个进行链接功能。
+
+2014-03-06 15:47:17.287 RemoterCtrl[590:60b] Error: Error Domain=NSURLErrorDomain Code=-1004 "Could not connect to the server." UserInfo=0x14d73720 {NSErrorFailingURLStringKey=http://192.168.1.105/playhotkey?key=3, NSErrorFailingURLKey=http://192.168.1.105/playhotkey?key=3, NSLocalizedDescription=Could not connect to the server., NSUnderlyingError=0x14d73e00 "Could not connect to the server."}
+
+
+/Users/zhangqiaoling/RemoterCtrl/AFNetworking/AFHTTPClient.m:673:30: Implicit conversion loses integer precision: 'NSInteger' (aka 'long') to 'AFHTTPClientParameterEncoding'

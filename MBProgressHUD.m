@@ -292,14 +292,14 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 	if (animated) {
 		[UIView beginAnimations:nil context:NULL];
 		[UIView setAnimationDuration:0.30];
-		self.alpha = 1.0f;
+		self.alpha = 1.0f;//0.8f;//1.0f;   //Jeanne.  2014.03.12 test
 		if (animationType == MBProgressHUDAnimationZoomIn || animationType == MBProgressHUDAnimationZoomOut) {
 			self.transform = rotationTransform;
 		}
 		[UIView commitAnimations];
 	}
 	else {
-		self.alpha = 1.0f;
+		self.alpha = 1.0f;//0.8f;//1.0f;   //Jeanne.  2014.03.12 test
 	}
 }
 

@@ -129,7 +129,7 @@ private:
 	int ret = 0;
 	[self lock];
 	[mObservers addObject:obs];
-	ret = [mObservers count];
+	ret = (int)([mObservers count]);
 	[self unlock];
 	return ret;
 }
@@ -138,7 +138,7 @@ private:
 	int ret = 0;
 	[self lock];
 	[mObservers removeObject:obs];
-	ret = [mObservers count];
+	ret = (int)([mObservers count]);
 	[self unlock];
 	return ret;
 }

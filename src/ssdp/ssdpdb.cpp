@@ -242,7 +242,7 @@ int SSDPDB::UpdateCacheControl(u8* uuid, u32 uuidlen, int cachecontrol){
 		thisdevice = *it; 
 		if( (thisdevice->uuid.length() == uuidlen &&  memcmp(thisdevice->uuid.c_str(), uuid, uuidlen) == 0) ){
 			thisdevice->cachecontrol = cachecontrol;
-			thisdevice->lastupdate = systimeinseconds;
+			thisdevice->lastupdate = (int)systimeinseconds;
 			tel++;
 		}
 		it++;
@@ -266,7 +266,7 @@ int SSDPDB::CacheControlLoop(){
 		
 		Lock();
 		updated = 0;
-		nows = time(NULL);
+		nows = (int)time(NULL);
 		int i=0;
 		while(i<mDevices.size()){
 			thisdevice = mDevices[i];

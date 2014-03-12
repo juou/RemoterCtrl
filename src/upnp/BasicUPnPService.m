@@ -130,7 +130,7 @@
 	
 	[mMutex lock];
 	[mObservers addObject:obs];
-	ret = [mObservers count];
+	ret = (int)[mObservers count];
 	[mMutex unlock];
 	
 	return ret;	
@@ -141,7 +141,7 @@
 	
 	[mMutex lock];
 	[mObservers removeObject:obs];
-	ret = [mObservers count];
+	ret = (int)[mObservers count];
 	[mMutex unlock];
 	
 	return ret;	

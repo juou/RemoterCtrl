@@ -93,7 +93,7 @@
 	int ret = 0;
 	
 	[mObservers addObject:obs];
-	ret = [mObservers count];
+	ret = (int)[mObservers count];
 	
 	return ret;	
 }
@@ -103,7 +103,7 @@
 	int ret = 0;
 	
 	[mObservers removeObject:obs];
-	ret = [mObservers count];
+	ret = (int)[mObservers count];
 	
 	return ret;	
 }

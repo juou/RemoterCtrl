@@ -20,6 +20,8 @@
 //@property (copy, nonatomic) NSMutableArray *FixMainMenuItems;
 //Add for wifisetting on tabbar.  @Jeanne. 2014.03.04
 @property (copy, nonatomic) NSMutableString *wifiSetFlag;
+//Add for force refresh after rescan.  @Jeanne. 2014.03.06
+@property (copy, nonatomic) NSMutableString *ForceRefreshFlag;
 
 -(void) menu_disp_ctrl:(int)index;
 -(IBAction)backgroundTap:(id)sender;
@@ -36,7 +38,7 @@
 -(void) decode_menu:(NSString *)response Forcmd: (NSInteger)cmd;
 -(void) refresh_menu;
 -(void) getPlayInfo;
--(void) refresh_presetbtn:(NSString *) clickNo;
+-(void) refresh_presetbtn:(NSString *)clickNo SyncFromdevice:(NSString *)Flag;
 -(void) clearSearchFlag;
 
 @end

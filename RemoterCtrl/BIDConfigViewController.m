@@ -27,10 +27,15 @@
 
 @implementation BIDConfigViewController
 
+
+
 //2014.03.05
 -(IBAction)RescanPressed
 {
     NSLog(@"Rescan pressed!");
+    NSString *flag = @"YES";
+    NSString *RescanKEY = @"RESCAN";
+    [self.parentViewController setValue:flag forKey:RescanKEY];  //set rescan key
     [self.view removeFromSuperview];
 }
 
@@ -224,11 +229,12 @@
     
     UIAlertView *alert = [[UIAlertView alloc]
                           initWithTitle:@"AirMusic Control App"
-                          message:@"Version 1.0.12\nCopyright@2014 mediaU.\nAll rights reserved.\n2014.03.05"
+                          message:@"Version 1.0.15\nCopyright@2014 mediaU.\nAll rights reserved.\n2014.03.12"
                           delegate:nil
                           cancelButtonTitle:@"OK"
                           otherButtonTitles:nil];
-    //alert.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1];
+    //[alert setBackgroundColor:[UIColor colorWithRed:17.0/255 green:207.0/255 blue:255.0/255 alpha:1]];
+    //alert.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:1];
     [alert show];
      
 
@@ -319,7 +325,6 @@
          NSLog(@"get dlnaname response: %@", response);
          [self decodedlna_response:response];
          if (self.dlna_name != nil) {
-             //[dlnaButton setTitleEdgeInsets:UIEdgeInsetsMake(4, 14, 0, 0)];
              [dlnaButton setTitle:self.dlna_name forState:UIControlStateNormal];
          }
          
@@ -359,7 +364,7 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     UIButton *bgButton =(id)[self.view viewWithTag:kbg_Button_tag];
-    NSLog(@"click button: %d (1: Yes, 0: NO)",buttonIndex);
+    NSLog(@"click button: %ld (1: Yes, 0: NO)",(long)buttonIndex);
     
     if (1 == buttonIndex) {
         NSLog(@"Go to software update process.");

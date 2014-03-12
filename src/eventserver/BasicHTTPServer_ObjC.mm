@@ -160,7 +160,7 @@ public:
 			ret = [obs response:mObjCServer returncode:&oReturnCode headers:oHeaders body:oBody];
 			if(ret == YES){
 				*returncode = oReturnCode;
-				*bodylen = [oBody length];
+				*bodylen = (int)([oBody length]);
 				if(*bodylen > 0){
 					*body = (char*)malloc([oBody length]); //must be deleted by the caller (!!!)
 					memcpy(*body, [oBody bytes], [oBody length]);

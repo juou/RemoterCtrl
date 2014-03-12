@@ -75,7 +75,7 @@ int SocketServerConnection::ReadDataFromSocket(struct sockaddr_in **sender){
 	memset(sender, 0, sizeof(struct sockaddr_in));
 	
 	while(true){
-		len = recv(mSocket, mBuffer, mBufferSize, 0);
+		len = (int)(recv(mSocket, mBuffer, mBufferSize, 0));
 		*sender = &mSender;
 		
 		if(len < 0 /* error */ || len == 0 /* closed */){
@@ -93,7 +93,7 @@ int SocketServerConnection::ReadDataFromSocket(struct sockaddr_in **sender){
 }
 
 int SocketServerConnection::SendDataOnSocket(unsigned char *sendbuf, int len){
-	int sentlen = send(mSocket, sendbuf, len, 0);
+	int sentlen = (int)send(mSocket, sendbuf, len, 0);
 	return sentlen;
 }
 

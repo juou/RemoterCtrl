@@ -20,6 +20,7 @@
     ILHTTPClient *client;   // http client
     NSMutableString *MagicUrl;
     NSMutableArray *mSSDPObjCDevices;  //basic ssdp device
+    NSString *RESCAN;
 }
 
 
