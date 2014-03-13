@@ -278,6 +278,24 @@ static NSMutableString *m_id;
 {
     UILabel *logLabel = (id)[self.view viewWithTag:klog_Label_tag];
     UILabel *showLabel = (id)[self.view viewWithTag:kShow_Label_tag];
+    NSArray *languageArray = [NSLocale preferredLanguages];
+    NSString *language = [languageArray objectAtIndex:0];
+    NSLog(@"语言：%@", language);//en
+    
+    //Add for multi languages.  @Jeanne.  2014.03.13
+    //创建一个可变数组来存储待显示的数据
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"en" ofType:@"plist"];
+    self.strs = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
+    
+    /*
+    //=================
+    int i;
+    for (i=0; i<([languageArray count]); i++) {
+        NSLog(@"语言［%d］: %@",i,[languageArray objectAtIndex:i]);
+    }
+    //=================
+     */
+    
     [super viewDidLoad];
     
 	// Do any additional setup after loading the view, typically from a nib.
@@ -350,10 +368,12 @@ static NSMutableString *m_id;
     [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(searchip) userInfo:nil repeats:NO];
     
     
-    //UITabBar *Tab = (id)[self.view viewWithTag:kMain_Tabbar_tag];
-    //Tab.hidden = TRUE;
+    //Add for multi languages.  @Jeanne.  2014.03.13
+    NSString *searchstr;
+    searchstr = [self.strs valueForKey:@"SCANING"];
     
-    [MBProgressHUD fadeInHUDInView:self.view withText:@"Search for device..."];
+    [MBProgressHUD fadeInHUDInView:self.view withText:searchstr];
+    //[MBProgressHUD fadeInHUDInView:self.view withText:@"Search for device..."];
     fadein_flag = TRUE;    //for fade in flag.  @Jeanne. 2014.02.26
     
     //Check rescan flag
