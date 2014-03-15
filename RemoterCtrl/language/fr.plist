@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NETWORKFAIL_REMIND</key>
+	<string>Réseau indisponible. Veuillez vérifier vos réseaux Wi-Fi.</string>
+	<key>NODEVICE_REMIND</key>
+	<string>Désolé, impossible de trouver un appareil, veuillez d&apos;abord vérifier que votre appareil est allumé.</string>
+	<key>RECONNECT_REMIND</key>
+	<string>Impossible de se connecter à l&apos;appareil, nouvelle tentative de connexion…</string>
+	<key>MYFAV</key>
+	<string>Mes favoris</string>
+	<key>ADDFAV</key>
+	<string>Ajouté à Mes favoris.</string>
+	<key>DELFAV</key>
+	<string>Retiré de Mes favoris.</string>
+	<key>EXISTINFAV</key>
+	<string>Cette station a été déposée dans Mes favoris</string>
+	<key>OVERWRITEFAV_REMIND</key>
+	<string>Cette icône de raccourci contient des infos. Voulez-vous les remplacer?</string>
+	<key>ENTERPW</key>
+	<string>Veuillez saisir un mot-clé.</string>
+	<key>DLNANAME</key>
+	<string>Nom DLNA</string>
+	<key>CHANGEDLNANAME</key>
+	<string>Modifier nom DLNA</string>
+	<key>SAVE</key>
+	<string>Save</string>
+	<key>IRSWUPDATE</key>
+	<string>Mise à jour du logiciel de l&apos;appareil</string>
+	<key>IRDEVICE</key>
+	<string>l&apos;appareil</string>
+	<key>SWUPDATE</key>
+	<string>Mise à jour du logiciel</string>
+	<key>SWUPDATING</key>
+	<string>Mise à jour du logiciel en cours…</string>
+	<key>LATESTVERSION_REMIND</key>
+	<string>Vous disposez déjà de la dernière version.</string>
+	<key>NEWVERSION_REMIND</key>
+	<string>Une nouvelle version est disponible. Voulez-vous faire la mise à jour maintenant ?</string>
+	<key>UPDATEFAIL_REMIND</key>
+	<string>Échec de la mise à jour.</string>
+	<key>UPDATESUCCESS_REMIND</key>
+	<string>Update successful.</string>
+	<key>RESCAN</key>
+	<string>Rechercher l&apos;appareil</string>
+	<key>ABOUT</key>
+	<string>À propos</string>
+	<key>ABOUTDETAIL</key>
+	<string>À propos de l&apos;app AirMusic Control</string>
+	<key>EMPTY</key>
+	<string>Vide</string>
+	<key>RESET</key>
+	<string>Réinitialiser</string>
+	<key>CANCEL</key>
+	<string>Annuler</string>
+	<key>DELETE</key>
+	<string>Supprimer</string>
+	<key>PLAY</key>
+	<string>Ecouter</string>
+	<key>SCANING</key>
+	<string>Recherche…</string>
+	<key>YES</key>
+	<string>Yes</string>
+	<key>NO</key>
+	<string>No</string>
+	<key>FULL_REMIND</key>
+	<string>My Favorite list is full.</string>
+	<key>NOSUCHSTATION_REMIND</key>
+	<string>No such station.</string>
+	<key>ADDFAIL_REMIND</key>
+	<string>Added to my favorite failed.</string>
+	<key>SEARCH</key>
+	<string>Search</string>
+	<key>DONE</key>
+	<string>Done</string>
+	<key>OK</key>
+	<string>OK</string>
+</dict>
+</plist>

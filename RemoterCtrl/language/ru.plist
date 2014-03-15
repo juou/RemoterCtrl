@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NETWORKFAIL_REMIND</key>
+	<string>Сеть недоступна Проверьте сети Wi-Fi.</string>
+	<key>NODEVICE_REMIND</key>
+	<string>Извините, устройство не обнаружено. Удостоверьтесь, что устройство включено.</string>
+	<key>RECONNECT_REMIND</key>
+	<string>Не удалось установить соединение с устройством. Повторная попытка подключения.</string>
+	<key>MYFAV</key>
+	<string>Любимые</string>
+	<key>ADDFAV</key>
+	<string>Добавлено в Избранное.</string>
+	<key>DELFAV</key>
+	<string>Удалить из Избранного.</string>
+	<key>EXISTINFAV</key>
+	<string>Данная станция добавлена в Любимые</string>
+	<key>OVERWRITEFAV_REMIND</key>
+	<string>Эта станция уже существует, перезаписать ее?</string>
+	<key>ENTERPW</key>
+	<string>Введите ключевое слово.</string>
+	<key>DLNANAME</key>
+	<string>Имя DLNA</string>
+	<key>CHANGEDLNANAME</key>
+	<string>Переименовать DLNA</string>
+	<key>SAVE</key>
+	<string>Save</string>
+	<key>IRSWUPDATE</key>
+	<string>Обновление ПО устройства</string>
+	<key>IRDEVICE</key>
+	<string>Устройство</string>
+	<key>SWUPDATE</key>
+	<string>Обновление ПО</string>
+	<key>SWUPDATING</key>
+	<string>Выполняется обновление ПО…</string>
+	<key>LATESTVERSION_REMIND</key>
+	<string>Уже используется новейшая версия ПО.</string>
+	<key>NEWVERSION_REMIND</key>
+	<string>Имеется более новая версия ПО. Обновить сейчас? </string>
+	<key>UPDATEFAIL_REMIND</key>
+	<string>Сбой обновления.</string>
+	<key>UPDATESUCCESS_REMIND</key>
+	<string>Update successful.</string>
+	<key>RESCAN</key>
+	<string>Повторный поиск устройства</string>
+	<key>ABOUT</key>
+	<string>О приложении</string>
+	<key>ABOUTDETAIL</key>
+	<string>О приложении AirMusic Control</string>
+	<key>EMPTY</key>
+	<string>Свободно</string>
+	<key>RESET</key>
+	<string>Сбросить</string>
+	<key>CANCEL</key>
+	<string>Отменить</string>
+	<key>DELETE</key>
+	<string>Удалить</string>
+	<key>PLAY</key>
+	<string>Слушать</string>
+	<key>SCANING</key>
+	<string>Поиск…</string>
+	<key>YES</key>
+	<string>Yes</string>
+	<key>NO</key>
+	<string>No</string>
+	<key>FULL_REMIND</key>
+	<string>My Favorite list is full.</string>
+	<key>NOSUCHSTATION_REMIND</key>
+	<string>No such station.</string>
+	<key>ADDFAIL_REMIND</key>
+	<string>Added to my favorite failed.</string>
+	<key>SEARCH</key>
+	<string>Search</string>
+	<key>DONE</key>
+	<string>Done</string>
+	<key>OK</key>
+	<string>OK</string>
+</dict>
+</plist>

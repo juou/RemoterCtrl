@@ -22,6 +22,7 @@
 @property (copy, nonatomic) NSMutableString *wifiSetFlag;
 //Add for force refresh after rescan.  @Jeanne. 2014.03.06
 @property (copy, nonatomic) NSMutableString *ForceRefreshFlag;
+@property (strong, nonatomic) NSMutableDictionary *strs;  //Add for multi languages.  @Jeanne.  2014.03.13
 
 -(void) menu_disp_ctrl:(int)index;
 -(IBAction)backgroundTap:(id)sender;

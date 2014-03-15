@@ -280,12 +280,56 @@ static NSMutableString *m_id;
     UILabel *showLabel = (id)[self.view viewWithTag:kShow_Label_tag];
     NSArray *languageArray = [NSLocale preferredLanguages];
     NSString *language = [languageArray objectAtIndex:0];
+    int i;
+    BOOL bSupportflag;
     NSLog(@"语言：%@", language);//en
     
     //Add for multi languages.  @Jeanne.  2014.03.13
+    //#####################################################
+    self.supportlanguages = @[
+                    @"en",   //English
+                    @"de",   //German
+                    @"fr",   //French
+                    @"da",   //Danish
+                    @"sv",   //Swedish
+                    @"nb",   //Norwegian
+                    @"ru",   //Russian
+                    ];
+    
+    NSString *supportlang;
+    bSupportflag = FALSE;
+    for (i=0; i<[self.supportlanguages count]; i++) {
+        supportlang = [self.supportlanguages objectAtIndex:i];
+        if ([supportlang isEqualToString:language]) {
+            NSLog(@"Current language(%@) is supported",language);
+            bSupportflag = TRUE;
+            break;
+        }
+    }
     //创建一个可变数组来存储待显示的数据
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"en" ofType:@"plist"];
+    NSString *path;
+    if(bSupportflag == TRUE){
+        NSLog(@"Use current language: %@",language);
+       path = [[NSBundle mainBundle] pathForResource:language ofType:@"plist"];
+    }
+    else{
+        NSLog(@"Use en language");
+       path = [[NSBundle mainBundle] pathForResource:@"en" ofType:@"plist"];
+    }
     self.strs = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
+    //#####################################################
+    
+    /*
+    //test
+    int i;
+    NSString * fontName;
+    for (i=0; i< [[UIFont familyNames] count]; i++) {
+        fontName = [[UIFont familyNames] objectAtIndex:i];
+        NSLog(@"Font[%d]: %@",i, fontName);
+    }
+     */
+    
+
     
     /*
     //=================
@@ -499,6 +543,14 @@ static NSMutableString *m_id;
              }
              self.subViewController.toMagicUrl = MagicUrl; //2014.03.06 for rescan
              
+             //Add for multi languages.  @Jeanne.  2014.03.13
+             if (self.subViewController.strs == nil) {
+                 self.subViewController.strs = [[NSMutableDictionary alloc] initWithDictionary:self.strs];
+             }
+             else{
+                 self.subViewController.strs = [self.strs mutableCopy];
+             }
+             
              showLabel.hidden = TRUE;
              verLabel.hidden = TRUE;
              logLabel.hidden = TRUE;
@@ -669,6 +721,14 @@ static NSMutableString *m_id;
         }
         else{
             self.configViewController.toMagicUrl = [MagicUrl mutableCopy];
+        }
+        
+        //Add for multi languages.  @Jeanne.  2014.03.13
+        if (self.configViewController.strs == nil) {
+            self.configViewController.strs = [[NSMutableDictionary alloc] initWithDictionary:self.strs];
+        }
+        else{
+            self.configViewController.strs = [self.strs mutableCopy];
         }
         
         [self.subViewController.view removeFromSuperview];

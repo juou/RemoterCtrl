@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NETWORKFAIL_REMIND</key>
+	<string>Network not available. Please check your Wi-Fi networks.</string>
+	<key>NODEVICE_REMIND</key>
+	<string>Sorry, can&apos;t find any device, please make sure your device is turned on.</string>
+	<key>RECONNECT_REMIND</key>
+	<string>Failed to connect to device, attempting to reconnect ...</string>
+	<key>MYFAV</key>
+	<string>My Favorite</string>
+	<key>ADDFAV</key>
+	<string>Added to My Favorite</string>
+	<key>DELFAV</key>
+	<string>Remove from My Favorite</string>
+	<key>EXISTINFAV</key>
+	<string>Already exist in My Favorite</string>
+	<key>OVERWRITEFAV_REMIND</key>
+	<string>This preset is already exist, do you want to overwrite it?</string>
+	<key>ENTERPW</key>
+	<string>Please enter keyword.</string>
+	<key>DLNANAME</key>
+	<string>DLNA Name</string>
+	<key>CHANGEDLNANAME</key>
+	<string>Change DLNA Name</string>
+	<key>SAVE</key>
+	<string>Save</string>
+	<key>IRSWUPDATE</key>
+	<string>IR Device Software Update</string>
+	<key>IRDEVICE</key>
+	<string>IR Device</string>
+	<key>SWUPDATE</key>
+	<string>Software Update</string>
+	<key>SWUPDATING</key>
+	<string>Software updating...</string>
+	<key>LATESTVERSION_REMIND</key>
+	<string>You already have the latest version.</string>
+	<key>NEWVERSION_REMIND</key>
+	<string>There is a newer version available. Would you like to update now ? </string>
+	<key>UPDATEFAIL_REMIND</key>
+	<string>Update failed.</string>
+	<key>UPDATESUCCESS_REMIND</key>
+	<string>Update successful.</string>
+	<key>RESCAN</key>
+	<string>Rescan IR Devices</string>
+	<key>ABOUT</key>
+	<string>About</string>
+	<key>ABOUTDETAIL</key>
+	<string>About AirMusic Control App</string>
+	<key>EMPTY</key>
+	<string>Empty</string>
+	<key>RESET</key>
+	<string>Reset</string>
+	<key>CANCEL</key>
+	<string>Cancel</string>
+	<key>DELETE</key>
+	<string>Delete</string>
+	<key>PLAY</key>
+	<string>Play</string>
+	<key>SCANING</key>
+	<string>Scanning…</string>
+	<key>YES</key>
+	<string>Yes</string>
+	<key>NO</key>
+	<string>No</string>
+	<key>FULL_REMIND</key>
+	<string>My Favorite list is full.</string>
+	<key>NOSUCHSTATION_REMIND</key>
+	<string>No such station.</string>
+	<key>ADDFAIL_REMIND</key>
+	<string>Added to my favorite failed.</string>
+	<key>SEARCH</key>
+	<string>Search</string>
+	<key>DONE</key>
+	<string>Done</string>
+	<key>OK</key>
+	<string>OK</string>
+</dict>
+</plist>

@@ -30,6 +30,7 @@
 @property (copy, nonatomic) NSMutableString *wifiSettingUrl;
 
 @property (strong, nonatomic) NSMutableDictionary *strs;  //Add for multi languages.  @Jeanne.  2014.03.13
+@property (copy, nonatomic) NSArray *supportlanguages; //Add for multi languages.  @Jeanne.  2014.03.13
 
 //protocol UPnPDBObserver
 -(void)UPnPDBWillUpdate:(UPnPDB*)sender;

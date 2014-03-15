@@ -83,6 +83,7 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
 
 @implementation BIDSubViewController
 
+
 //Paul Request: in main menu, items should be on fix pos. Jeanne. 2014.03.03
 -(void)MakeMainMenuItem
 {
@@ -153,14 +154,21 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
             successText:nil
                 success:^(AFHTTPRequestOperation *operation, NSString *response)
          {
+             NSString *FAVStr = [self.strs valueForKey:@"MYFAV"];  //Add for multi languages.  @Jeanne.  2014.03.13
+             NSString *AddStr = [self.strs valueForKey:@"ADDFAV"];  //Add for multi languages.  @Jeanne.  2014.03.13
+             NSString *ExistStr = [self.strs valueForKey:@"EXISTINFAV"];  //Add for multi languages.  @Jeanne.  2014.03.13
+             NSString *OKStr = [self.strs valueForKey:@"OK"];  //Add for multi languages.  @Jeanne.  2014.03.13
+             NSString *FullStr = [self.strs valueForKey:@"FULL_REMIND"]; //Add for multi languages.  @Jeanne.  2014.03.13
+             NSString *NoStationStr = [self.strs valueForKey:@"NOSUCHSTATION_REMIND"]; //Add for multi languages.  @Jeanne.  2014.03.13
+             NSString *FailStr = [self.strs valueForKey:@"ADDFAIL_REMIND"]; //Add for multi languages.  @Jeanne.  2014.03.13
              NSLog(@"setfav response: %@", response);
              if([response rangeOfString:@"OK"].location !=NSNotFound)
              {//update ok
                  UIAlertView *alert = [[UIAlertView alloc]
-                                       initWithTitle:@"Preset process"
-                                       message:@"Add to preset successful!"
+                                       initWithTitle: FAVStr
+                                       message:AddStr
                                        delegate:nil
-                                       cancelButtonTitle:@"OK"
+                                       cancelButtonTitle:OKStr
                                        otherButtonTitles:nil];
                  [alert show];
                  
@@ -180,21 +188,21 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
                  NSString *Failreson;
                  
                  if([response rangeOfString:@"EXIST"].location !=NSNotFound){
-                     Failreson = @"Add to preset failed!\nThis station has already in preset list.";
+                     Failreson = ExistStr;
                  }else if([response rangeOfString:@"FULL"].location !=NSNotFound){
-                     Failreson = @"Add to preset failed!\nThe preset list is full.";
+                     Failreson = FullStr;
                  }else if([response rangeOfString:@"NO_SUCH_STATION"].location !=NSNotFound){
-                     Failreson = @"Add to preset failed!\nNo such station.";
+                     Failreson = NoStationStr;
                  }else{
-                     Failreson = @"Add to preset failed!";
+                     Failreson = FailStr;
                  }
                  
                  [MBProgressHUD fadeOutHUDInView:self.view withSuccessText:nil];
                  UIAlertView *alert = [[UIAlertView alloc]
-                                       initWithTitle:@"Preset process"
+                                       initWithTitle:FAVStr
                                        message:Failreson
                                        delegate:nil
-                                       cancelButtonTitle:@"OK"
+                                       cancelButtonTitle:OKStr
                                        otherButtonTitles:nil];
                  [alert show];
              }
@@ -236,12 +244,17 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
         [self AddPresetprocess]; //do add preset process.  @Jeanne. 2014.03.04
     }
     else{//need to replace
+        NSString *ExsitStr = [self.strs valueForKey:@"OVERWRITEFAV_REMIND"]; //Add for multi languages.  @Jeanne.  2014.03.13
+        NSString *YesStr = [self.strs valueForKey:@"YES"]; //Add for multi languages.  @Jeanne.  2014.03.13
+        NSString *NoStr = [self.strs valueForKey:@"NO"]; //Add for multi languages.  @Jeanne.  2014.03.13
+        NSString *MyFavStr = [self.strs valueForKey:@"MYFAV"]; //Add for multi languages.  @Jeanne.  2014.03.13
+        
         UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle:@"My Favorite"
-                              message:@"This preset is already exist, do you want to overwrite it?"
+                              initWithTitle:MyFavStr
+                              message:ExsitStr
                               delegate:self
-                              cancelButtonTitle:@"No"
-                              otherButtonTitles:@"Yes", nil];
+                              cancelButtonTitle:NoStr
+                              otherButtonTitles:YesStr, nil];
         [alert show];
     }
 
@@ -910,6 +923,16 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
             item_name= [NSString stringWithCString:infostr encoding:NSUTF8StringEncoding];
             item_status= [NSString stringWithCString:status encoding:NSUTF8StringEncoding];
             
+            //test
+            //NSData* xmlData =[item_name dataUsingEncoding:NSUTF8StringEncoding];
+                            //= [NSData dataWithBytes:infostr length:250];//[item_name dataUsingEncoding:NSUTF8StringEncoding];
+            //NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingDOSChineseSimplif);
+            //NSString *responseString = [[NSString alloc] initWithData:xmlData encoding:enc];
+            //NSLog(@"ConvertStr:%@",responseString);
+            //UIWebView *web = [[UIWebView alloc] init];
+            //NSString *st = [web stringByEvaluatingJavaScriptFromString:item_name];
+            //NSLog(@"%@",st);
+            
             //add itemcell to menu
             itemCell = makeItemCell(item_subid,item_name,item_status);
             [Items addObject:itemCell];
@@ -1461,6 +1484,15 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
 -(void)viewWillAppear:(BOOL)animated
 {
     UITableView *tableView = (id)[self.view viewWithTag:kMenu_Tableview_tag];
+    UIButton *SearchButton = (id)[self.view viewWithTag:kSearch_Button_tag];  //Add for multi languages.  @Jeanne.  2014.03.13
+    UIButton *AddButton =(id)[self.view viewWithTag:kPrtAdd_Button_tag]; //Add for multi languages.  @Jeanne.  2014.03.13
+    UIButton *CancelButton =(id)[self.view viewWithTag:kPrtCancel_Button_tag]; //Add for multi languages.  @Jeanne.  2014.03.13
+    
+    //Add for multi languages.  @Jeanne.  2014.03.13
+    [SearchButton setTitle:[self.strs valueForKey:@"SEARCH"] forState:UIControlStateNormal];
+    [AddButton setTitle:[self.strs valueForKey:@"DONE"] forState:UIControlStateNormal];
+    [CancelButton setTitle:[self.strs valueForKey:@"CANCEL"] forState:UIControlStateNormal];
+    
     //Add for force refresh after rescan.  @Jeanne. 2014.03.06
     if ([self.ForceRefreshFlag isEqualToString:@"YES"]) { //Reinit something
         self.ForceRefreshFlag = [@"NO" mutableCopy];
@@ -1698,7 +1730,9 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     cell.textLabel.textColor = [UIColor colorWithRed:255 green:255 blue:255 alpha:1];
     cell.textLabel.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
     //cell.textLabel.frame = CGRectMake(50, 5, 200, 20);
-    cell.textLabel.font = [UIFont systemFontOfSize:17];
+    
+    //Heiti SC
+    cell.textLabel.font = [UIFont systemFontOfSize:17];//[UIFont fontWithName:@"Heiti SC" size:17];//[UIFont systemFontOfSize:17];
     //Paul request to black bg.  @Jeanne. 2014.03.03
     //tableView.backgroundColor = [UIColor colorWithPatternImage:bglistImage];
     return cell;
@@ -1817,6 +1851,8 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
         }
         else if ([itemCell.status isEqualToString:@"emptyfile"])
         {//it's empty file
+            //do nothing.  @Jeanne. 2014.03.15
+            /*
             UIAlertView *alert = [[UIAlertView alloc]
                                   initWithTitle:@"Empty File"
                                   message:@"It's empty file!"
@@ -1824,12 +1860,15 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
                                   cancelButtonTitle:@"OK,I knew."
                                   otherButtonTitles:nil];
             [alert show];
+             */
             
         }
 
     }
     else{ //it is empty list.  @Jeanne. 2014.03.10
         
+        //do nothing.  @Jeanne. 2014.03.15
+        /*
         UIAlertView *alert = [[UIAlertView alloc]
                               initWithTitle:@"Empty File"
                               message:@"It's empty file!"
@@ -1837,6 +1876,7 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
                               cancelButtonTitle:@"OK,I knew."
                               otherButtonTitles:nil];
         [alert show];
+         */
         
     }
     
@@ -1864,6 +1904,9 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     UILabel *label = [[UILabel alloc] init];
     BIDItemCell *itemCell;
     NSString *itemStr;
+    NSString *EmptyStr = [self.strs valueForKey:@"EMPTY"]; //Add for multi languages.  @Jeanne.  2014.03.13
+    NSString *AddStr = [self.strs valueForKey:@"ADDFAV"];  //Add for multi languages.  @Jeanne.  2014.03.13
+    
     
     //modified from 'pos' to 'Preset'    @Jeanne.  2014.03.03
     if(row < 5)
@@ -1874,21 +1917,21 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
             
             if([itemCell.status isEqualToString:@"emptyfile"])
             {
-               itemStr = [[NSString alloc] initWithFormat:@"Add to Preset %d",(int)(row+1)];
+               itemStr = [[NSString alloc] initWithFormat:@"%d) %@",(int)(row+1),EmptyStr];
             }
             else
             {
-               itemStr = [[NSString alloc] initWithFormat:@"Replace Preset %d: %@",(int)(row+1),itemCell.name];
+               itemStr = [[NSString alloc] initWithFormat:@"%d) %@",(int)(row+1),itemCell.name];
             }
             
         }
         else{
-            itemStr = [[NSString alloc] initWithFormat:@"Add to Preset %d",(int)(row+1)];
+            itemStr = [[NSString alloc] initWithFormat:@"%d) %@",(int)(row+1),EmptyStr];
         }
     }
     else
     {
-        itemStr = @"Add to last";
+        itemStr = AddStr;
     }
     
     label.text = [[NSString alloc] initWithFormat:@"   %@",itemStr];

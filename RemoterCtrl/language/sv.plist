@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NETWORKFAIL_REMIND</key>
+	<string>Nätverket är inte tillgängligt. Kontrollera ditt Wi-Fi-nätverk.</string>
+	<key>NODEVICE_REMIND</key>
+	<string>Kan inte hitta någon enhet, kontrollera att enheten är påslagen.</string>
+	<key>RECONNECT_REMIND</key>
+	<string>Det gick inte att ansluta till enheten, försöker återansluta ...</string>
+	<key>MYFAV</key>
+	<string>Mina favoriter</string>
+	<key>ADDFAV</key>
+	<string>Lades till i Min favorit.</string>
+	<key>DELFAV</key>
+	<string>Togs bort från Min favorit.</string>
+	<key>EXISTINFAV</key>
+	<string>Denna station har lagts till i Mina favoriter</string>
+	<key>OVERWRITEFAV_REMIND</key>
+	<string>Denna förinställning finns redan, vill du skriva över den?</string>
+	<key>ENTERPW</key>
+	<string>Ange nyckelord.</string>
+	<key>DLNANAME</key>
+	<string>DLNA namn</string>
+	<key>CHANGEDLNANAME</key>
+	<string>Ändra DLNA namn</string>
+	<key>SAVE</key>
+	<string>Save</string>
+	<key>IRSWUPDATE</key>
+	<string>Uppdatering av enhetens programvara</string>
+	<key>IRDEVICE</key>
+	<string>Enhet</string>
+	<key>SWUPDATE</key>
+	<string>Uppdatering av programvara</string>
+	<key>SWUPDATING</key>
+	<string>Programvaran uppdateras...</string>
+	<key>LATESTVERSION_REMIND</key>
+	<string>Du har redan den senaste versionen.</string>
+	<key>NEWVERSION_REMIND</key>
+	<string>Det finns en nyare version tillgänglig. Vill du uppdatera nu? </string>
+	<key>UPDATEFAIL_REMIND</key>
+	<string>Uppdateringen misslyckades.</string>
+	<key>UPDATESUCCESS_REMIND</key>
+	<string>Update successful.</string>
+	<key>RESCAN</key>
+	<string>Sök enhet igen</string>
+	<key>ABOUT</key>
+	<string>Om</string>
+	<key>ABOUTDETAIL</key>
+	<string>Om AirMusic Control App</string>
+	<key>EMPTY</key>
+	<string>Tom</string>
+	<key>RESET</key>
+	<string>Återställ</string>
+	<key>CANCEL</key>
+	<string>Avbryt</string>
+	<key>DELETE</key>
+	<string>Ta bort</string>
+	<key>PLAY</key>
+	<string>Lyssna</string>
+	<key>SCANING</key>
+	<string>Söker…</string>
+	<key>YES</key>
+	<string>Yes</string>
+	<key>NO</key>
+	<string>No</string>
+	<key>FULL_REMIND</key>
+	<string>My Favorite list is full.</string>
+	<key>NOSUCHSTATION_REMIND</key>
+	<string>No such station.</string>
+	<key>ADDFAIL_REMIND</key>
+	<string>Added to my favorite failed.</string>
+	<key>SEARCH</key>
+	<string>Search</string>
+	<key>DONE</key>
+	<string>Done</string>
+	<key>OK</key>
+	<string>OK</string>
+</dict>
+</plist>
