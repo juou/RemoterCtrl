@@ -25,7 +25,7 @@
 	<key>CHANGEDLNANAME</key>
 	<string>Endre DLNA navn</string>
 	<key>SAVE</key>
-	<string>Save</string>
+	<string>Lagre</string>
 	<key>IRSWUPDATE</key>
 	<string>Oppdatering av enhetsprogramvare</string>
 	<key>IRDEVICE</key>
@@ -61,20 +61,22 @@
 	<key>SCANING</key>
 	<string>Skanner ... </string>
 	<key>YES</key>
-	<string>Yes</string>
+	<string>Ja</string>
 	<key>NO</key>
-	<string>No</string>
+	<string>Nei</string>
 	<key>FULL_REMIND</key>
 	<string>My Favorite list is full.</string>
 	<key>NOSUCHSTATION_REMIND</key>
-	<string>No such station.</string>
+	<string>Ingen stasjonsdata</string>
 	<key>ADDFAIL_REMIND</key>
-	<string>Added to my favorite failed.</string>
+	<string>Lagt til som Min favoritt mislykket</string>
 	<key>SEARCH</key>
-	<string>Search</string>
+	<string>Søk</string>
 	<key>DONE</key>
 	<string>Done</string>
 	<key>OK</key>
 	<string>OK</string>
+	<key>ADD</key>
+	<string>Legg til</string>
 </dict>
 </plist>

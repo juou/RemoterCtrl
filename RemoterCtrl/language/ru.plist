@@ -25,7 +25,7 @@
 	<key>CHANGEDLNANAME</key>
 	<string>Переименовать DLNA</string>
 	<key>SAVE</key>
-	<string>Save</string>
+	<string>Сохранить</string>
 	<key>IRSWUPDATE</key>
 	<string>Обновление ПО устройства</string>
 	<key>IRDEVICE</key>
@@ -61,20 +61,22 @@
 	<key>SCANING</key>
 	<string>Поиск…</string>
 	<key>YES</key>
-	<string>Yes</string>
+	<string>Да</string>
 	<key>NO</key>
-	<string>No</string>
+	<string>Нет</string>
 	<key>FULL_REMIND</key>
 	<string>My Favorite list is full.</string>
 	<key>NOSUCHSTATION_REMIND</key>
-	<string>No such station.</string>
+	<string>Нет станций</string>
 	<key>ADDFAIL_REMIND</key>
 	<string>Added to my favorite failed.</string>
 	<key>SEARCH</key>
-	<string>Search</string>
+	<string>Поиск</string>
 	<key>DONE</key>
 	<string>Done</string>
 	<key>OK</key>
 	<string>OK</string>
+	<key>ADD</key>
+	<string>Добавить</string>
 </dict>
 </plist>

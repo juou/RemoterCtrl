@@ -25,7 +25,7 @@
 	<key>CHANGEDLNANAME</key>
 	<string>Modifier nom DLNA</string>
 	<key>SAVE</key>
-	<string>Save</string>
+	<string>Sauvegarder</string>
 	<key>IRSWUPDATE</key>
 	<string>Mise à jour du logiciel de l&apos;appareil</string>
 	<key>IRDEVICE</key>
@@ -61,20 +61,22 @@
 	<key>SCANING</key>
 	<string>Recherche…</string>
 	<key>YES</key>
-	<string>Yes</string>
+	<string>Oui</string>
 	<key>NO</key>
-	<string>No</string>
+	<string>Non</string>
 	<key>FULL_REMIND</key>
 	<string>My Favorite list is full.</string>
 	<key>NOSUCHSTATION_REMIND</key>
-	<string>No such station.</string>
+	<string>Aucune donnée pour la station</string>
 	<key>ADDFAIL_REMIND</key>
-	<string>Added to my favorite failed.</string>
+	<string>Échec de ajouter à Mes favoris</string>
 	<key>SEARCH</key>
-	<string>Search</string>
+	<string>Rechercher</string>
 	<key>DONE</key>
 	<string>Done</string>
 	<key>OK</key>
 	<string>OK</string>
+	<key>ADD</key>
+	<string>Ajouter</string>
 </dict>
 </plist>

@@ -78,6 +78,8 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     BOOL AddPresetFlag;    //2014.02.18
     BOOL RefreshPresetFlag;  //2014.03.07
     BOOL PresetPressedFlag;  //2014.03.07
+    BOOL DelPresetFlag; //Add for del fav.  @Jeanne. 2014.03.17
+    unsigned delfavpos; //Add for del fav.  @Jeanne. 2014.03.17
 }
 @end
 
@@ -132,6 +134,33 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     AddButton.hidden = TRUE;
     CancelButton.hidden = TRUE;
     AddPresetFlag = FALSE;  //2014.02.18
+    
+}
+
+//Add for del fav.  @Jeanne. 2014.03.17
+-(void)DelPresetprocess
+{
+    NSString *delFavcmd;
+    NSLog(@"Del fav %d",delfavpos);
+    
+    delFavcmd = [[NSString alloc] initWithFormat:@"/delfav?item=%d",delfavpos];
+    NSLog(@"CMD: %@",delFavcmd);
+    
+    [client getPath:delFavcmd
+         parameters:nil
+        loadingText:nil
+        successText:nil
+            success:^(AFHTTPRequestOperation *operation, NSString *response)
+     {
+         NSLog(@"delfav response: %@", response);
+         [self refresh_menu];
+         [self refresh_presetbtn:kNOCLOCK SyncFromdevice:@"YES"];
+         
+     }
+            failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         NSLog(@"Error: %@", error);
+     }];
     
 }
 
@@ -1488,9 +1517,13 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     UIButton *AddButton =(id)[self.view viewWithTag:kPrtAdd_Button_tag]; //Add for multi languages.  @Jeanne.  2014.03.13
     UIButton *CancelButton =(id)[self.view viewWithTag:kPrtCancel_Button_tag]; //Add for multi languages.  @Jeanne.  2014.03.13
     
+    //Add for del fav.  @Jeanne. 2014.03.17
+    DelPresetFlag = FALSE;
+    delfavpos = 0xff;
+    
     //Add for multi languages.  @Jeanne.  2014.03.13
     [SearchButton setTitle:[self.strs valueForKey:@"SEARCH"] forState:UIControlStateNormal];
-    [AddButton setTitle:[self.strs valueForKey:@"DONE"] forState:UIControlStateNormal];
+    [AddButton setTitle:[self.strs valueForKey:@"ADD"] forState:UIControlStateNormal];
     [CancelButton setTitle:[self.strs valueForKey:@"CANCEL"] forState:UIControlStateNormal];
     
     //Add for force refresh after rescan.  @Jeanne. 2014.03.06
@@ -1594,6 +1627,20 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     // Dispose of any resources that can be recreated.
 }
 
+//Add for del fav.  @Jeanne. 2014.03.17
+- (void)btnClicked:(id)sender event:(id)event
+{
+    UITableView *MenutableView = (id)[self.view viewWithTag:kMenu_Tableview_tag];
+    NSSet *touches =[event allTouches];
+    UITouch *touch =[touches anyObject];
+    CGPoint currentTouchPosition = [touch locationInView:MenutableView];
+    NSIndexPath *indexPath= [MenutableView indexPathForRowAtPoint:currentTouchPosition];
+    if (indexPath!= nil)
+    {
+        [self tableView: MenutableView accessoryButtonTappedForRowWithIndexPath:indexPath];
+    }
+}
+
 
 #pragma mark -Table View Data Source Methods
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -1637,6 +1684,8 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     //Paul request to black bg.  @Jeanne. 2014.03.03
     //UIImage *bglistImage = [UIImage imageNamed:@"bk_list"];
     NSString *internetRadioId = [[NSString alloc] initWithFormat:@"%d",uiINTERNET_RADIO_MENU];
+    NSString *PresetListId = [[NSString alloc] initWithFormat:@"%d",uiFAVEX_MENU];  //Add for del fav.  @Jeanne. 2014.03.17
+    NSString *EmptyStr = [self.strs valueForKey:@"EMPTY"]; //Add for multi languages.  @Jeanne.  2014.03.13
     
     //Paul Request: in main menu, items should be on fix pos. Jeanne. 2014.03.03
     if([self.menuProperty.menuId isEqualToString:@"1"])
@@ -1654,13 +1703,43 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    if ([itemCell.status isEqualToString:@"content"])
+    
+    //Add for del fav.  @Jeanne. 2014.03.17
+    if([self.menuProperty.menuId isEqualToString:PresetListId])
     {
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator; //info button (i)
+        if ([itemCell.status isEqualToString:@"emptyfile"])
+        {
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            cell.accessoryView= nil;
+        }
+        else
+        {
+            UIButton *Custombtn;
+            UIImage *infoImage = [UIImage imageNamed:@"info.png"];
+            Custombtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            CGRect frame = CGRectMake(0.0, 0.0, infoImage.size.width, infoImage.size.height);
+            Custombtn.frame = frame;
+            [Custombtn setBackgroundImage:infoImage forState:UIControlStateNormal];
+            Custombtn.backgroundColor= [UIColor clearColor];
+            [Custombtn addTarget:self action:@selector(btnClicked:event:)  forControlEvents:UIControlEventTouchUpInside];
+            
+            //[Custombtn setBackgroundImage:infoImage forState:UIControlStateNormal];
+            cell.accessoryType = UITableViewCellAccessoryDetailButton; //info button (i)
+            cell.accessoryView=Custombtn;
+            
+        }
+        
     }
-    else
-    {
-        cell.accessoryType = UITableViewCellAccessoryNone;
+    else{
+        cell.accessoryView= nil;
+       if ([itemCell.status isEqualToString:@"content"])
+       {
+          cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator; //info button (i)
+       }
+       else
+       {
+          cell.accessoryType = UITableViewCellAccessoryNone;
+       }
     }
     
     if([self.menuProperty.menuId isEqualToString:@"1"])
@@ -1721,7 +1800,7 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     
     //if is empty, show empty item.  @Jeanne. 2014.03.10
     if (itemCell == nil) {
-        cell.textLabel.text = @"Empty";
+        cell.textLabel.text = EmptyStr;  //Add for multi languages.  @Jeanne.  2014.03.13
     }
     else{
         cell.textLabel.text = itemCell.name;
@@ -1739,6 +1818,29 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
 }//tableView:tableView cellForRowAtIndexPath:indexPath
 
 #pragma mark -Table View Delegate Methods
+
+//Add for del fav.  @Jeanne. 2014.03.17
+//tableView accessoryButtonTappedForRowWithIndexPath:单击细节展开按钮后调用的方法
+-(void) tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+{
+    BIDItemCell *itemCell;
+    NSString *DeleteStr = [self.strs valueForKey:@"DELETE"]; //Add for multi languages.  @Jeanne.  2014.03.13
+    NSString *CancelStr = [self.strs valueForKey:@"CANCEL"]; //Add for multi languages.  @Jeanne.  2014.03.13
+    itemCell = [Items objectAtIndex:indexPath.row];
+    
+    //Add for del fav.  @Jeanne. 2014.03.17
+    DelPresetFlag = TRUE;
+    delfavpos = (unsigned)indexPath.row;
+
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle:itemCell.name
+                          message:nil
+                          delegate:self
+                          cancelButtonTitle:CancelStr
+                          otherButtonTitles:DeleteStr,nil];
+    [alert show];
+}
+
 
 //tableView didSelectRowAtIndexPath:会在一行被选中时调用，告诉用户要单击细节展开按钮而不是选中行
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -1945,13 +2047,27 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
 {
     NSLog(@"click button: %ld (1: Yes, 0: NO)",(long)buttonIndex);
     
-    if (1 == buttonIndex) {
-        NSLog(@"do add preset process.");
-        [self AddPresetprocess]; //do add preset process.  @Jeanne. 2014.03.04
+    //Add for del fav.  @Jeanne. 2014.03.17
+    if (DelPresetFlag) {
+        NSLog(@"Del Presetprocess!");
+        if (1 == buttonIndex) {
+            NSLog(@"del preset");
+            [self DelPresetprocess];
+        }
+        else{
+            NSLog(@"111Cancel it!");
+        }
+        DelPresetFlag = FALSE;
     }
     else{
+      if (1 == buttonIndex) {
+        NSLog(@"do add preset process.");
+        [self AddPresetprocess]; //do add preset process.  @Jeanne. 2014.03.04
+      }
+      else{
         NSLog(@"Cancel it!");
         [self CancelPressed];
+      }
     }
 }
 

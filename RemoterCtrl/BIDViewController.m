@@ -211,7 +211,8 @@ static NSMutableString *m_id;
     else{ //searched
         if (fadein_flag) {
             NSLog(@"fade out first!\n");
-            [MBProgressHUD fadeOutHUDInView:self.view withSuccessText:@"Device searched!"];
+            //[MBProgressHUD fadeOutHUDInView:self.view withSuccessText:@"Device searched!"];
+            [MBProgressHUD fadeOutHUDInView:self.view withSuccessText:nil];
             fadein_flag =FALSE;
             [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(searchip) userInfo:nil repeats:NO];
         }

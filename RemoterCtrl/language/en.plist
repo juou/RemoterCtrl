@@ -67,7 +67,7 @@
 	<key>FULL_REMIND</key>
 	<string>My Favorite list is full.</string>
 	<key>NOSUCHSTATION_REMIND</key>
-	<string>No such station.</string>
+	<string>No station data</string>
 	<key>ADDFAIL_REMIND</key>
 	<string>Added to my favorite failed.</string>
 	<key>SEARCH</key>
@@ -76,5 +76,7 @@
 	<string>Done</string>
 	<key>OK</key>
 	<string>OK</string>
+	<key>ADD</key>
+	<string>Add</string>
 </dict>
 </plist>

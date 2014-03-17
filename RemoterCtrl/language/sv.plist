@@ -25,7 +25,7 @@
 	<key>CHANGEDLNANAME</key>
 	<string>Ändra DLNA namn</string>
 	<key>SAVE</key>
-	<string>Save</string>
+	<string>Spara</string>
 	<key>IRSWUPDATE</key>
 	<string>Uppdatering av enhetens programvara</string>
 	<key>IRDEVICE</key>
@@ -61,20 +61,22 @@
 	<key>SCANING</key>
 	<string>Söker…</string>
 	<key>YES</key>
-	<string>Yes</string>
+	<string>Ja</string>
 	<key>NO</key>
-	<string>No</string>
+	<string>Nej</string>
 	<key>FULL_REMIND</key>
 	<string>My Favorite list is full.</string>
 	<key>NOSUCHSTATION_REMIND</key>
-	<string>No such station.</string>
+	<string>Ingen stationsdata</string>
 	<key>ADDFAIL_REMIND</key>
-	<string>Added to my favorite failed.</string>
+	<string>Lades till i Min favorit misslyckades</string>
 	<key>SEARCH</key>
-	<string>Search</string>
+	<string>Sök</string>
 	<key>DONE</key>
 	<string>Done</string>
 	<key>OK</key>
 	<string>OK</string>
+	<key>ADD</key>
+	<string>Lägg till</string>
 </dict>
 </plist>
