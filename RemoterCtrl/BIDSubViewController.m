@@ -297,6 +297,8 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     UIButton *CancelButton =(id)[self.view viewWithTag:kPrtCancel_Button_tag];
     [self.singlePicker reloadAllComponents];
     BgButton.hidden = FALSE;
+    
+    
     self.singlePicker.hidden = FALSE;
     AddButton.hidden = FALSE;
     CancelButton.hidden = FALSE;
@@ -1066,13 +1068,24 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
                 playLabel.numberOfLines = 0;
                 playLabel.textAlignment = NSTextAlignmentLeft;
                 playLabel.text = string;
-                if (playLabel.text.length > 20) { //need > 2line
-                    playLabel.font =[UIFont systemFontOfSize:14];
+                
+                //Modified for support multi ios device.  @Jeanne. 2014.03.21
+                if (!([self.CuriosDevice isEqualToString:@"ipad"]))
+                {
+                    if (playLabel.text.length > 20) { //need > 2line
+                        playLabel.font =[UIFont systemFontOfSize:14];
+                    }
                 }
+
             }
             else
             {
-                playLabel.font =[UIFont systemFontOfSize:17];
+                //Modified for support multi ios device.  @Jeanne. 2014.03.21
+                if (!([self.CuriosDevice isEqualToString:@"ipad"]))
+                {
+                   playLabel.font =[UIFont systemFontOfSize:17];
+                }
+
                 playLabel.textAlignment = NSTextAlignmentCenter;
                 playLabel.text = playStatus;
             }
@@ -1134,7 +1147,11 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
         }
         else
         {//not in playing
-            playLabel.font =[UIFont systemFontOfSize:17];
+            //Modified for support multi ios device.  @Jeanne. 2014.03.21
+            if (!([self.CuriosDevice isEqualToString:@"ipad"]))
+            {
+                playLabel.font =[UIFont systemFontOfSize:17];
+            }
             playLabel.textAlignment = NSTextAlignmentCenter;
             playLabel.text = playStatus;
         }
@@ -1668,14 +1685,29 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if([self.menuProperty.menuId isEqualToString:@"1"])
-    {//main menu
-        return 60;
+    //Modified for support multi ios device.  @Jeanne. 2014.03.21
+    if ([self.CuriosDevice isEqualToString:@"ipad"])
+    {
+        if([self.menuProperty.menuId isEqualToString:@"1"])
+        {//main menu
+            return 120;
+        }
+        else
+        {//other menu
+            return 96;
+        }
     }
-    else
-    {//other menu
-        return 48;
+    else{
+        if([self.menuProperty.menuId isEqualToString:@"1"])
+        {//main menu
+            return 60;
+        }
+        else
+        {//other menu
+            return 48;
+        }
     }
+
     
 }
 
@@ -1766,7 +1798,15 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
                 cell.imageView.image = image;
                 break;
         }
-        bgImage = [UIImage imageNamed:@"mainbar_bg"];
+        
+        //Modified for support multi ios device.  @Jeanne. 2014.03.21
+        if ([self.CuriosDevice isEqualToString:@"ipad"])
+        {
+            bgImage = [UIImage imageNamed:@"mainbar_bg_ipad"];
+        }
+        else{
+            bgImage = [UIImage imageNamed:@"mainbar_bg"];
+        }
     }
     else if([self.menuProperty.menuId isEqualToString:internetRadioId])
     {//in ineternet radio
@@ -1794,11 +1834,25 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
                 cell.imageView.image = image;
                 break;
         }
-        bgImage = [UIImage imageNamed:@"bar_bg"];
+        //Modified for support multi ios device.  @Jeanne. 2014.03.21
+        if ([self.CuriosDevice isEqualToString:@"ipad"])
+        {
+            bgImage = [UIImage imageNamed:@"bar_bg_ipad"];
+        }
+        else{
+            bgImage = [UIImage imageNamed:@"bar_bg"];
+        }
     }
     else{
         cell.imageView.image = nil;
-        bgImage = [UIImage imageNamed:@"bar_bg"];
+        //Modified for support multi ios device.  @Jeanne. 2014.03.21
+        if ([self.CuriosDevice isEqualToString:@"ipad"])
+        {
+            bgImage = [UIImage imageNamed:@"bar_bg_ipad"];
+        }
+        else{
+            bgImage = [UIImage imageNamed:@"bar_bg"];
+        }
     }
     
     //if is empty, show empty item.  @Jeanne. 2014.03.10
@@ -1814,7 +1868,15 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     //cell.textLabel.frame = CGRectMake(50, 5, 200, 20);
     
     //Heiti SC
-    cell.textLabel.font = [UIFont systemFontOfSize:17];//[UIFont fontWithName:@"Heiti SC" size:17];//[UIFont systemFontOfSize:17];
+    //Modified for support multi ios device.  @Jeanne. 2014.03.21
+    if ([self.CuriosDevice isEqualToString:@"ipad"])
+    {
+        cell.textLabel.font = [UIFont systemFontOfSize:30];
+    }
+    else{
+        cell.textLabel.font = [UIFont systemFontOfSize:17];
+    }
+    //[UIFont fontWithName:@"Heiti SC" size:17];//[UIFont systemFontOfSize:17];
     //Paul request to black bg.  @Jeanne. 2014.03.03
     //tableView.backgroundColor = [UIColor colorWithPatternImage:bglistImage];
     return cell;
@@ -2042,6 +2104,13 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     label.text = [[NSString alloc] initWithFormat:@"   %@",itemStr];
     label.textColor = [UIColor blueColor];
     label.textAlignment = NSTextAlignmentLeft;
+    //Modified for support multi ios device.  @Jeanne. 2014.03.21
+    if ([self.CuriosDevice isEqualToString:@"ipad"])
+    {
+        //label.frame = CGRectMake(0.0f, 0.0f, 500.0f, 60.0f);
+        label.font =[UIFont systemFontOfSize:30];
+    }
+
     return label;
     //return itemStr;
 }

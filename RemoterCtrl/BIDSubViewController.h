@@ -23,6 +23,7 @@
 //Add for force refresh after rescan.  @Jeanne. 2014.03.06
 @property (copy, nonatomic) NSMutableString *ForceRefreshFlag;
 @property (strong, nonatomic) NSMutableDictionary *strs;  //Add for multi languages.  @Jeanne.  2014.03.13
+@property (copy, nonatomic) NSMutableString *CuriosDevice; //Add for support multi ios device.  @Jeanne. 2014.03.21
 
 //@property (copy, nonatomic) BIDViewController * BIDctrl;  //test control parent. @Jeanne
 

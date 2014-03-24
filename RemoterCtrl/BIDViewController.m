@@ -565,6 +565,13 @@ static NSMutableString *m_id;
  
              }
              
+             //Modified for support multi ios device.  @Jeanne. 2014.03.21
+             if (self.subViewController.CuriosDevice == nil) {
+                 self.subViewController.CuriosDevice = [[NSMutableString alloc] initWithString:self.CuriosDevice];
+             }
+             self.subViewController.CuriosDevice = [self.CuriosDevice mutableCopy];
+             
+             
              if (self.subViewController.toMagicUrl == nil) {
                  self.subViewController.toMagicUrl = [[NSMutableString alloc] initWithString:MagicUrl];
              }
@@ -817,6 +824,15 @@ static NSMutableString *m_id;
     cell.textLabel.textColor = [UIColor colorWithRed:255 green:255 blue:255 alpha:1];
     cell.textLabel.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
     cell.backgroundColor = [UIColor colorWithPatternImage:bgImage];
+    
+    //Modified for support multi ios device.  @Jeanne. 2014.03.21
+    if ([self.CuriosDevice isEqualToString:@"ipad"])
+    {
+        cell.textLabel.font = [UIFont systemFontOfSize:30];
+    }
+    else{
+        cell.textLabel.font = [UIFont systemFontOfSize:17];
+    }
     //cell.textLabel.font = [UIFont systemFontOfSize:17];
 
     return cell;

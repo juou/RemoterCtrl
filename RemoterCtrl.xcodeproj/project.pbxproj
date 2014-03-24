@@ -33,6 +33,23 @@
 		945F11F7189548AF008BF222 /* bar_play_bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 945F11F6189548AF008BF222 /* bar_play_bottom.png */; };
 		945F11F918954E24008BF222 /* bar_play_top.png in Resources */ = {isa = PBXBuildFile; fileRef = 945F11F818954E24008BF222 /* bar_play_top.png */; };
 		9463FE0418D6DEF50025A803 /* info.png in Resources */ = {isa = PBXBuildFile; fileRef = 9463FE0318D6DEF50025A803 /* info.png */; };
+		9467E5A218E03B7E0005D339 /* wifi_setting_ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9467E59518E03B7E0005D339 /* wifi_setting_ipad.png */; };
+		9467E5A318E03B7E0005D339 /* Service_ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9467E59618E03B7E0005D339 /* Service_ipad.png */; };
+		9467E5A418E03B7E0005D339 /* History_ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9467E59718E03B7E0005D339 /* History_ipad.png */; };
+		9467E5A518E03B7E0005D339 /* LocalRadio_ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9467E59818E03B7E0005D339 /* LocalRadio_ipad.png */; };
+		9467E5A618E03B7E0005D339 /* RadioMusic_ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9467E59918E03B7E0005D339 /* RadioMusic_ipad.png */; };
+		9467E5A718E03B7E0005D339 /* MyFavorite_ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9467E59A18E03B7E0005D339 /* MyFavorite_ipad.png */; };
+		9467E5A818E03B7E0005D339 /* home_ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9467E59B18E03B7E0005D339 /* home_ipad.png */; };
+		9467E5A918E03B7E0005D339 /* config_ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9467E59C18E03B7E0005D339 /* config_ipad.png */; };
+		9467E5AA18E03B7E0005D339 /* play_ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9467E59D18E03B7E0005D339 /* play_ipad.png */; };
+		9467E5AB18E03B7E0005D339 /* Radio_icon_ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9467E59E18E03B7E0005D339 /* Radio_icon_ipad.png */; };
+		9467E5AC18E03B7E0005D339 /* LocalRadio_icon_ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9467E59F18E03B7E0005D339 /* LocalRadio_icon_ipad.png */; };
+		9467E5AD18E03B7E0005D339 /* MediaCenter_icon_ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9467E5A018E03B7E0005D339 /* MediaCenter_icon_ipad.png */; };
+		9467E5AE18E03B7E0005D339 /* start_ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9467E5A118E03B7E0005D339 /* start_ipad.png */; };
+		9467E5B018E040A80005D339 /* mainbar_bg_ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9467E5AF18E040A80005D339 /* mainbar_bg_ipad.png */; };
+		9467E5B918E045DD0005D339 /* search_ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9467E5B818E045DD0005D339 /* search_ipad.png */; };
+		9467E5BB18E05CFC0005D339 /* BIDConfigViewController_ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9467E5BA18E05CFC0005D339 /* BIDConfigViewController_ipad.xib */; };
+		9467E5BD18E0651B0005D339 /* bar_bg_ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9467E5BC18E0651B0005D339 /* bar_bg_ipad.png */; };
 		9475DC7A188E0E4A00AD1792 /* bk_list.png in Resources */ = {isa = PBXBuildFile; fileRef = 9475DC79188E0E4A00AD1792 /* bk_list.png */; };
 		9475DC7C188E1CA100AD1792 /* bar_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 9475DC7B188E1CA100AD1792 /* bar_bg.png */; };
 		9475DC8C188E4D0000AD1792 /* config.png in Resources */ = {isa = PBXBuildFile; fileRef = 9475DC8B188E4D0000AD1792 /* config.png */; };
@@ -155,6 +172,23 @@
 		945F11F6189548AF008BF222 /* bar_play_bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bar_play_bottom.png; sourceTree = "<group>"; };
 		945F11F818954E24008BF222 /* bar_play_top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bar_play_top.png; sourceTree = "<group>"; };
 		9463FE0318D6DEF50025A803 /* info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = info.png; sourceTree = "<group>"; };
+		9467E59518E03B7E0005D339 /* wifi_setting_ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wifi_setting_ipad.png; sourceTree = "<group>"; };
+		9467E59618E03B7E0005D339 /* Service_ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Service_ipad.png; sourceTree = "<group>"; };
+		9467E59718E03B7E0005D339 /* History_ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = History_ipad.png; sourceTree = "<group>"; };
+		9467E59818E03B7E0005D339 /* LocalRadio_ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LocalRadio_ipad.png; sourceTree = "<group>"; };
+		9467E59918E03B7E0005D339 /* RadioMusic_ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RadioMusic_ipad.png; sourceTree = "<group>"; };
+		9467E59A18E03B7E0005D339 /* MyFavorite_ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MyFavorite_ipad.png; sourceTree = "<group>"; };
+		9467E59B18E03B7E0005D339 /* home_ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home_ipad.png; sourceTree = "<group>"; };
+		9467E59C18E03B7E0005D339 /* config_ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = config_ipad.png; sourceTree = "<group>"; };
+		9467E59D18E03B7E0005D339 /* play_ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play_ipad.png; sourceTree = "<group>"; };
+		9467E59E18E03B7E0005D339 /* Radio_icon_ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Radio_icon_ipad.png; sourceTree = "<group>"; };
+		9467E59F18E03B7E0005D339 /* LocalRadio_icon_ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LocalRadio_icon_ipad.png; sourceTree = "<group>"; };
+		9467E5A018E03B7E0005D339 /* MediaCenter_icon_ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MediaCenter_icon_ipad.png; sourceTree = "<group>"; };
+		9467E5A118E03B7E0005D339 /* start_ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = start_ipad.png; sourceTree = "<group>"; };
+		9467E5AF18E040A80005D339 /* mainbar_bg_ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mainbar_bg_ipad.png; sourceTree = "<group>"; };
+		9467E5B818E045DD0005D339 /* search_ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search_ipad.png; sourceTree = "<group>"; };
+		9467E5BA18E05CFC0005D339 /* BIDConfigViewController_ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BIDConfigViewController_ipad.xib; sourceTree = "<group>"; };
+		9467E5BC18E0651B0005D339 /* bar_bg_ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bar_bg_ipad.png; sourceTree = "<group>"; };
 		9475DC79188E0E4A00AD1792 /* bk_list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bk_list.png; sourceTree = "<group>"; };
 		9475DC7B188E1CA100AD1792 /* bar_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bar_bg.png; sourceTree = "<group>"; };
 		9475DC8B188E4D0000AD1792 /* config.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = config.png; sourceTree = "<group>"; };
@@ -308,6 +342,7 @@
 			children = (
 				94A47D3618DC480900CCB80A /* Main_ipad.xib */,
 				94A47D3818DC49F600CCB80A /* BIDSubViewController_ipad.xib */,
+				9467E5BA18E05CFC0005D339 /* BIDConfigViewController_ipad.xib */,
 			);
 			name = iPad;
 			sourceTree = "<group>";
@@ -335,6 +370,22 @@
 		94B3752D187E9585007E1975 /* icon */ = {
 			isa = PBXGroup;
 			children = (
+				9467E5B818E045DD0005D339 /* search_ipad.png */,
+				9467E5BC18E0651B0005D339 /* bar_bg_ipad.png */,
+				9467E5AF18E040A80005D339 /* mainbar_bg_ipad.png */,
+				9467E59518E03B7E0005D339 /* wifi_setting_ipad.png */,
+				9467E59618E03B7E0005D339 /* Service_ipad.png */,
+				9467E59718E03B7E0005D339 /* History_ipad.png */,
+				9467E59818E03B7E0005D339 /* LocalRadio_ipad.png */,
+				9467E59918E03B7E0005D339 /* RadioMusic_ipad.png */,
+				9467E59A18E03B7E0005D339 /* MyFavorite_ipad.png */,
+				9467E59B18E03B7E0005D339 /* home_ipad.png */,
+				9467E59C18E03B7E0005D339 /* config_ipad.png */,
+				9467E59D18E03B7E0005D339 /* play_ipad.png */,
+				9467E59E18E03B7E0005D339 /* Radio_icon_ipad.png */,
+				9467E59F18E03B7E0005D339 /* LocalRadio_icon_ipad.png */,
+				9467E5A018E03B7E0005D339 /* MediaCenter_icon_ipad.png */,
+				9467E5A118E03B7E0005D339 /* start_ipad.png */,
 				94A47D3418DC418900CCB80A /* start_320x480.png */,
 				9463FE0318D6DEF50025A803 /* info.png */,
 				943CFF5A18C851D900FB81F6 /* icon_29.png */,
@@ -633,9 +684,11 @@
 				94B2A20B18C480D400EFBC25 /* btn_msg.png in Resources */,
 				9441D9391895ECF50034D528 /* radio_bk.png in Resources */,
 				94B122FA18A9C3BD00CA3FF0 /* RadioMusic.png in Resources */,
+				9467E5B018E040A80005D339 /* mainbar_bg_ipad.png in Resources */,
 				94A47D2318DC102200CCB80A /* icon_58.png in Resources */,
 				947C676418D4145600E70B7F /* da.plist in Resources */,
 				94B122FD18A9FA3800CA3FF0 /* search.png in Resources */,
+				9467E5AC18E03B7E0005D339 /* LocalRadio_icon_ipad.png in Resources */,
 				94A47D3118DC1E8500CCB80A /* Main_iphone4.xib in Resources */,
 				94A47D3918DC49F600CCB80A /* BIDSubViewController_ipad.xib in Resources */,
 				947C676618D415A800E70B7F /* sv.plist in Resources */,
@@ -644,15 +697,20 @@
 				94C840B8188654BF0050730A /* icon_80.png in Resources */,
 				9475DC8E188E4F1500AD1792 /* play.png in Resources */,
 				9475DC90188E657A00AD1792 /* left.png in Resources */,
+				9467E5AE18E03B7E0005D339 /* start_ipad.png in Resources */,
 				94B122FB18A9C3BD00CA3FF0 /* Service.png in Resources */,
 				94B122FF18A9FCE400CA3FF0 /* bar_notice.png in Resources */,
 				943C4DF918A89C0300643A7A /* bar_top.png in Resources */,
 				94A47D3718DC480900CCB80A /* Main_ipad.xib in Resources */,
+				9467E5AB18E03B7E0005D339 /* Radio_icon_ipad.png in Resources */,
 				94A47D2A18DC115400CCB80A /* icon_114.png in Resources */,
 				94CCD41B18C5CAB9005BEB2D /* btn_preset_s_click.png in Resources */,
+				9467E5A218E03B7E0005D339 /* wifi_setting_ipad.png in Resources */,
 				94A47D2518DC113800CCB80A /* icon_57.png in Resources */,
+				9467E5BD18E0651B0005D339 /* bar_bg_ipad.png in Resources */,
 				943C4DF718A8763A00643A7A /* BIDConfigViewController.xib in Resources */,
 				94A47D2D18DC118400CCB80A /* icon_50.png in Resources */,
+				9467E5AD18E03B7E0005D339 /* MediaCenter_icon_ipad.png in Resources */,
 				94F7DA90187A9CBE0008A500 /* 37x-Checkmark.png in Resources */,
 				94B122F918A9C3BD00CA3FF0 /* MyFavorite.png in Resources */,
 				94B37531187E9700007E1975 /* star.png in Resources */,
@@ -661,29 +719,38 @@
 				945F11F318953D6E008BF222 /* mute.png in Resources */,
 				947C676818D416B000E70B7F /* nb.plist in Resources */,
 				945F11F918954E24008BF222 /* bar_play_top.png in Resources */,
+				9467E5AA18E03B7E0005D339 /* play_ipad.png in Resources */,
 				94A47D2918DC115400CCB80A /* icon_100.png in Resources */,
 				947C676A18D417A400E70B7F /* ru.plist in Resources */,
+				9467E5BB18E05CFC0005D339 /* BIDConfigViewController_ipad.xib in Resources */,
 				94D09A0C1898CA840099F90C /* start.png in Resources */,
 				9475DC8C188E4D0000AD1792 /* config.png in Resources */,
 				94F7DA4B187A9BE20008A500 /* Images.xcassets in Resources */,
 				943CFF6118C851D900FB81F6 /* icon_152.png in Resources */,
 				947C676218D40B0A00E70B7F /* fr.plist in Resources */,
+				9467E5A718E03B7E0005D339 /* MyFavorite_ipad.png in Resources */,
 				94B122F818A9C3BD00CA3FF0 /* LocalRadio.png in Resources */,
 				943C4E0518A9007500643A7A /* btn_add_dis.png in Resources */,
 				94B3752F187E9585007E1975 /* home.png in Resources */,
 				943C4E0718A9007500643A7A /* btn_preset_h_dis.png in Resources */,
 				943C4E0818A9007500643A7A /* btn_preset_s_dis.png in Resources */,
 				94A47D3518DC418900CCB80A /* start_320x480.png in Resources */,
+				9467E5A818E03B7E0005D339 /* home_ipad.png in Resources */,
 				9475DC7A188E0E4A00AD1792 /* bk_list.png in Resources */,
 				943C4DFE18A8DD0500643A7A /* btn_preset_s.png in Resources */,
+				9467E5A918E03B7E0005D339 /* config_ipad.png in Resources */,
+				9467E5A318E03B7E0005D339 /* Service_ipad.png in Resources */,
 				943C4E0018A8DD1300643A7A /* btn_preset_h.png in Resources */,
+				9467E5A418E03B7E0005D339 /* History_ipad.png in Resources */,
 				94B122F718A9C3BD00CA3FF0 /* History.png in Resources */,
 				9463FE0418D6DEF50025A803 /* info.png in Resources */,
 				94D09A0A1898C5070099F90C /* MediaCenter_icon.png in Resources */,
+				9467E5B918E045DD0005D339 /* search_ipad.png in Resources */,
 				94B1230118A9FDAC00CA3FF0 /* bar_menu.png in Resources */,
 				9441D9331895EBCE0034D528 /* radio.png in Resources */,
 				94A47D1C18DBFF7900CCB80A /* BIDSubViewController_iphone4.xib in Resources */,
 				94F7DA3D187A9BE20008A500 /* InfoPlist.strings in Resources */,
+				9467E5A618E03B7E0005D339 /* RadioMusic_ipad.png in Resources */,
 				9441D9371895ECE30034D528 /* bar_play_middle.png in Resources */,
 				94CCD41918C5BF29005BEB2D /* btn_back.png in Resources */,
 				94F7DA91187A9CBE0008A500 /* 37x-Checkmark@2x.png in Resources */,
@@ -704,6 +771,7 @@
 				94B2A20918C47E0700EFBC25 /* dlnarename_bg.png in Resources */,
 				94B2A20D18C4B9B500EFBC25 /* left_tab.png in Resources */,
 				947C676118D40B0A00E70B7F /* en.plist in Resources */,
+				9467E5A518E03B7E0005D339 /* LocalRadio_ipad.png in Resources */,
 				9475DC7C188E1CA100AD1792 /* bar_bg.png in Resources */,
 				94C840BA188654C90050730A /* icon_120.png in Resources */,
 			);
