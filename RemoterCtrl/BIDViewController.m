@@ -12,6 +12,7 @@
 #import "ILHTTPClient.h"
 #import "BIDSubViewController.h"
 #import "UPnPManager.h"
+#import "BIDUIDevice.h"
 
 //#define kMagic_Device   @":52525/root_XXYY.xml"
 //#define kMagic_Device_2   @":52525/root_XXYY_S.xml"
@@ -19,7 +20,7 @@
 
 #define kMain_Tabbar_tag       101
 #define kMain_2_Tabbar_tag     100
-#define kShow_Label_tag        9
+//#define kShow_Label_tag        9
 #define kVer_Label_tag         10
 #define klog_Label_tag         11
 #define kurl_TableView_tag     102
@@ -278,7 +279,7 @@ static NSMutableString *m_id;
 - (void)viewDidLoad
 {
     UILabel *logLabel = (id)[self.view viewWithTag:klog_Label_tag];
-    UILabel *showLabel = (id)[self.view viewWithTag:kShow_Label_tag];
+    //UILabel *showLabel = (id)[self.view viewWithTag:kShow_Label_tag];
     NSArray *languageArray = [NSLocale preferredLanguages];
     NSString *language = [languageArray objectAtIndex:0];
     int i;
@@ -363,7 +364,7 @@ static NSMutableString *m_id;
     [logLabel setText:@"test"];
     search_cnt = 0; //for search count  @Jeanne.  2014.02.25
     searched_flag = 0;  //for search icon.  @Jeanne. 2014.02.26
-    showLabel.hidden = TRUE;  //for fade effect.  @Jeanne. 2014.2.26
+    //showLabel.hidden = TRUE;  //for fade effect.  @Jeanne. 2014.2.26
     
     //先初始化对象
     if (MagicUrl == nil) {
@@ -375,7 +376,19 @@ static NSMutableString *m_id;
     //初始化config菜单 2014.02.12
     //==============================
     if (self.configViewController ==nil) {
-        self.configViewController = [[BIDConfigViewController alloc] initWithNibName:@"BIDConfigViewController" bundle:nil];
+        //Modified for support multi ios device.  @Jeanne. 2014.03.21
+        if ([self.CuriosDevice isEqualToString:@"iphone4"]) {
+            self.configViewController = [[BIDConfigViewController alloc] initWithNibName:@"BIDConfigViewController_iphone4" bundle:nil];
+        }
+        else if ([self.CuriosDevice isEqualToString:@"iphone5"]) {
+            self.configViewController = [[BIDConfigViewController alloc] initWithNibName:@"BIDConfigViewController" bundle:nil];
+        }
+        else if ([self.CuriosDevice isEqualToString:@"ipad"]) {
+            self.configViewController = [[BIDConfigViewController alloc] initWithNibName:@"BIDConfigViewController_ipad" bundle:nil];
+        }
+        else{
+            self.configViewController = [[BIDConfigViewController alloc] initWithNibName:@"BIDConfigViewController" bundle:nil];
+        }
     }
     if (self.configViewController.wifiSetFlag == nil) {
         self.configViewController.wifiSetFlag = [[NSMutableString alloc] init];
@@ -503,7 +516,7 @@ static NSMutableString *m_id;
 {
     UITabBar *Tab = (id)[self.view viewWithTag:kMain_Tabbar_tag];
     UITabBar *Tab_2 = (id)[self.view viewWithTag:kMain_2_Tabbar_tag];  //Add for wifisetting on tabbar.  @Jeanne. 2014.03.04
-    UILabel *showLabel = (id)[self.view viewWithTag:kShow_Label_tag];
+    //UILabel *showLabel = (id)[self.view viewWithTag:kShow_Label_tag];
     UILabel *verLabel = (id)[self.view viewWithTag:kVer_Label_tag];
     UILabel *logLabel = (id)[self.view viewWithTag:klog_Label_tag];
     
@@ -532,7 +545,20 @@ static NSMutableString *m_id;
              
              
              if (self.subViewController ==nil) {
-                 self.subViewController = [[BIDSubViewController alloc] initWithNibName:@"BIDSubViewController" bundle:nil];
+                 
+                 //Modified for support multi ios device.  @Jeanne. 2014.03.21
+                 if ([self.CuriosDevice isEqualToString:@"iphone4"]) {
+                    self.subViewController = [[BIDSubViewController alloc] initWithNibName:@"BIDSubViewController_iphone4" bundle:nil];
+                 }
+                 else if ([self.CuriosDevice isEqualToString:@"iphone5"]) {
+                     self.subViewController = [[BIDSubViewController alloc] initWithNibName:@"BIDSubViewController" bundle:nil];
+                 }
+                 else if ([self.CuriosDevice isEqualToString:@"ipad"]) {
+                     self.subViewController = [[BIDSubViewController alloc] initWithNibName:@"BIDSubViewController_ipad" bundle:nil];
+                 }
+                 else{
+                     self.subViewController = [[BIDSubViewController alloc] initWithNibName:@"BIDSubViewController" bundle:nil];
+                 }
                  
              }
              else{
@@ -552,7 +578,7 @@ static NSMutableString *m_id;
                  self.subViewController.strs = [self.strs mutableCopy];
              }
              
-             showLabel.hidden = TRUE;
+             //showLabel.hidden = TRUE;
              verLabel.hidden = TRUE;
              logLabel.hidden = TRUE;
              
@@ -660,6 +686,8 @@ static NSMutableString *m_id;
         
         if (configitem.enabled == FALSE) { //it is in config menu
             NSLog(@"In config menu now, quit first!\n");
+            
+            //[self passSelf: self.subViewController.BIDctrl]; //test control parent.  @Jeanne
 
             [self.configViewController.view removeFromSuperview];
             [self.view insertSubview:self.subViewController.view atIndex:1];
@@ -714,7 +742,20 @@ static NSMutableString *m_id;
     else if(item.tag == 3){ //config menu
         NSLog(@"go to config menu\n");
         if (self.configViewController ==nil) {
-            self.configViewController = [[BIDConfigViewController alloc] initWithNibName:@"BIDConfigViewController" bundle:nil];
+            //Modified for support multi ios device.  @Jeanne. 2014.03.21
+            if ([self.CuriosDevice isEqualToString:@"iphone4"]) {
+                self.configViewController = [[BIDConfigViewController alloc] initWithNibName:@"BIDConfigViewController_iphone4" bundle:nil];
+            }
+            else if ([self.CuriosDevice isEqualToString:@"iphone5"]) {
+              self.configViewController = [[BIDConfigViewController alloc] initWithNibName:@"BIDConfigViewController" bundle:nil];
+            }
+            else if ([self.CuriosDevice isEqualToString:@"ipad"]) {
+                self.configViewController = [[BIDConfigViewController alloc] initWithNibName:@"BIDConfigViewController_ipad" bundle:nil];
+            }
+            else{
+              self.configViewController = [[BIDConfigViewController alloc] initWithNibName:@"BIDConfigViewController" bundle:nil];
+            }
+            
         }
         
         if (self.configViewController.toMagicUrl == nil) {
@@ -805,5 +846,12 @@ static NSMutableString *m_id;
 
     
 }
+
+/*  test control parent
+-(void)passSelf:(id)sender
+{
+    sender = self;
+}
+*/
 
 @end

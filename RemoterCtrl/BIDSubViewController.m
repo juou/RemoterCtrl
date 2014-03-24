@@ -11,6 +11,7 @@
 #import <string.h>
 #import "ILHTTPClient.h"
 #import "BIDItemCell.h"
+#import "BIDViewController.h"
 
 //Add for wifisetting on tabbar.  @Jeanne. 2014.03.04
 #define kMain_Tabbar_tag       101
@@ -1387,8 +1388,10 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
 
 - (void)onTimer:(NSTimer *)timer
 {
+    
     NSString *clickNo = [[timer userInfo] objectForKey:@"clickNo"];
     [self refresh_presetbtn:clickNo SyncFromdevice:@"YES"];
+  
 }
 
 -(void) presetBtn_update: (NSString *)clickNo

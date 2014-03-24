@@ -10,7 +10,7 @@
 #import "BIDMenuProperty.h"
 #import "BIDItemCell.h"
 
-
+@class BIDViewController;
 @interface BIDSubViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,UIPickerViewDelegate,UIPickerViewDataSource,UIAlertViewDelegate>
 @property (strong, nonatomic) BIDMenuProperty *menuProperty;
 @property (copy, nonatomic) NSMutableString *toMagicUrl;
@@ -23,6 +23,8 @@
 //Add for force refresh after rescan.  @Jeanne. 2014.03.06
 @property (copy, nonatomic) NSMutableString *ForceRefreshFlag;
 @property (strong, nonatomic) NSMutableDictionary *strs;  //Add for multi languages.  @Jeanne.  2014.03.13
+
+//@property (copy, nonatomic) BIDViewController * BIDctrl;  //test control parent. @Jeanne
 
 -(void) menu_disp_ctrl:(int)index;
 -(IBAction)backgroundTap:(id)sender;

@@ -8,18 +8,72 @@
 
 #import "BIDAppDelegate.h"
 #import "BIDViewController.h"
-
+#import <UIKit/UIKit.h>
 
 
 @implementation BIDAppDelegate
 
+//Add for support multi ios device.  @Jeanne. 2014.03.21
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    UIDeviceResolution CurResoloution;
     
-    // start of your application:didFinishLaunchingWithOptions // ...
-    //[TestFlight takeOff:@"0b44fa5d-4025-42d3-b864-9d869307e8c7"];
+    if (self.CurDevice == nil) {
+        self.CurDevice = [[BIDUIDevice alloc] init];
+    }
+    
+    //get current device
+    CurResoloution =[self.CurDevice currentResolution];
+    NSLog(@"Current Resolution: %lu",(unsigned long)CurResoloution);
+    
+    
+    // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
+    //test
+    //CurResoloution = UIDevice_iPhoneHiRes;
+    
+    //应用启动之后的一些自定义设置
+   if (self.ViewController ==nil) {
+       if ((UIDevice_iPhoneStandardRes == CurResoloution)
+           ||(UIDevice_iPhoneHiRes == CurResoloution))
+       {
+           NSLog(@"3.5 inch");
+            self.ViewController = [[BIDViewController alloc] initWithNibName:@"Main_iphone4" bundle:nil];
+           self.ViewController.CuriosDevice = [@"iphone4" mutableCopy];
+       }
+       else if (UIDevice_iPhoneTallerHiRes == CurResoloution)
+       {
+           NSLog(@"4 inch");
+           self.ViewController = [[BIDViewController alloc] initWithNibName:@"Main_iphone5" bundle:nil];
+           self.ViewController.CuriosDevice = [@"iphone5" mutableCopy];
+       }
+       else if ((UIDevice_iPadHiRes == CurResoloution)
+                ||(UIDevice_iPadStandardRes == CurResoloution))
+       {
+           NSLog(@"ipad");
+           self.ViewController = [[BIDViewController alloc] initWithNibName:@"Main_ipad" bundle:nil];
+           self.ViewController.CuriosDevice = [@"ipad" mutableCopy];
+       }
+       else{
+           NSLog(@"else else else Jeanne");
+           self.ViewController = [[BIDViewController alloc] initWithNibName:@"Main_iphone5" bundle:nil];
+           self.ViewController.CuriosDevice = [@"iphone5" mutableCopy];
+       }
+
+    }
+
+
+    //[[NSBundle mainBundle] loadNibNamed:@"Main_iphone4" owner:self options:nil];
+    self.window.rootViewController = self.ViewController;
+    
+    // Override point for customization after application launch.
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+    
     return YES;
+    
+    //return YES;
 }
 							
 - (void)applicationWillResignActive:(UIApplication *)application

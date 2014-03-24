@@ -13,6 +13,7 @@
 #import "BIDPlayViewController.h"
 #import "UPnPDB.h"
 #import "ILHTTPClient.h"
+#import "BIDUIDevice.h"
 
 @interface BIDViewController : UIViewController <UPnPDBObserver,UITabBarDelegate,UITableViewDataSource,UITableViewDelegate>
 {
@@ -28,6 +29,7 @@
 @property (strong, nonatomic) BIDSubViewController *subViewController;
 @property (strong, nonatomic) BIDConfigViewController *configViewController;
 @property (copy, nonatomic) NSMutableString *wifiSettingUrl;
+@property (copy, nonatomic) NSMutableString *CuriosDevice; //Add for support multi ios device.  @Jeanne. 2014.03.21
 
 @property (strong, nonatomic) NSMutableDictionary *strs;  //Add for multi languages.  @Jeanne.  2014.03.13
 @property (copy, nonatomic) NSArray *supportlanguages; //Add for multi languages.  @Jeanne.  2014.03.13
@@ -39,5 +41,5 @@
 -(void) decode_response:(NSString *)response Forcmd: (NSInteger)cmd Forpos:(NSInteger)pos;
 -(void)searchip;
 -(void)Rescandevice;
-
+//-(void)passSelf:(id)sender;  //test control parent.  @Jeanne
 @end

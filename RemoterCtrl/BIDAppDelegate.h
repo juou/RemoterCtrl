@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BIDUIDevice.h"
+#import "BIDViewController.h"
 @class BIDViewController;
 
 @interface BIDAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) IBOutlet UITabBarController *rootController;
+@property (strong, nonatomic) BIDViewController *ViewController;
+@property (strong, nonatomic) BIDUIDevice *CurDevice;
 
 @end
