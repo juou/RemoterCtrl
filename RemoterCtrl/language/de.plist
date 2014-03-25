@@ -21,9 +21,9 @@
 	<key>ENTERPW</key>
 	<string>Bitte geben Sie das Stichwort ein.</string>
 	<key>DLNANAME</key>
-	<string>DLNA namen</string>
+	<string>DLNA-Namens</string>
 	<key>CHANGEDLNANAME</key>
-	<string>DLNA namen ändern verändern</string>
+	<string>Änderung des DLNA-Namens</string>
 	<key>SAVE</key>
 	<string>Speichern</string>
 	<key>IRSWUPDATE</key>
@@ -65,7 +65,7 @@
 	<key>NO</key>
 	<string>Nein</string>
 	<key>FULL_REMIND</key>
-	<string>My Favorite list is full.</string>
+	<string>Meine Favoriten-Liste ist voll</string>
 	<key>NOSUCHSTATION_REMIND</key>
 	<string>Keine Senderdaten</string>
 	<key>ADDFAIL_REMIND</key>

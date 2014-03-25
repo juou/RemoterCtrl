@@ -551,7 +551,15 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     
     //2014.02.07------------------------  begin
     [self init_playinfo];
-    UIImage *radiodfImage = [UIImage imageNamed:@"radio"];
+    UIImage *radiodfImage;// = [UIImage imageNamed:@"radio"];
+    //Modified for support multi ios device.  @Jeanne. 2014.03.21
+    if ([self.CuriosDevice isEqualToString:@"ipad"])
+    {
+        radiodfImage = [UIImage imageNamed:@"radio_ipad"];
+    }
+    else{
+        radiodfImage = [UIImage imageNamed:@"radio"];
+    }
     [radioImage setImage:radiodfImage];
     UIImage *albumdfImage = [UIImage imageNamed:@"album"];
     [AlbumImage setImage:albumdfImage];
@@ -670,12 +678,28 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     {
         if (0 == muteFlag) {
             muteFlag = 1;
-            [MuteButton setImage:[UIImage imageNamed:@"mute.png"] forState:UIControlStateNormal];
+            //Modified for support multi ios device.  @Jeanne. 2014.03.21
+            if ([self.CuriosDevice isEqualToString:@"ipad"])
+            {
+                [MuteButton setImage:[UIImage imageNamed:@"mute_ipad.png"] forState:UIControlStateNormal];
+            }
+            else{
+                [MuteButton setImage:[UIImage imageNamed:@"mute.png"] forState:UIControlStateNormal];
+            }
+            
             Volslider.enabled = FALSE;
         }
         else{
             muteFlag = 0;
-            [MuteButton setImage:[UIImage imageNamed:@"vol.png"] forState:UIControlStateNormal];
+            //Modified for support multi ios device.  @Jeanne. 2014.03.21
+            if ([self.CuriosDevice isEqualToString:@"ipad"])
+            {
+                [MuteButton setImage:[UIImage imageNamed:@"vol_ipad.png"] forState:UIControlStateNormal];
+            }
+            else{
+                [MuteButton setImage:[UIImage imageNamed:@"vol.png"] forState:UIControlStateNormal];
+            }
+            
             Volslider.enabled = TRUE;
         }
         
@@ -832,8 +856,17 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     UIImage * imageFromURL;
     UIImageView *radioImage = (id)[self.view viewWithTag:kRadio_image_tag];
     UIImageView *albumImage = (id)[self.view viewWithTag:kAlbum_image_tag];
-    UIImage *logoImage = [UIImage imageNamed:@"radio"];
+    UIImage *logoImage;// = [UIImage imageNamed:@"radio"];
     UIImage *albumdfImage = [UIImage imageNamed:@"album"];
+    
+    //Modified for support multi ios device.  @Jeanne. 2014.03.21
+    if ([self.CuriosDevice isEqualToString:@"ipad"])
+    {
+        logoImage = [UIImage imageNamed:@"radio_ipad"];
+    }
+    else{
+        logoImage = [UIImage imageNamed:@"radio"];
+    }
     
     if (index == 1) { //logo image
         if (([logo_url isEqualToString:@"nourl"] )|| (logo_url == nil))
@@ -1184,11 +1217,25 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
             muteFlag = atoi(mute); //2014.01.26
             
             if (0 == muteFlag) {
-                [MuteButton setImage:[UIImage imageNamed:@"vol.png"] forState:UIControlStateNormal];
+                //Modified for support multi ios device.  @Jeanne. 2014.03.21
+                if ([self.CuriosDevice isEqualToString:@"ipad"])
+                {
+                    [MuteButton setImage:[UIImage imageNamed:@"vol_ipad.png"] forState:UIControlStateNormal];
+                }
+                else{
+                    [MuteButton setImage:[UIImage imageNamed:@"vol.png"] forState:UIControlStateNormal];
+                }
                 Volslider.enabled = TRUE;
             }
             else{
-                [MuteButton setImage:[UIImage imageNamed:@"mute.png"] forState:UIControlStateNormal];
+                //Modified for support multi ios device.  @Jeanne. 2014.03.21
+                if ([self.CuriosDevice isEqualToString:@"ipad"])
+                {
+                    [MuteButton setImage:[UIImage imageNamed:@"mute_ipad.png"] forState:UIControlStateNormal];
+                }
+                else{
+                    [MuteButton setImage:[UIImage imageNamed:@"mute.png"] forState:UIControlStateNormal];
+                }
                 Volslider.enabled = FALSE;
             }
         }
@@ -1413,14 +1460,14 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
 
 -(void) presetBtn_update: (NSString *)clickNo
 {
-    UIImage *bgImage = [UIImage imageNamed:@"btn_preset_h.png"];
-    UIImage *disbgImage = [UIImage imageNamed:@"btn_preset_h_dis.png"];
-    UIImage *playbgImage = [UIImage imageNamed:@"btn_preset_s.png"];
-    UIImage *playdisbgImage = [UIImage imageNamed:@"btn_preset_s_dis.png"];
-    UIImage *playclickbgImage = [UIImage imageNamed:@"btn_preset_s_click.png"];
+    UIImage *bgImage;
+    UIImage *disbgImage;
+    UIImage *playbgImage;
+    UIImage *playdisbgImage;
+    UIImage *playclickbgImage;
+    UIImage *addbgImage;
+    UIImage *adddisbgImage;
     UIButton *PresetaddButton = (id)[self.view viewWithTag:kPrtPlay_Add_Button_tag];
-    UIImage *addbgImage = [UIImage imageNamed:@"btn_add.png"];
-    UIImage *adddisbgImage = [UIImage imageNamed:@"btn_add_dis.png"];
     NSString *PresetListId = [[NSString alloc] initWithFormat:@"%d",uiFAVEX_MENU];
     NSInteger tag,itemcnt,playtag;
     UIButton *PresetButton,*PrtPlayButton;
@@ -1428,6 +1475,30 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     BIDItemCell *itemCell;
     
     NSLog(@"presetBtn_update: clickNo=%@",clickNo);
+    
+    //Modified for support multi ios device.  @Jeanne. 2014.03.21
+    if ([self.CuriosDevice isEqualToString:@"ipad"])
+    {
+        bgImage = [UIImage imageNamed:@"btn_preset_h_ipad.png"];
+        disbgImage = [UIImage imageNamed:@"btn_preset_h_dis_ipad.png"];
+        playbgImage = [UIImage imageNamed:@"btn_preset_s_ipad.png"];
+        playdisbgImage = [UIImage imageNamed:@"btn_preset_s_dis_ipad.png"];
+        playclickbgImage = [UIImage imageNamed:@"btn_preset_s_click.png"];   //to process ????
+        addbgImage = [UIImage imageNamed:@"btn_add_ipad.png"];
+        adddisbgImage = [UIImage imageNamed:@"btn_add_dis_ipad.png"];
+        
+    }
+    else
+    {
+        bgImage = [UIImage imageNamed:@"btn_preset_h.png"];
+        disbgImage = [UIImage imageNamed:@"btn_preset_h_dis.png"];
+        playbgImage = [UIImage imageNamed:@"btn_preset_s.png"];
+        playdisbgImage = [UIImage imageNamed:@"btn_preset_s_dis.png"];
+        playclickbgImage = [UIImage imageNamed:@"btn_preset_s_click.png"];
+        addbgImage = [UIImage imageNamed:@"btn_add.png"];
+        adddisbgImage = [UIImage imageNamed:@"btn_add_dis.png"];
+        
+    }
 
     itemcnt =[PresetItems count];
         
@@ -1750,7 +1821,15 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
         else
         {
             UIButton *Custombtn;
-            UIImage *infoImage = [UIImage imageNamed:@"info.png"];
+            UIImage *infoImage;
+            //Modified for support multi ios device.  @Jeanne. 2014.03.21
+            if ([self.CuriosDevice isEqualToString:@"ipad"])
+            {
+                infoImage = [UIImage imageNamed:@"info_ipad.png"];
+            }
+            else{
+                infoImage = [UIImage imageNamed:@"info.png"];
+            }
             Custombtn = [UIButton buttonWithType:UIButtonTypeCustom];
             CGRect frame = CGRectMake(0.0, 0.0, infoImage.size.width, infoImage.size.height);
             Custombtn.frame = frame;
@@ -1769,7 +1848,7 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
         cell.accessoryView= nil;
        if ([itemCell.status isEqualToString:@"content"])
        {
-          cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator; //info button (i)
+          cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator; // '>'
        }
        else
        {
@@ -1781,30 +1860,48 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     {//In main menu, add icon
         int sub_id = [itemCell.submenuId intValue];
         UIImage *image;
-        switch (sub_id) {
-            case uiLOCATIONRADIO_MENU:
-                //NSLog(@"Location menu item\n");
-                image = [UIImage imageNamed:@"LocalRadio_icon.png"];
-                cell.imageView.image = image;
-                break;
-            case uiINTERNET_RADIO_MENU:
-                //NSLog(@"radio menu item\n");
-                image = [UIImage imageNamed:@"Radio_icon.png"];
-                cell.imageView.image = image;
-                break;
-            case uiUPNP_MENU:
-                //NSLog(@"mediaCenter menu item\n");
-                image = [UIImage imageNamed:@"MediaCenter_icon.png"];
-                cell.imageView.image = image;
-                break;
-        }
+
         
         //Modified for support multi ios device.  @Jeanne. 2014.03.21
         if ([self.CuriosDevice isEqualToString:@"ipad"])
         {
+            switch (sub_id) {
+                case uiLOCATIONRADIO_MENU:
+                    //NSLog(@"Location menu item\n");
+                    image = [UIImage imageNamed:@"LocalRadio_icon_ipad.png"];
+                    cell.imageView.image = image;
+                    break;
+                case uiINTERNET_RADIO_MENU:
+                    //NSLog(@"radio menu item\n");
+                    image = [UIImage imageNamed:@"Radio_icon_ipad.png"];
+                    cell.imageView.image = image;
+                    break;
+                case uiUPNP_MENU:
+                    //NSLog(@"mediaCenter menu item\n");
+                    image = [UIImage imageNamed:@"MediaCenter_icon_ipad.png"];
+                    cell.imageView.image = image;
+                    break;
+            }
             bgImage = [UIImage imageNamed:@"mainbar_bg_ipad"];
         }
         else{
+            switch (sub_id) {
+                case uiLOCATIONRADIO_MENU:
+                    //NSLog(@"Location menu item\n");
+                    image = [UIImage imageNamed:@"LocalRadio_icon.png"];
+                    cell.imageView.image = image;
+                    break;
+                case uiINTERNET_RADIO_MENU:
+                    //NSLog(@"radio menu item\n");
+                    image = [UIImage imageNamed:@"Radio_icon.png"];
+                    cell.imageView.image = image;
+                    break;
+                case uiUPNP_MENU:
+                    //NSLog(@"mediaCenter menu item\n");
+                    image = [UIImage imageNamed:@"MediaCenter_icon.png"];
+                    cell.imageView.image = image;
+                    break;
+            }
             bgImage = [UIImage imageNamed:@"mainbar_bg"];
         }
     }
@@ -1812,34 +1909,57 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     {//in ineternet radio
         int sub_id = [itemCell.submenuId intValue];
         UIImage *image;
-        switch (sub_id) {
-            case uiFAVEX_MENU:
-                image = [UIImage imageNamed:@"MyFavorite.png"];
-                cell.imageView.image = image;
-                break;
-            case uiRADIO_MUSICEX_MENU:
-                image = [UIImage imageNamed:@"RadioMusic.png"];
-                cell.imageView.image = image;
-                break;
-            case uiLOCATIONRADIO_MENU:
-                image = [UIImage imageNamed:@"LocalRadio.png"];
-                cell.imageView.image = image;
-                break;
-            case uiLAST_IRADIO_MENU:
-                image = [UIImage imageNamed:@"History.png"];
-                cell.imageView.image = image;
-                break;
-            case uiNEWSEARCHRADIOEX_MENU:
-                image = [UIImage imageNamed:@"Service.png"];
-                cell.imageView.image = image;
-                break;
-        }
+
         //Modified for support multi ios device.  @Jeanne. 2014.03.21
         if ([self.CuriosDevice isEqualToString:@"ipad"])
         {
+            switch (sub_id) {
+                case uiFAVEX_MENU:
+                    image = [UIImage imageNamed:@"MyFavorite_ipad.png"];
+                    cell.imageView.image = image;
+                    break;
+                case uiRADIO_MUSICEX_MENU:
+                    image = [UIImage imageNamed:@"RadioMusic_ipad.png"];
+                    cell.imageView.image = image;
+                    break;
+                case uiLOCATIONRADIO_MENU:
+                    image = [UIImage imageNamed:@"LocalRadio_ipad.png"];
+                    cell.imageView.image = image;
+                    break;
+                case uiLAST_IRADIO_MENU:
+                    image = [UIImage imageNamed:@"History_ipad.png"];
+                    cell.imageView.image = image;
+                    break;
+                case uiNEWSEARCHRADIOEX_MENU:
+                    image = [UIImage imageNamed:@"Service_ipad.png"];
+                    cell.imageView.image = image;
+                    break;
+            }
             bgImage = [UIImage imageNamed:@"bar_bg_ipad"];
         }
         else{
+            switch (sub_id) {
+                case uiFAVEX_MENU:
+                    image = [UIImage imageNamed:@"MyFavorite.png"];
+                    cell.imageView.image = image;
+                    break;
+                case uiRADIO_MUSICEX_MENU:
+                    image = [UIImage imageNamed:@"RadioMusic.png"];
+                    cell.imageView.image = image;
+                    break;
+                case uiLOCATIONRADIO_MENU:
+                    image = [UIImage imageNamed:@"LocalRadio.png"];
+                    cell.imageView.image = image;
+                    break;
+                case uiLAST_IRADIO_MENU:
+                    image = [UIImage imageNamed:@"History.png"];
+                    cell.imageView.image = image;
+                    break;
+                case uiNEWSEARCHRADIOEX_MENU:
+                    image = [UIImage imageNamed:@"Service.png"];
+                    cell.imageView.image = image;
+                    break;
+            }
             bgImage = [UIImage imageNamed:@"bar_bg"];
         }
     }
@@ -1883,6 +2003,19 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
 }//tableView:tableView cellForRowAtIndexPath:indexPath
 
 #pragma mark -Table View Delegate Methods
+
+//调整缩进 @Jeanne. 2014.03.25
+-(NSInteger) tableView:(UITableView *)tableView indentationLevelForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([self.CuriosDevice isEqualToString:@"ipad"])
+    {
+        return 2;
+    }
+    else{
+        return 0;
+    }
+}
+
 
 //Add for del fav.  @Jeanne. 2014.03.17
 //tableView accessoryButtonTappedForRowWithIndexPath:单击细节展开按钮后调用的方法

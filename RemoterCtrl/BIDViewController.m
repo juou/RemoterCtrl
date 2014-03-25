@@ -810,7 +810,7 @@ static NSMutableString *m_id;
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    UIImage *bgImage= [UIImage imageNamed:@"bar_bg"];
+    UIImage *bgImage;
     NSString *str;
     NSString *poskey = [NSString stringWithFormat:@"%ld",(long)indexPath.row];
     
@@ -823,22 +823,39 @@ static NSMutableString *m_id;
     cell.textLabel.text = str;
     cell.textLabel.textColor = [UIColor colorWithRed:255 green:255 blue:255 alpha:1];
     cell.textLabel.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
-    cell.backgroundColor = [UIColor colorWithPatternImage:bgImage];
+    
     
     //Modified for support multi ios device.  @Jeanne. 2014.03.21
     if ([self.CuriosDevice isEqualToString:@"ipad"])
     {
+        bgImage = [UIImage imageNamed:@"bar_bg_ipad"];
         cell.textLabel.font = [UIFont systemFontOfSize:30];
     }
     else{
+        bgImage= [UIImage imageNamed:@"bar_bg"];
         cell.textLabel.font = [UIFont systemFontOfSize:17];
     }
+    cell.backgroundColor = [UIColor colorWithPatternImage:bgImage];
     //cell.textLabel.font = [UIFont systemFontOfSize:17];
 
     return cell;
 }//tableView:tableView cellForRowAtIndexPath:indexPath
 
 #pragma mark -Table View Delegate Methods
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //Modified for support multi ios device.  @Jeanne. 2014.03.21
+    if ([self.CuriosDevice isEqualToString:@"ipad"])
+    {
+        return 96;
+    }
+    else{
+        return 48;
+    }
+    
+    
+}
 
 //tableView didSelectRowAtIndexPath:会在一行被选中时调用，告诉用户要单击细节展开按钮而不是选中行
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

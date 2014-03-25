@@ -21,9 +21,9 @@
 	<key>ENTERPW</key>
 	<string>Skriv inn nøkkelord.</string>
 	<key>DLNANAME</key>
-	<string>DLNA navn</string>
+	<string>DLNA-navn</string>
 	<key>CHANGEDLNANAME</key>
-	<string>Endre DLNA navn</string>
+	<string>Endre DLNA-navn</string>
 	<key>SAVE</key>
 	<string>Lagre</string>
 	<key>IRSWUPDATE</key>
@@ -65,7 +65,7 @@
 	<key>NO</key>
 	<string>Nei</string>
 	<key>FULL_REMIND</key>
-	<string>My Favorite list is full.</string>
+	<string>Min favorittliste er full</string>
 	<key>NOSUCHSTATION_REMIND</key>
 	<string>Ingen stasjonsdata</string>
 	<key>ADDFAIL_REMIND</key>

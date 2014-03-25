@@ -16,8 +16,8 @@
             <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="start_ipad.png" translatesAutoresizingMaskIntoConstraints="NO" id="qQE-vr-s9Z">
-                    <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bar_play_bottom.png" translatesAutoresizingMaskIntoConstraints="NO" id="qQE-vr-s9Z">
+                    <rect key="frame" x="0.0" y="0.0" width="768" height="117"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="idU-4W-sWZ">
@@ -51,7 +51,7 @@
                     <rect key="frame" x="253" y="249" width="262" height="204"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
-                <imageView userInteractionEnabled="NO" tag="8" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="radio.png" translatesAutoresizingMaskIntoConstraints="NO" id="vih-p1-tMY">
+                <imageView userInteractionEnabled="NO" tag="8" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="radio_ipad.png" translatesAutoresizingMaskIntoConstraints="NO" id="vih-p1-tMY">
                     <rect key="frame" x="255" y="251" width="258" height="200"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
@@ -102,9 +102,9 @@
                     </connections>
                 </slider>
                 <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GRc-et-sSe">
-                    <rect key="frame" x="180" y="940" width="66" height="66"/>
+                    <rect key="frame" x="178" y="945" width="60" height="60"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" image="vol.png">
+                    <state key="normal" image="vol_ipad.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
@@ -133,7 +133,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" tag="20" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FdH-wn-cir">
-                    <rect key="frame" x="0.0" y="890" width="153" height="85"/>
+                    <rect key="frame" x="0.0" y="890" width="154" height="85"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="28"/>
                     <state key="normal" title="    1     ">
@@ -151,7 +151,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" tag="21" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K6u-Uc-gAh">
-                    <rect key="frame" x="153" y="890" width="153" height="85"/>
+                    <rect key="frame" x="154" y="890" width="153" height="85"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="28"/>
                     <state key="normal" title="2">
@@ -163,7 +163,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" tag="22" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QiD-Mk-agb">
-                    <rect key="frame" x="306" y="890" width="153" height="85"/>
+                    <rect key="frame" x="307" y="890" width="154" height="85"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="28"/>
                     <state key="normal" title="3">
@@ -175,7 +175,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" tag="23" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LlS-1s-1lU">
-                    <rect key="frame" x="459" y="890" width="153" height="85"/>
+                    <rect key="frame" x="461" y="890" width="153" height="85"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="28"/>
                     <state key="normal" title="4">
@@ -187,7 +187,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" tag="24" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hex-56-Slm">
-                    <rect key="frame" x="612" y="890" width="156" height="85"/>
+                    <rect key="frame" x="614" y="890" width="154" height="85"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="28"/>
                     <state key="normal" title="5">
@@ -230,7 +230,7 @@
                     <rect key="frame" x="0.0" y="838" width="128" height="85"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="28"/>
-                    <state key="normal" title="1" backgroundImage="btn_preset_s.png">
+                    <state key="normal" title="1" backgroundImage="btn_preset_s_ipad.png">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -242,7 +242,7 @@
                     <rect key="frame" x="128" y="838" width="128" height="85"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="28"/>
-                    <state key="normal" title="2" backgroundImage="btn_preset_s.png">
+                    <state key="normal" title="2" backgroundImage="btn_preset_s_ipad.png">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -254,7 +254,7 @@
                     <rect key="frame" x="256" y="838" width="128" height="85"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="28"/>
-                    <state key="normal" title="3" backgroundImage="btn_preset_s.png">
+                    <state key="normal" title="3" backgroundImage="btn_preset_s_ipad.png">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -266,7 +266,7 @@
                     <rect key="frame" x="384" y="838" width="128" height="84"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="28"/>
-                    <state key="normal" title="4" backgroundImage="btn_preset_s.png">
+                    <state key="normal" title="4" backgroundImage="btn_preset_s_ipad.png">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -278,7 +278,7 @@
                     <rect key="frame" x="512" y="838" width="128" height="85"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="28"/>
-                    <state key="normal" title="5" backgroundImage="btn_preset_s.png">
+                    <state key="normal" title="5" backgroundImage="btn_preset_s_ipad.png">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -289,7 +289,7 @@
                 <button opaque="NO" tag="33" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E5C-MC-xey">
                     <rect key="frame" x="640" y="838" width="128" height="85"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" backgroundImage="btn_add.png">
+                    <state key="normal" backgroundImage="btn_add_ipad.png">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -350,14 +350,13 @@
         <image name="bar_play_bottom.png" width="10" height="200"/>
         <image name="bar_play_middle.png" width="10" height="730"/>
         <image name="bar_play_top.png" width="10" height="120"/>
-        <image name="btn_add.png" width="55" height="42"/>
+        <image name="btn_add_ipad.png" width="128" height="85"/>
         <image name="btn_back.png" width="100" height="70"/>
-        <image name="btn_preset_s.png" width="53" height="42"/>
+        <image name="btn_preset_s_ipad.png" width="128" height="85"/>
         <image name="btn_stop.png" width="240" height="200"/>
-        <image name="radio.png" width="208" height="160"/>
         <image name="radio_bk.png" width="262" height="204"/>
+        <image name="radio_ipad.png" width="255" height="195"/>
         <image name="search_ipad.png" width="122" height="122"/>
-        <image name="start_ipad.png" width="768" height="1024"/>
-        <image name="vol.png" width="32" height="32"/>
+        <image name="vol_ipad.png" width="60" height="60"/>
     </resources>
 </document>

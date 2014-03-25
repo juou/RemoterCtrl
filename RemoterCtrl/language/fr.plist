@@ -23,7 +23,7 @@
 	<key>DLNANAME</key>
 	<string>Nom DLNA</string>
 	<key>CHANGEDLNANAME</key>
-	<string>Modifier nom DLNA</string>
+	<string>Modifier le nom DLNA</string>
 	<key>SAVE</key>
 	<string>Sauvegarder</string>
 	<key>IRSWUPDATE</key>
@@ -65,7 +65,7 @@
 	<key>NO</key>
 	<string>Non</string>
 	<key>FULL_REMIND</key>
-	<string>My Favorite list is full.</string>
+	<string>La liste Mes favoris est pleine</string>
 	<key>NOSUCHSTATION_REMIND</key>
 	<string>Aucune donnée pour la station</string>
 	<key>ADDFAIL_REMIND</key>

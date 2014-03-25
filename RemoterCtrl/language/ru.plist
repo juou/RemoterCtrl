@@ -21,9 +21,9 @@
 	<key>ENTERPW</key>
 	<string>Введите ключевое слово.</string>
 	<key>DLNANAME</key>
-	<string>Имя DLNA</string>
+	<string>Имени DLNA</string>
 	<key>CHANGEDLNANAME</key>
-	<string>Переименовать DLNA</string>
+	<string>Смена имени DLNA</string>
 	<key>SAVE</key>
 	<string>Сохранить</string>
 	<key>IRSWUPDATE</key>
@@ -65,7 +65,7 @@
 	<key>NO</key>
 	<string>Нет</string>
 	<key>FULL_REMIND</key>
-	<string>My Favorite list is full.</string>
+	<string>Список «Любимые» заполнен</string>
 	<key>NOSUCHSTATION_REMIND</key>
 	<string>Нет станций</string>
 	<key>ADDFAIL_REMIND</key>

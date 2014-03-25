@@ -21,9 +21,9 @@
 	<key>ENTERPW</key>
 	<string>Indtast søgeord.</string>
 	<key>DLNANAME</key>
-	<string>DLNA navn</string>
+	<string>DLNA-navn</string>
 	<key>CHANGEDLNANAME</key>
-	<string>Skift DLNA navn</string>
+	<string>Skift DLNA-navn</string>
 	<key>SAVE</key>
 	<string>Gem</string>
 	<key>IRSWUPDATE</key>
@@ -65,7 +65,7 @@
 	<key>NO</key>
 	<string>Nej</string>
 	<key>FULL_REMIND</key>
-	<string>My Favorite list is full.</string>
+	<string>Listen over Foretrukne er fuld</string>
 	<key>NOSUCHSTATION_REMIND</key>
 	<string>Ingen stationsdata</string>
 	<key>ADDFAIL_REMIND</key>

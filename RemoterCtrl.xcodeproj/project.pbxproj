@@ -32,6 +32,17 @@
 		945F11F5189547E7008BF222 /* btn_stop.png in Resources */ = {isa = PBXBuildFile; fileRef = 945F11F4189547E7008BF222 /* btn_stop.png */; };
 		945F11F7189548AF008BF222 /* bar_play_bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 945F11F6189548AF008BF222 /* bar_play_bottom.png */; };
 		945F11F918954E24008BF222 /* bar_play_top.png in Resources */ = {isa = PBXBuildFile; fileRef = 945F11F818954E24008BF222 /* bar_play_top.png */; };
+		945FA03418E112A300E95BAE /* info_ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 945FA03318E112A300E95BAE /* info_ipad.png */; };
+		945FA03918E1493D00E95BAE /* dlnarename_bg_ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 945FA03518E1493D00E95BAE /* dlnarename_bg_ipad.png */; };
+		945FA03A18E1493D00E95BAE /* radio_ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 945FA03618E1493D00E95BAE /* radio_ipad.png */; };
+		945FA03B18E1493D00E95BAE /* mute_ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 945FA03718E1493D00E95BAE /* mute_ipad.png */; };
+		945FA03C18E1493D00E95BAE /* vol_ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 945FA03818E1493D00E95BAE /* vol_ipad.png */; };
+		945FA04318E1496300E95BAE /* btn_add_ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 945FA03D18E1496300E95BAE /* btn_add_ipad.png */; };
+		945FA04418E1496300E95BAE /* btn_add_dis_ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 945FA03E18E1496300E95BAE /* btn_add_dis_ipad.png */; };
+		945FA04518E1496300E95BAE /* btn_preset_h_ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 945FA03F18E1496300E95BAE /* btn_preset_h_ipad.png */; };
+		945FA04618E1496300E95BAE /* btn_preset_h_dis_ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 945FA04018E1496300E95BAE /* btn_preset_h_dis_ipad.png */; };
+		945FA04718E1496300E95BAE /* btn_preset_s_ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 945FA04118E1496300E95BAE /* btn_preset_s_ipad.png */; };
+		945FA04818E1496300E95BAE /* btn_preset_s_dis_ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 945FA04218E1496300E95BAE /* btn_preset_s_dis_ipad.png */; };
 		9463FE0418D6DEF50025A803 /* info.png in Resources */ = {isa = PBXBuildFile; fileRef = 9463FE0318D6DEF50025A803 /* info.png */; };
 		9467E5A218E03B7E0005D339 /* wifi_setting_ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9467E59518E03B7E0005D339 /* wifi_setting_ipad.png */; };
 		9467E5A318E03B7E0005D339 /* Service_ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9467E59618E03B7E0005D339 /* Service_ipad.png */; };
@@ -54,7 +65,6 @@
 		9475DC7C188E1CA100AD1792 /* bar_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 9475DC7B188E1CA100AD1792 /* bar_bg.png */; };
 		9475DC8C188E4D0000AD1792 /* config.png in Resources */ = {isa = PBXBuildFile; fileRef = 9475DC8B188E4D0000AD1792 /* config.png */; };
 		9475DC8E188E4F1500AD1792 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 9475DC8D188E4F1500AD1792 /* play.png */; };
-		9475DC90188E657A00AD1792 /* left.png in Resources */ = {isa = PBXBuildFile; fileRef = 9475DC8F188E657A00AD1792 /* left.png */; };
 		947C675E18D40B0100E70B7F /* de.plist in Resources */ = {isa = PBXBuildFile; fileRef = 947C675D18D40B0100E70B7F /* de.plist */; };
 		947C676118D40B0A00E70B7F /* en.plist in Resources */ = {isa = PBXBuildFile; fileRef = 947C675F18D40B0A00E70B7F /* en.plist */; };
 		947C676218D40B0A00E70B7F /* fr.plist in Resources */ = {isa = PBXBuildFile; fileRef = 947C676018D40B0A00E70B7F /* fr.plist */; };
@@ -89,7 +99,6 @@
 		94B2A20B18C480D400EFBC25 /* btn_msg.png in Resources */ = {isa = PBXBuildFile; fileRef = 94B2A20A18C480D400EFBC25 /* btn_msg.png */; };
 		94B2A20D18C4B9B500EFBC25 /* left_tab.png in Resources */ = {isa = PBXBuildFile; fileRef = 94B2A20C18C4B9B500EFBC25 /* left_tab.png */; };
 		94B3752F187E9585007E1975 /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 94B3752E187E9585007E1975 /* home.png */; };
-		94B37531187E9700007E1975 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 94B37530187E9700007E1975 /* star.png */; };
 		94BBDC8B18B495990005DF5B /* libupnpx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94BBDC8A18B495990005DF5B /* libupnpx.a */; };
 		94BBDC8D18B495F80005DF5B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94BBDC8C18B495F80005DF5B /* AudioToolbox.framework */; };
 		94BC632E187BA7E50038D7C4 /* BIDSubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BC632C187BA7E50038D7C4 /* BIDSubViewController.m */; };
@@ -171,6 +180,17 @@
 		945F11F4189547E7008BF222 /* btn_stop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_stop.png; sourceTree = "<group>"; };
 		945F11F6189548AF008BF222 /* bar_play_bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bar_play_bottom.png; sourceTree = "<group>"; };
 		945F11F818954E24008BF222 /* bar_play_top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bar_play_top.png; sourceTree = "<group>"; };
+		945FA03318E112A300E95BAE /* info_ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = info_ipad.png; sourceTree = "<group>"; };
+		945FA03518E1493D00E95BAE /* dlnarename_bg_ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dlnarename_bg_ipad.png; sourceTree = "<group>"; };
+		945FA03618E1493D00E95BAE /* radio_ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = radio_ipad.png; sourceTree = "<group>"; };
+		945FA03718E1493D00E95BAE /* mute_ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mute_ipad.png; sourceTree = "<group>"; };
+		945FA03818E1493D00E95BAE /* vol_ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vol_ipad.png; sourceTree = "<group>"; };
+		945FA03D18E1496300E95BAE /* btn_add_ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_add_ipad.png; sourceTree = "<group>"; };
+		945FA03E18E1496300E95BAE /* btn_add_dis_ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_add_dis_ipad.png; sourceTree = "<group>"; };
+		945FA03F18E1496300E95BAE /* btn_preset_h_ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_preset_h_ipad.png; sourceTree = "<group>"; };
+		945FA04018E1496300E95BAE /* btn_preset_h_dis_ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_preset_h_dis_ipad.png; sourceTree = "<group>"; };
+		945FA04118E1496300E95BAE /* btn_preset_s_ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_preset_s_ipad.png; sourceTree = "<group>"; };
+		945FA04218E1496300E95BAE /* btn_preset_s_dis_ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_preset_s_dis_ipad.png; sourceTree = "<group>"; };
 		9463FE0318D6DEF50025A803 /* info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = info.png; sourceTree = "<group>"; };
 		9467E59518E03B7E0005D339 /* wifi_setting_ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wifi_setting_ipad.png; sourceTree = "<group>"; };
 		9467E59618E03B7E0005D339 /* Service_ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Service_ipad.png; sourceTree = "<group>"; };
@@ -193,7 +213,6 @@
 		9475DC7B188E1CA100AD1792 /* bar_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bar_bg.png; sourceTree = "<group>"; };
 		9475DC8B188E4D0000AD1792 /* config.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = config.png; sourceTree = "<group>"; };
 		9475DC8D188E4F1500AD1792 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
-		9475DC8F188E657A00AD1792 /* left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = left.png; sourceTree = "<group>"; };
 		947C675D18D40B0100E70B7F /* de.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = de.plist; path = language/de.plist; sourceTree = "<group>"; };
 		947C675F18D40B0A00E70B7F /* en.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = en.plist; path = language/en.plist; sourceTree = "<group>"; };
 		947C676018D40B0A00E70B7F /* fr.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = fr.plist; path = language/fr.plist; sourceTree = "<group>"; };
@@ -229,7 +248,6 @@
 		94B2A20A18C480D400EFBC25 /* btn_msg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_msg.png; sourceTree = "<group>"; };
 		94B2A20C18C4B9B500EFBC25 /* left_tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = left_tab.png; sourceTree = "<group>"; };
 		94B3752E187E9585007E1975 /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
-		94B37530187E9700007E1975 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
 		94BBDC8A18B495990005DF5B /* libupnpx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libupnpx.a; path = "../Library/Developer/Xcode/DerivedData/Remoter-gmngbfwyysfhmyerbetubvdzvflo/Build/Products/Debug-iphoneos/libupnpx.a"; sourceTree = "<group>"; };
 		94BBDC8C18B495F80005DF5B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		94BBDC8E18B495F80005DF5B /* RemoterCtrl.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = RemoterCtrl.entitlements; sourceTree = "<group>"; };
@@ -370,6 +388,17 @@
 		94B3752D187E9585007E1975 /* icon */ = {
 			isa = PBXGroup;
 			children = (
+				945FA03D18E1496300E95BAE /* btn_add_ipad.png */,
+				945FA03E18E1496300E95BAE /* btn_add_dis_ipad.png */,
+				945FA03F18E1496300E95BAE /* btn_preset_h_ipad.png */,
+				945FA04018E1496300E95BAE /* btn_preset_h_dis_ipad.png */,
+				945FA04118E1496300E95BAE /* btn_preset_s_ipad.png */,
+				945FA04218E1496300E95BAE /* btn_preset_s_dis_ipad.png */,
+				945FA03518E1493D00E95BAE /* dlnarename_bg_ipad.png */,
+				945FA03618E1493D00E95BAE /* radio_ipad.png */,
+				945FA03718E1493D00E95BAE /* mute_ipad.png */,
+				945FA03818E1493D00E95BAE /* vol_ipad.png */,
+				945FA03318E112A300E95BAE /* info_ipad.png */,
 				9467E5B818E045DD0005D339 /* search_ipad.png */,
 				9467E5BC18E0651B0005D339 /* bar_bg_ipad.png */,
 				9467E5AF18E040A80005D339 /* mainbar_bg_ipad.png */,
@@ -436,11 +465,9 @@
 				945F11F218953D6E008BF222 /* mute.png */,
 				945F11F01894ECB6008BF222 /* vol.png */,
 				9475DC8D188E4F1500AD1792 /* play.png */,
-				9475DC8F188E657A00AD1792 /* left.png */,
 				9475DC8B188E4D0000AD1792 /* config.png */,
 				9475DC7B188E1CA100AD1792 /* bar_bg.png */,
 				9475DC79188E0E4A00AD1792 /* bk_list.png */,
-				94B37530187E9700007E1975 /* star.png */,
 				94B3752E187E9585007E1975 /* home.png */,
 				9441D9381895ECF50034D528 /* radio_bk.png */,
 			);
@@ -692,11 +719,12 @@
 				94A47D3118DC1E8500CCB80A /* Main_iphone4.xib in Resources */,
 				94A47D3918DC49F600CCB80A /* BIDSubViewController_ipad.xib in Resources */,
 				947C676618D415A800E70B7F /* sv.plist in Resources */,
+				945FA03B18E1493D00E95BAE /* mute_ipad.png in Resources */,
 				94A47D1E18DC0B1100CCB80A /* BIDConfigViewController_iphone4.xib in Resources */,
+				945FA04518E1496300E95BAE /* btn_preset_h_ipad.png in Resources */,
 				943CFF5F18C851D900FB81F6 /* icon_40.png in Resources */,
 				94C840B8188654BF0050730A /* icon_80.png in Resources */,
 				9475DC8E188E4F1500AD1792 /* play.png in Resources */,
-				9475DC90188E657A00AD1792 /* left.png in Resources */,
 				9467E5AE18E03B7E0005D339 /* start_ipad.png in Resources */,
 				94B122FB18A9C3BD00CA3FF0 /* Service.png in Resources */,
 				94B122FF18A9FCE400CA3FF0 /* bar_notice.png in Resources */,
@@ -711,9 +739,10 @@
 				943C4DF718A8763A00643A7A /* BIDConfigViewController.xib in Resources */,
 				94A47D2D18DC118400CCB80A /* icon_50.png in Resources */,
 				9467E5AD18E03B7E0005D339 /* MediaCenter_icon_ipad.png in Resources */,
+				945FA04818E1496300E95BAE /* btn_preset_s_dis_ipad.png in Resources */,
 				94F7DA90187A9CBE0008A500 /* 37x-Checkmark.png in Resources */,
 				94B122F918A9C3BD00CA3FF0 /* MyFavorite.png in Resources */,
-				94B37531187E9700007E1975 /* star.png in Resources */,
+				945FA04718E1496300E95BAE /* btn_preset_s_ipad.png in Resources */,
 				9441D9351895EBDD0034D528 /* album.png in Resources */,
 				947C675E18D40B0100E70B7F /* de.plist in Resources */,
 				945F11F318953D6E008BF222 /* mute.png in Resources */,
@@ -732,6 +761,7 @@
 				94B122F818A9C3BD00CA3FF0 /* LocalRadio.png in Resources */,
 				943C4E0518A9007500643A7A /* btn_add_dis.png in Resources */,
 				94B3752F187E9585007E1975 /* home.png in Resources */,
+				945FA03418E112A300E95BAE /* info_ipad.png in Resources */,
 				943C4E0718A9007500643A7A /* btn_preset_h_dis.png in Resources */,
 				943C4E0818A9007500643A7A /* btn_preset_s_dis.png in Resources */,
 				94A47D3518DC418900CCB80A /* start_320x480.png in Resources */,
@@ -739,10 +769,15 @@
 				9475DC7A188E0E4A00AD1792 /* bk_list.png in Resources */,
 				943C4DFE18A8DD0500643A7A /* btn_preset_s.png in Resources */,
 				9467E5A918E03B7E0005D339 /* config_ipad.png in Resources */,
+				945FA04618E1496300E95BAE /* btn_preset_h_dis_ipad.png in Resources */,
 				9467E5A318E03B7E0005D339 /* Service_ipad.png in Resources */,
+				945FA04318E1496300E95BAE /* btn_add_ipad.png in Resources */,
 				943C4E0018A8DD1300643A7A /* btn_preset_h.png in Resources */,
+				945FA04418E1496300E95BAE /* btn_add_dis_ipad.png in Resources */,
 				9467E5A418E03B7E0005D339 /* History_ipad.png in Resources */,
+				945FA03918E1493D00E95BAE /* dlnarename_bg_ipad.png in Resources */,
 				94B122F718A9C3BD00CA3FF0 /* History.png in Resources */,
+				945FA03C18E1493D00E95BAE /* vol_ipad.png in Resources */,
 				9463FE0418D6DEF50025A803 /* info.png in Resources */,
 				94D09A0A1898C5070099F90C /* MediaCenter_icon.png in Resources */,
 				9467E5B918E045DD0005D339 /* search_ipad.png in Resources */,
@@ -756,6 +791,7 @@
 				94F7DA91187A9CBE0008A500 /* 37x-Checkmark@2x.png in Resources */,
 				94BC632F187BA7E50038D7C4 /* BIDSubViewController.xib in Resources */,
 				943CFF6018C851D900FB81F6 /* icon_76.png in Resources */,
+				945FA03A18E1493D00E95BAE /* radio_ipad.png in Resources */,
 				94CCD41718C59D22005BEB2D /* wifi_setting.png in Resources */,
 				94D09A061898A0A90099F90C /* LocalRadio_icon.png in Resources */,
 				94D09A081898A0A90099F90C /* Radio_icon.png in Resources */,
@@ -950,7 +986,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "EB94992A-25F6-47F1-89B5-7BF827524F4C";
+				PROVISIONING_PROFILE = "686DB253-FCE3-446C-B968-F425DE802880";
 				SEPARATE_STRIP = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "./src/api ./src/port/ios";
@@ -985,7 +1021,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "EB94992A-25F6-47F1-89B5-7BF827524F4C";
+				PROVISIONING_PROFILE = "686DB253-FCE3-446C-B968-F425DE802880";
 				SEPARATE_STRIP = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "./src/api ./src/port/ios";

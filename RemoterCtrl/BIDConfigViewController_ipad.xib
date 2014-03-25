@@ -15,8 +15,8 @@
             <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="start_ipad.png" translatesAutoresizingMaskIntoConstraints="NO" id="CEn-Xs-6YF">
-                    <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bar_play_bottom.png" translatesAutoresizingMaskIntoConstraints="NO" id="CEn-Xs-6YF">
+                    <rect key="frame" x="0.0" y="0.0" width="768" height="117"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J0l-aL-Q1R">
@@ -120,7 +120,7 @@
                 <button hidden="YES" opaque="NO" alpha="0.64999999999999969" tag="208" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UBm-J9-KtV">
                     <rect key="frame" x="0.0" y="117" width="768" height="907"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.47282608695652173" green="0.47282608695652173" blue="0.47282608695652173" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <state key="normal">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -129,19 +129,19 @@
                         <action selector="textFieldDoneEditing:" destination="-1" eventType="touchUpInside" id="e2v-qH-gZs"/>
                     </connections>
                 </button>
-                <imageView hidden="YES" userInteractionEnabled="NO" tag="209" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="dlnarename_bg.png" translatesAutoresizingMaskIntoConstraints="NO" id="3Jx-ZV-Kxx">
-                    <rect key="frame" x="0.0" y="200" width="768" height="420"/>
+                <imageView hidden="YES" userInteractionEnabled="NO" tag="209" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="dlnarename_bg_ipad.png" translatesAutoresizingMaskIntoConstraints="NO" id="3Jx-ZV-Kxx">
+                    <rect key="frame" x="84" y="200" width="600" height="380"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
                 <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="210" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Change DLNA Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sjA-Fx-yeD">
-                    <rect key="frame" x="60" y="238" width="600" height="50"/>
+                    <rect key="frame" x="100" y="223" width="560" height="50"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="30"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <textField hidden="YES" opaque="NO" clipsSubviews="YES" tag="211" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="test" borderStyle="bezel" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ezT-N6-rM0">
-                    <rect key="frame" x="90" y="380" width="580" height="60"/>
+                <textField hidden="YES" opaque="NO" clipsSubviews="YES" tag="211" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ezT-N6-rM0">
+                    <rect key="frame" x="120" y="360" width="510" height="60"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="32"/>
                     <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="alphabet" returnKeyType="done"/>
@@ -151,8 +151,9 @@
                     </connections>
                 </textField>
                 <button hidden="YES" opaque="NO" tag="212" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fla-7h-IQN">
-                    <rect key="frame" x="120" y="500" width="200" height="60"/>
+                    <rect key="frame" x="130" y="480" width="190" height="55"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="30"/>
                     <state key="normal" title="Save" backgroundImage="btn_msg.png">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -162,8 +163,9 @@
                     </connections>
                 </button>
                 <button hidden="YES" opaque="NO" tag="213" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ok3-jP-aKh">
-                    <rect key="frame" x="440" y="500" width="200" height="60"/>
+                    <rect key="frame" x="430" y="480" width="190" height="55"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="30"/>
                     <state key="normal" title="Cancel" backgroundImage="btn_msg.png">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -178,8 +180,8 @@
         </view>
     </objects>
     <resources>
+        <image name="bar_play_bottom.png" width="10" height="200"/>
         <image name="btn_msg.png" width="200" height="100"/>
-        <image name="dlnarename_bg.png" width="320" height="210"/>
-        <image name="start_ipad.png" width="768" height="1024"/>
+        <image name="dlnarename_bg_ipad.png" width="600" height="380"/>
     </resources>
 </document>
