@@ -17,6 +17,7 @@
 @property (copy, nonatomic) NSMutableString *dlna_name;
 @property (weak, nonatomic) IBOutlet UITextField *rename_field;
 @property (strong, nonatomic) NSMutableDictionary *strs;  //Add for multi languages.  @Jeanne.  2014.03.13
+@property (copy, nonatomic) NSMutableString *IsinDemomode;//Add for demo mode.  @Jeanne. 2014.04.04
 
 -(IBAction)AboutButtonPressed;
 //-(IBAction)WifiButtonPressed;  //move to tab menu.  @Jeanne. 2014.03.03

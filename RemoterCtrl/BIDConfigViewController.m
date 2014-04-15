@@ -117,6 +117,10 @@
 {
     UIButton *dlnaButton =(id)[self.view viewWithTag:kdlnaname_Button_tag];
     NSString *newname = [[NSString alloc] initWithString:[self.rename_field.text stringByReplacingOccurrencesOfString:@" " withString:@"%20"]];
+    
+    //Add for demo mode.  @Jeanne. 2014.04.08
+    if ([self.IsinDemomode isEqualToString:@"NO"]) {
+    
     if (!([self.rename_field.text isEqualToString:@""]))
     {//save the new name to device
         NSString *setdlnanamecmd = [[NSString alloc] initWithFormat:@"/setdlnaname?name=%@",newname];
@@ -140,6 +144,8 @@
          }];
         client.isNeedHUD = [@"YES" mutableCopy];
         //=========================================
+    }
+        
     }
     
     //close the rename menu
@@ -239,6 +245,18 @@
     NSString *OKStr = [self.strs valueForKey:@"OK"]; //Add for multi languages.  @Jeanne.  2014.03.13
     
     
+    //Add for demo mode.  @Jeanne. 2014.04.08
+    if ([self.IsinDemomode isEqualToString:@"YES"]) {
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle:updateStr
+                              message:latestversionStr
+                              delegate:nil
+                              cancelButtonTitle:OKStr
+                              otherButtonTitles:nil];
+        [alert show];
+        
+    }
+    else{
     
     //check new sw
     [client getPath:@"/checknewsw"
@@ -273,6 +291,8 @@
      {
          NSLog(@"Error: %@", error);
      }];
+        
+    }
     
 }
 
@@ -345,41 +365,46 @@
 {
     UIButton *dlnaButton =(id)[self.view viewWithTag:kdlnaname_Button_tag];
     
+    
     //Add for multi languages.  @Jeanne.  2014.03.13
     [self refreshDisplay_forlanguage];
     
-    if (client == nil) {
-        client = [ILHTTPClient clientWithBaseURL:self.toMagicUrl
-                                showingHUDInView:self.view];
+    //Add for demo mode.  @Jeanne. 2014.04.08
+    if ([self.IsinDemomode isEqualToString:@"NO"]) {
+        
+        if (client == nil) {
+            client = [ILHTTPClient clientWithBaseURL:self.toMagicUrl
+                                    showingHUDInView:self.view];
+        }
+        
+        //get dlna name  @Jeanne. 2014.03.03
+        //=========================================
+        client.isNeedHUD = [@"NO" mutableCopy];
+        [client getPath:@"/getdlnaname"
+             parameters:nil
+            loadingText:nil
+            successText:nil
+                success:^(AFHTTPRequestOperation *operation, NSString *response)
+         {
+             NSLog(@"get dlnaname response: %@", response);
+             [self decodedlna_response:response];
+             if (self.dlna_name != nil) {
+                 [dlnaButton setTitle:self.dlna_name forState:UIControlStateNormal];
+             }
+             
+         }
+                failure:^(AFHTTPRequestOperation *operation, NSError *error)
+         {
+             NSLog(@"Error: %@", error);
+             if (self.dlna_name != nil) {
+                 [dlnaButton setTitle:self.dlna_name forState:UIControlStateNormal];
+             }
+         }];
+        client.isNeedHUD = [@"YES" mutableCopy];
+        //=========================================
+        
     }
-    
-    //get dlna name  @Jeanne. 2014.03.03
-    //=========================================
-    client.isNeedHUD = [@"NO" mutableCopy];
-    [client getPath:@"/getdlnaname"
-         parameters:nil
-        loadingText:nil
-        successText:nil
-            success:^(AFHTTPRequestOperation *operation, NSString *response)
-     {
-         NSLog(@"get dlnaname response: %@", response);
-         [self decodedlna_response:response];
-         if (self.dlna_name != nil) {
-             [dlnaButton setTitle:self.dlna_name forState:UIControlStateNormal];
-         }
-         
-     }
-            failure:^(AFHTTPRequestOperation *operation, NSError *error)
-     {
-         NSLog(@"Error: %@", error);
-         if (self.dlna_name != nil) {
-             [dlnaButton setTitle:self.dlna_name forState:UIControlStateNormal];
-         }
-     }];
-    client.isNeedHUD = [@"YES" mutableCopy];
-    //=========================================
-    
-    
+
 }
 
 - (void)viewDidLoad
@@ -388,9 +413,13 @@
     //UIButton *wifiButton =(id)[self.view viewWithTag:kwifi_Button_tag];
     //NSString *wifitext;  //test only @Jeanne.  2014.02.13
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-    client = [ILHTTPClient clientWithBaseURL:self.toMagicUrl
+    
+    //Add for demo mode.  @Jeanne. 2014.04.08
+    if ([self.IsinDemomode isEqualToString:@"NO"]) {
+      // Do any additional setup after loading the view from its nib.
+      client = [ILHTTPClient clientWithBaseURL:self.toMagicUrl
                             showingHUDInView:self.view];
+    }
     
     
 }

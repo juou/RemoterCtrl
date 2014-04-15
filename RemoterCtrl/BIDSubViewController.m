@@ -51,6 +51,14 @@
 
 #define kNOCLOCK     @"NOCLICK"
 
+//Add for demo menu.  @Jeanne. 2014.04.4
+#define DEMO_MAINMENU_CNT       3
+#define DEMO_PRESET_CNT         5
+#define DEMO_LOCAL_CNT          10
+#define DEMO_INTERNET_CNT       5
+#define DEMO_RADIO_CNT          10
+
+
 static NSMutableArray *Items;
 static NSMutableArray *PresetItems;
 static NSString *CellIdentifier = @"Cell";
@@ -86,6 +94,177 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
 
 @implementation BIDSubViewController
 
+//Add for demo menu.  @Jeanne. 2014.04.4
+-(void) getDemomenu: (NSInteger) Menuid
+{
+    UITableView *tableView = (id)[self.view viewWithTag:kMenu_Tableview_tag];
+    UIView *parentView = self.parentViewController.view;
+    UITabBar *tabBar;
+    BIDItemCell *itemCell;
+    NSString *item_subid;
+    NSString *item_status;
+    NSString *item_name;
+    int mainmenu_subid[DEMO_MAINMENU_CNT] = {uiLOCATIONRADIO_MENU,uiINTERNET_RADIO_MENU,uiUPNP_MENU};
+    int internetmenu_subid[DEMO_INTERNET_CNT] = {uiFAVEX_MENU,
+                                                 uiRADIO_MUSICEX_MENU,
+                                                 uiLOCATIONRADIO_MENU,
+                                                 uiLAST_IRADIO_MENU,
+                                                 uiNEWSEARCHRADIOEX_MENU};
+    NSArray *mainmenu_itemnames;
+    NSArray *internetmenu_itemnames;
+    int i;
+    
+    //Add for wifisetting on tabbar.  @Jeanne. 2014.03.04
+    if ([self.wifiSetFlag isEqualToString:@"YES"]) { //include wifi setting
+        tabBar =(id)[parentView viewWithTag:kMain_2_Tabbar_tag];
+    }else{//not include wifi setting
+        tabBar =(id)[parentView viewWithTag:kMain_Tabbar_tag];
+    }
+    
+    mainmenu_itemnames = @[
+                           [self.strs valueForKey:@"LOCAL_RADIO"],
+                           [self.strs valueForKey:@"INTERNET_RADIO"],
+                           [self.strs valueForKey:@"MEDIA_CENTER"],
+                           ];
+    
+    internetmenu_itemnames = @[
+                               [self.strs valueForKey:@"MY_FAV"],
+                               [self.strs valueForKey:@"RADIO_MUSIC"],
+                               [self.strs valueForKey:@"LOCAL_RADIO"],
+                               [self.strs valueForKey:@"HISTORY"],
+                               [self.strs valueForKey:@"SERVICE"],
+                               ];
+    
+    
+    switch (Menuid) {
+        case uiMAIN_MENU:
+            //remove table objects first
+            [Items removeAllObjects];
+            for (i=0; i< DEMO_MAINMENU_CNT; i++) {
+                item_subid = [NSString stringWithFormat:@"%d",mainmenu_subid[i]];
+                item_name = [mainmenu_itemnames objectAtIndex:i];
+                item_status = @"content";
+                itemCell = makeItemCell(item_subid,item_name,item_status);
+                [Items addObject:itemCell];
+            }
+            break;
+            
+        case uiHOTKEY_MENU:
+            //remove table objects first
+            [PresetItems removeAllObjects];
+            for (i=0; i< DEMO_PRESET_CNT; i++) {
+                item_subid = [NSString stringWithFormat:@"%ld_%d",(long)Menuid,i+1];
+                item_name = [NSString stringWithFormat:@"%@ %d",[self.strs valueForKey:@"FAV_STATION"],i+1];
+                item_status = @"file";
+                itemCell = makeItemCell(item_subid,item_name,item_status);
+                [PresetItems addObject:itemCell];
+            }
+            break;
+    
+        case uiFAVEX_MENU:
+            //remove table objects first
+            [Items removeAllObjects];
+            for (i=0; i< DEMO_PRESET_CNT; i++) {
+                item_subid = [NSString stringWithFormat:@"%ld_%d",(long)Menuid,i+1];
+                item_name = [NSString stringWithFormat:@"%@ %d",[self.strs valueForKey:@"FAV_STATION"],i+1];
+                item_status = @"file";
+                itemCell = makeItemCell(item_subid,item_name,item_status);
+                [Items addObject:itemCell];
+            }
+            break;
+            
+        case uiLOCATIONRADIO_MENU:
+            //remove table objects first
+            [Items removeAllObjects];
+            for (i=0; i< DEMO_LOCAL_CNT; i++) {
+                item_subid = [NSString stringWithFormat:@"%ld_%d",(long)Menuid,i+1];
+                item_name = [NSString stringWithFormat:@"%@ %d",[self.strs valueForKey:@"LOCAL_STATION"],i+1];
+                item_status = @"file";
+                itemCell = makeItemCell(item_subid,item_name,item_status);
+                [Items addObject:itemCell];
+            }
+            break;
+            
+        case uiINTERNET_RADIO_MENU:
+            //remove table objects first
+            [Items removeAllObjects];
+            for (i=0; i< DEMO_INTERNET_CNT; i++) {
+                item_subid = [NSString stringWithFormat:@"%d",internetmenu_subid[i]];
+                item_name = [internetmenu_itemnames objectAtIndex:i];
+                item_status = @"content";
+                itemCell = makeItemCell(item_subid,item_name,item_status);
+                [Items addObject:itemCell];
+            }
+            break;
+            
+        case uiRADIO_MUSICEX_MENU:
+            //remove table objects first
+            [Items removeAllObjects];
+            for (i=0; i< DEMO_RADIO_CNT; i++) {
+                item_subid = [NSString stringWithFormat:@"%ld_%d",(long)Menuid,i+1];
+                item_name = [NSString stringWithFormat:@"%@ %d",[self.strs valueForKey:@"STATION"],i+1];
+                item_status = @"file";
+                itemCell = makeItemCell(item_subid,item_name,item_status);
+                [Items addObject:itemCell];
+            }
+            break;
+            
+        case uiLAST_IRADIO_MENU:
+            //remove table objects first
+            [Items removeAllObjects];
+            for (i=0; i< DEMO_RADIO_CNT; i++) {
+                item_subid = [NSString stringWithFormat:@"%ld_%d",(long)Menuid,i+1];
+                item_name = [NSString stringWithFormat:@"%@ %@ %d",[self.strs valueForKey:@"HISTORY"],[self.strs valueForKey:@"STATION"],i+1];
+                item_status = @"file";
+                itemCell = makeItemCell(item_subid,item_name,item_status);
+                [Items addObject:itemCell];
+            }
+            break;
+            
+        case uiNEWSEARCHRADIOEX_MENU:
+            //remove table objects first
+            [Items removeAllObjects];
+            for (i=0; i< DEMO_RADIO_CNT; i++) {
+                item_subid = [NSString stringWithFormat:@"%ld_%d",(long)Menuid,i+1];
+                item_name = [NSString stringWithFormat:@"%@ %@ %d",self.SearchField.text,[self.strs valueForKey:@"STATION"],i+1];
+                item_status = @"file";
+                itemCell = makeItemCell(item_subid,item_name,item_status);
+                [Items addObject:itemCell];
+            }
+            break;
+            
+        case uiUPNP_MENU:
+            //remove table objects first
+            [Items removeAllObjects];
+            for (i=0; i< DEMO_RADIO_CNT; i++) {
+                item_subid = [NSString stringWithFormat:@"%ld_%d",(long)Menuid,i+1];
+                item_name = [NSString stringWithFormat:@"upnp %@ %d",[self.strs valueForKey:@"STATION"],i+1];
+                item_status = @"file";
+                itemCell = makeItemCell(item_subid,item_name,item_status);
+                [Items addObject:itemCell];
+            }
+            break;
+            
+        
+        default:
+            break;
+    }
+    
+    [tableView reloadData];
+    tabBar.selectedItem = nil;
+    
+    //Reset menu display ctrl @Jeanne. 2014.01.29
+    if([self.menuProperty.menuId isEqualToString:@"1"])
+    {
+        NSLog(@"to main menu!!!\n");
+        [self menu_disp_ctrl:1];  //main menu ctrl
+    }
+    else
+    {
+        NSLog(@"to menu (%@)!!!\n",self.menuProperty.menuId);
+        [self menu_disp_ctrl:2];  //other menu ctrl
+    }
+}
 
 //Paul Request: in main menu, items should be on fix pos. Jeanne. 2014.03.03
 -(void)MakeMainMenuItem
@@ -257,37 +436,52 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     
     NSLog(@"Select row: %ld",(long)row);
     
-    if (row < 5) {//on pos 0-4
-        itemCell = [PresetItems objectAtIndex:row];
-        if([itemCell.status isEqualToString:@"emptyfile"])
+    if ([self.IsinDemomode isEqualToString:@"YES"]){ //Add for demo mode.  @Jeanne. 2014.04.04
+        NSString *FAVStr = [self.strs valueForKey:@"MYFAV"];  //Add for multi languages.  @Jeanne.  2014.03.13
+        NSString *AddStr = [self.strs valueForKey:@"ADDFAV"];  //Add for multi languages.  @Jeanne.  2014.03.13
+        NSString *OKStr = [self.strs valueForKey:@"OK"];  //Add for multi languages.  @Jeanne.  2014.03.13
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle: FAVStr
+                              message:AddStr
+                              delegate:nil
+                              cancelButtonTitle:OKStr
+                              otherButtonTitles:nil];
+        [alert show];
+        [self CancelPressed];
+    }
+    else{
+        if (row < 5) {//on pos 0-4
+            itemCell = [PresetItems objectAtIndex:row];
+            if([itemCell.status isEqualToString:@"emptyfile"])
+            {
+                AddDirectly = TRUE;
+            }
+        }
+        else if(5 == row)
         {
             AddDirectly = TRUE;
         }
-    }
-    else if(5 == row)
-    {
-       AddDirectly = TRUE;
+        
+        if (TRUE == AddDirectly)
+        {
+            [self AddPresetprocess]; //do add preset process.  @Jeanne. 2014.03.04
+        }
+        else{//need to replace
+            NSString *ExsitStr = [self.strs valueForKey:@"OVERWRITEFAV_REMIND"]; //Add for multi languages.  @Jeanne.  2014.03.13
+            NSString *YesStr = [self.strs valueForKey:@"YES"]; //Add for multi languages.  @Jeanne.  2014.03.13
+            NSString *NoStr = [self.strs valueForKey:@"NO"]; //Add for multi languages.  @Jeanne.  2014.03.13
+            NSString *MyFavStr = [self.strs valueForKey:@"MYFAV"]; //Add for multi languages.  @Jeanne.  2014.03.13
+            
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle:MyFavStr
+                                  message:ExsitStr
+                                  delegate:self
+                                  cancelButtonTitle:NoStr
+                                  otherButtonTitles:YesStr, nil];
+            [alert show];
+        }
     }
     
-    if (TRUE == AddDirectly)
-    {
-        [self AddPresetprocess]; //do add preset process.  @Jeanne. 2014.03.04
-    }
-    else{//need to replace
-        NSString *ExsitStr = [self.strs valueForKey:@"OVERWRITEFAV_REMIND"]; //Add for multi languages.  @Jeanne.  2014.03.13
-        NSString *YesStr = [self.strs valueForKey:@"YES"]; //Add for multi languages.  @Jeanne.  2014.03.13
-        NSString *NoStr = [self.strs valueForKey:@"NO"]; //Add for multi languages.  @Jeanne.  2014.03.13
-        NSString *MyFavStr = [self.strs valueForKey:@"MYFAV"]; //Add for multi languages.  @Jeanne.  2014.03.13
-        
-        UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle:MyFavStr
-                              message:ExsitStr
-                              delegate:self
-                              cancelButtonTitle:NoStr
-                              otherButtonTitles:YesStr, nil];
-        [alert show];
-    }
-
 }
 
 -(IBAction)AddPresetButtonPressed
@@ -320,46 +514,55 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     [self.SearchField resignFirstResponder];
     [sender resignFirstResponder];
     
-    if (!([self.SearchField.text isEqualToString:@""]))
-    {//Set Search string
-        NSString *SetSearchStrcmd = [[NSString alloc] initWithFormat:@"/searchstn?str=%@",self.SearchField.text];
+    //Add for demo mode.  @Jeanne. 2014.04.04
+    if ([self.IsinDemomode isEqualToString:@"YES"]){
+        //[self getDemomenu:uiNEWSEARCHRADIOEX_MENU];
+        self.menuProperty.menuId = [[NSString stringWithFormat:@"%d",uiNEWSEARCHRADIOEX_MENU] mutableCopy];
+        SearchInputFlag = FALSE;
+        [self refresh_menu];
+    }
+    else{
+        if (!([self.SearchField.text isEqualToString:@""]))
+        {//Set Search string
+             NSString *SetSearchStrcmd = [[NSString alloc] initWithFormat:@"/searchstn?str=%@",self.SearchField.text];
         
-        NSLog(@"Set Search String: %@",SetSearchStrcmd);
-        [client getPath:SetSearchStrcmd
-             parameters:nil
-            loadingText:nil
-            successText:nil
-                success:^(AFHTTPRequestOperation *operation, NSString *response)
-         {
-             NSString *gochildcmd = [[NSString alloc] initWithFormat:@"/gochild?id=%d",uiNEWSEARCHRADIOEX_MENU];
-             //NSLog(@"response: %@", response);
-             NSLog(@"go to New Search menu");
-             //go to New Search menu
-             [client getPath:gochildcmd
-                  parameters:nil
-                 loadingText:nil
-                 successText:nil
+             NSLog(@"Set Search String: %@",SetSearchStrcmd);
+             [client getPath:SetSearchStrcmd
+                     parameters:nil
+                     loadingText:nil
+                     successText:nil
                      success:^(AFHTTPRequestOperation *operation, NSString *response)
-              {
-                  //NSLog(@"response: %@", response);
-                  NSLog(@"Refresh menu");
-                  [self decode_menu:response Forcmd:2]; //2:gochild decode
-                  SearchInputFlag = FALSE;
-                  [self refresh_menu];
+                     {
+                         NSString *gochildcmd = [[NSString alloc] initWithFormat:@"/gochild?id=%d",uiNEWSEARCHRADIOEX_MENU];
+                         //NSLog(@"response: %@", response);
+                         NSLog(@"go to New Search menu");
+                         //go to New Search menu
+                         [client getPath:gochildcmd
+                                 parameters:nil
+                                 loadingText:nil
+                                 successText:nil
+                                 success:^(AFHTTPRequestOperation *operation, NSString *response)
+                                 {
+                                    //NSLog(@"response: %@", response);
+                                    NSLog(@"Refresh menu");
+                                    [self decode_menu:response Forcmd:2]; //2:gochild decode
+                                    SearchInputFlag = FALSE;
+                                    [self refresh_menu];
                   
-              }
-                     failure:^(AFHTTPRequestOperation *operation, NSError *error)
-              {
-                  NSLog(@"Error: %@", error);
-              }
-              ];
+                                 }
+                                 failure:^(AFHTTPRequestOperation *operation, NSError *error)
+                                 {
+                                    NSLog(@"Error: %@", error);
+                                 }
+                         ];
              
-         }
-                failure:^(AFHTTPRequestOperation *operation, NSError *error)
-         {
-             NSLog(@"Error: %@", error);
-         }
-         ];
+                     }
+                     failure:^(AFHTTPRequestOperation *operation, NSError *error)
+                     {
+                         NSLog(@"Error: %@", error);
+                     }
+             ];
+        }
     }
 }
 
@@ -596,6 +799,42 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
         [self.SearchField resignFirstResponder];
         [self menu_disp_ctrl:2]; //other menu ctrl
     }
+    else if ([self.IsinDemomode isEqualToString:@"YES"]){ //Add for demo mode.  @Jeanne. 2014.04.04
+        NSInteger mId,mParentId;
+        
+        if(playLabel.hidden == FALSE){
+            NSLog(@"In Play menu, goback to menulist!!!\n");
+            playitemid = [@"noplayid" mutableCopy]; //2014.02.18
+            playLabel.hidden = TRUE; //set playLabel hide first, to stop get playinfo
+            [self refresh_menu]; //2014.02.10
+        }
+        else{
+           mId = [self.menuProperty.menuId intValue];
+        
+           switch (mId) {
+            case uiLOCATIONRADIO_MENU:
+            case uiINTERNET_RADIO_MENU:
+            case uiUPNP_MENU:
+                  mParentId = uiMAIN_MENU;
+                break;
+            case uiFAVEX_MENU:
+            case uiRADIO_MUSICEX_MENU:
+            case uiLAST_IRADIO_MENU:
+            case uiNEWSEARCHRADIOEX_MENU:
+                mParentId = uiINTERNET_RADIO_MENU;
+                break;
+                
+            default:
+                mParentId = 0;
+                break;
+           }
+        
+           if (mParentId) {
+                self.menuProperty.menuId = [[NSString stringWithFormat:@"%ld",(long)mParentId] mutableCopy];
+                [self refresh_menu];
+           }
+        }
+    }
     else
     {
       if(playLabel.hidden == FALSE){
@@ -703,32 +942,37 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
             Volslider.enabled = TRUE;
         }
         
-        int progress = (int)lroundf(Volslider.value); //获取滑块当前值，四舍五入
-        NSString *setVolcmd = [[NSString alloc] initWithFormat:@"/setvol?vol=%d&mute=%d",progress,muteFlag];
         
-        NSLog(@"%@",setVolcmd);
-        //Set Setting vol flag
-        volSettingFlag = TRUE;
-        client.isNeedHUD = [@"NO" mutableCopy];
+        if ([self.IsinDemomode isEqualToString:@"NO"]){ //Add for demo mode.  @Jeanne. 2014.04.04
         
-        [client getPath:setVolcmd
-             parameters:nil
-            loadingText:nil
-            successText:nil
-                success:^(AFHTTPRequestOperation *operation, NSString *response)
-         {
-             NSLog(@"Set vol response: %@", response);
-             //clear Setting vol flag
-             volSettingFlag = FALSE;
-         }
-                failure:^(AFHTTPRequestOperation *operation, NSError *error)
-         {
-             NSLog(@"Error: %@", error);
-             //clear Setting vol flag
-             volSettingFlag = FALSE;
-         }
-         ];
-        client.isNeedHUD = [@"YES" mutableCopy];
+            int progress = (int)lroundf(Volslider.value); //获取滑块当前值，四舍五入
+            NSString *setVolcmd = [[NSString alloc] initWithFormat:@"/setvol?vol=%d&mute=%d",progress,muteFlag];
+        
+            NSLog(@"%@",setVolcmd);
+            //Set Setting vol flag
+            volSettingFlag = TRUE;
+            client.isNeedHUD = [@"NO" mutableCopy];
+        
+            [client getPath:setVolcmd
+                    parameters:nil
+                    loadingText:nil
+                    successText:nil
+                    success:^(AFHTTPRequestOperation *operation, NSString *response)
+                    {
+                        NSLog(@"Set vol response: %@", response);
+                        //clear Setting vol flag
+                        volSettingFlag = FALSE;
+                    }
+                    failure:^(AFHTTPRequestOperation *operation, NSError *error)
+                    {
+                         NSLog(@"Error: %@", error);
+                         //clear Setting vol flag
+                         volSettingFlag = FALSE;
+                    }
+            ];
+            client.isNeedHUD = [@"YES" mutableCopy];
+            
+        }
     }
 }//muteButtonPressed
 
@@ -737,6 +981,8 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     int progress = (int)lroundf(sender.value); //获取滑块当前值，四舍五入
     NSString *setVolcmd = [[NSString alloc] initWithFormat:@"/setvol?vol=%d&mute=0",progress];
     
+    
+    if ([self.IsinDemomode isEqualToString:@"NO"]){ //Add for demo mode.  @Jeanne. 2014.04.04
     
     if(volSettingFlag)
     {
@@ -767,6 +1013,8 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
                 }
          ];
         client.isNeedHUD = [@"YES" mutableCopy];
+    }
+        
     }
     
 }//volChange
@@ -803,11 +1051,13 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     playhotkeycmd = [[NSString alloc] initWithFormat:@"/playhotkey?key=%ld",(long)hotkey];
     itemCell = [PresetItems objectAtIndex:hotkey-1];
     
-    PresetPressedFlag = TRUE;  //2014.03.10.  Add for Preset pressed
-    
-    //Playhotkey cmd
-
-    [client getPath:playhotkeycmd
+    if ([self.IsinDemomode isEqualToString:@"NO"]){ //Add for demo mode.  @Jeanne. 2014.04.04
+        
+        PresetPressedFlag = TRUE;  //2014.03.10.  Add for Preset pressed
+        
+        //Playhotkey cmd
+        
+        [client getPath:playhotkeycmd
              parameters:nil
             loadingText:nil
             successText:nil
@@ -834,6 +1084,17 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
              PresetPressedFlag = FALSE;  //2014.03.10.  Add for Preset pressed
              NSLog(@"Error: %@", error);
          }];
+    }
+    else{//In demo mode
+        //Reset menu display ctrl @Jeanne. 2014.01.29
+        playName.text = itemCell.name; //set play name
+        NSString *clickno;
+        clickno = [[NSString alloc] initWithFormat:@"%d", (int)(hotkey-1)];
+        [self presetBtn_update:clickno];  //2014.03.07 donot need to sync from device
+        [self menu_disp_ctrl:3];  //play menu ctrl
+    }
+    
+    
     
 }
 
@@ -1326,68 +1587,74 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     
     //------------------------------
     
-    [client getPath:path
-         parameters:nil
-        loadingText:nil
-        successText:nil
-            success:^(AFHTTPRequestOperation *operation, NSString *response)
-     {
-         //NSLog(@"refreshmenu: %@", response);
+    //Add for demo mode.  @Jeanne. 2014.04.04
+    if ([self.IsinDemomode isEqualToString:@"YES"]) {
+        NSInteger mId;
+         NSLog(@"In demo mode, Refresh demomenu");
+         mId = [self.menuProperty.menuId intValue];
+         [self getDemomenu:mId];
+    }
+    else{ //Real device process
+    
+        [client getPath:path
+                parameters:nil
+                loadingText:nil
+                successText:nil
+                success:^(AFHTTPRequestOperation *operation, NSString *response)
+                {
+                   //NSLog(@"refreshmenu: %@", response);
          
-         //remove table objects first
-         [Items removeAllObjects];
-         [self decode_menu:response Forcmd:0];
+                   //remove table objects first
+                   [Items removeAllObjects];
+                   [self decode_menu:response Forcmd:0];
          
-         //Paul Request: in main menu, items should be on fix pos. Jeanne. 2014.03.03
-         //*****************************************************
-         if ([self.menuProperty.menuId isEqualToString:@"1"])
-         {
-             if ([FixMainMenuItems count] == 0) {
-                 [self MakeMainMenuItem];
-             }
-             else{
-                 NSLog(@"main menu has already init!");
-             }
-            
-         }
-         //*****************************************************
+                   //Paul Request: in main menu, items should be on fix pos. Jeanne. 2014.03.03
+                   //*****************************************************
+                   if ([self.menuProperty.menuId isEqualToString:@"1"])
+                   {
+                      if ([FixMainMenuItems count] == 0) {
+                         [self MakeMainMenuItem];
+                      }
+                      else{
+                         NSLog(@"main menu has already init!");
+                      }
+                   }
+                   //*****************************************************
          
-         [tableView reloadData];
-         tabBar.selectedItem = nil;
+                   [tableView reloadData];
+                   tabBar.selectedItem = nil;
          
-         //Reset menu display ctrl @Jeanne. 2014.01.29
-         if([self.menuProperty.menuId isEqualToString:@"1"])
-         {
-             NSLog(@"to main menu!!!\n");
-             [self menu_disp_ctrl:1];  //main menu ctrl
-         }
-         else
-         {
-             NSLog(@"to menu (%@)!!!\n",self.menuProperty.menuId);
-             [self menu_disp_ctrl:2];  //other menu ctrl
-             
-         }
+                   //Reset menu display ctrl @Jeanne. 2014.01.29
+                   if([self.menuProperty.menuId isEqualToString:@"1"])
+                   {
+                      NSLog(@"to main menu!!!\n");
+                      [self menu_disp_ctrl:1];  //main menu ctrl
+                   }
+                   else
+                   {
+                      NSLog(@"to menu (%@)!!!\n",self.menuProperty.menuId);
+                      [self menu_disp_ctrl:2];  //other menu ctrl
+                   }
+                }
+                failure:^(AFHTTPRequestOperation *operation, NSError *error)
+                {
+                   NSLog(@"Error: %@", error);
+                   tabBar.selectedItem = nil;
          
-         
-     }
-            failure:^(AFHTTPRequestOperation *operation, NSError *error)
-     {
-         NSLog(@"Error: %@", error);
-         tabBar.selectedItem = nil;
-         
-         //Reset menu display ctrl @Jeanne. 2014.01.29
-         if([self.menuProperty.menuId isEqualToString:@"1"])
-         {
-             NSLog(@"to main menu!!!\n");
-             [self menu_disp_ctrl:1];  //main menu ctrl
-         }
-         else
-         {
-             NSLog(@"to menu (%@)!!!\n",self.menuProperty.menuId);
-             [self menu_disp_ctrl:2];  //other menu ctrl
-             
-         }
-     }];
+                   //Reset menu display ctrl @Jeanne. 2014.01.29
+                   if([self.menuProperty.menuId isEqualToString:@"1"])
+                   {
+                      NSLog(@"to main menu!!!\n");
+                      [self menu_disp_ctrl:1];  //main menu ctrl
+                   }
+                   else
+                   {
+                      NSLog(@"to menu (%@)!!!\n",self.menuProperty.menuId);
+                      [self menu_disp_ctrl:2];  //other menu ctrl
+                   }
+                }
+         ];
+    }
     
 } //refresh_menu
 
@@ -1568,6 +1835,14 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
 -(void) refresh_presetbtn:(NSString *)clickNo SyncFromdevice:(NSString *)Flag
 {
     NSLog(@"refresh preset btn!");
+    
+    //Add for demo mode.  @Jeanne. 2014.04.04
+    if ([self.IsinDemomode isEqualToString:@"YES"]) {
+        NSLog(@"In demo: refresh_presetbtn");
+        [self getDemomenu:uiHOTKEY_MENU];
+        [self presetBtn_update:clickNo];
+        return;
+    }
 
     if ([Flag isEqualToString:@"NO"])
     { //do not sync from device.
@@ -1679,8 +1954,12 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
         FixMainMenuItems = [[NSMutableArray alloc] initWithCapacity:0];
     }
     
-    client = [ILHTTPClient clientWithBaseURL:self.toMagicUrl
+    
+    //Add for demo mode.  @Jeanne. 2014.04.04
+    if (![self.IsinDemomode isEqualToString:@"YES"]){
+        client = [ILHTTPClient clientWithBaseURL:self.toMagicUrl
                             showingHUDInView:self.view];
+    }
 
     //client.isNeedHUD = [@"NO" mutableCopy];//2014.02.26
     
@@ -1736,6 +2015,11 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
 #pragma mark -Table View Data Source Methods
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    //Add for demo mode.  @Jeanne. 2014.04.04
+    if ([self.IsinDemomode isEqualToString:@"YES"]){
+       return [Items count];
+    }
+    
     //Paul Request: in main menu, items should be on fix pos. Jeanne. 2014.03.03
     if([self.menuProperty.menuId isEqualToString:@"1"])
     {//main menu
@@ -1784,25 +2068,32 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    BIDItemCell *itemCell;// = [Items objectAtIndex:indexPath.row];
+    BIDItemCell *itemCell;
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    UIImage *bgImage;// = [UIImage imageNamed:@"bar_bg"];
-    //Paul request to black bg.  @Jeanne. 2014.03.03
-    //UIImage *bglistImage = [UIImage imageNamed:@"bk_list"];
+    UIImage *bgImage;
     NSString *internetRadioId = [[NSString alloc] initWithFormat:@"%d",uiINTERNET_RADIO_MENU];
     NSString *PresetListId = [[NSString alloc] initWithFormat:@"%d",uiFAVEX_MENU];  //Add for del fav.  @Jeanne. 2014.03.17
     NSString *EmptyStr = [self.strs valueForKey:@"EMPTY"]; //Add for multi languages.  @Jeanne.  2014.03.13
     
-    //Paul Request: in main menu, items should be on fix pos. Jeanne. 2014.03.03
-    if([self.menuProperty.menuId isEqualToString:@"1"])
-    {//main menu
-        itemCell = [FixMainMenuItems objectAtIndex:indexPath.row];
-    }
-    else
-    {//other menu
-        //if is empty, show empty item.  @Jeanne. 2014.03.10
+    //Add for demo mode.  @Jeanne. 2014.04.04
+    if ([self.IsinDemomode isEqualToString:@"YES"]){
         if ([Items count]) {
             itemCell = [Items objectAtIndex:indexPath.row];
+        }
+    }
+    else{
+    
+        //Paul Request: in main menu, items should be on fix pos. Jeanne. 2014.03.03
+        if([self.menuProperty.menuId isEqualToString:@"1"])
+        {//main menu
+            itemCell = [FixMainMenuItems objectAtIndex:indexPath.row];
+        }
+        else
+        {//other menu
+            //if is empty, show empty item.  @Jeanne. 2014.03.10
+            if ([Items count]) {
+                itemCell = [Items objectAtIndex:indexPath.row];
+            }
         }
     }
     
@@ -1813,34 +2104,41 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     //Add for del fav.  @Jeanne. 2014.03.17
     if([self.menuProperty.menuId isEqualToString:PresetListId])
     {
-        if ([itemCell.status isEqualToString:@"emptyfile"])
-        {
+        //Add for demo mode.  @Jeanne. 2014.04.08
+        if ([self.IsinDemomode isEqualToString:@"NO"]) {
+           if ([itemCell.status isEqualToString:@"emptyfile"])
+           {
+              cell.accessoryType = UITableViewCellAccessoryNone;
+              cell.accessoryView= nil;
+           }
+           else
+           {
+              UIButton *Custombtn;
+              UIImage *infoImage;
+              //Modified for support multi ios device.  @Jeanne. 2014.03.21
+              if ([self.CuriosDevice isEqualToString:@"ipad"])
+              {
+                infoImage = [UIImage imageNamed:@"info_ipad.png"];
+              }
+              else{
+                infoImage = [UIImage imageNamed:@"info.png"];
+              }
+              Custombtn = [UIButton buttonWithType:UIButtonTypeCustom];
+              CGRect frame = CGRectMake(0.0, 0.0, infoImage.size.width, infoImage.size.height);
+              Custombtn.frame = frame;
+              [Custombtn setBackgroundImage:infoImage forState:UIControlStateNormal];
+              Custombtn.backgroundColor= [UIColor clearColor];
+              [Custombtn addTarget:self action:@selector(btnClicked:event:)  forControlEvents:UIControlEventTouchUpInside];
+            
+              //[Custombtn setBackgroundImage:infoImage forState:UIControlStateNormal];
+              cell.accessoryType = UITableViewCellAccessoryDetailButton; //info button (i)
+              cell.accessoryView=Custombtn;
+            
+           }
+        }
+        else{
             cell.accessoryType = UITableViewCellAccessoryNone;
             cell.accessoryView= nil;
-        }
-        else
-        {
-            UIButton *Custombtn;
-            UIImage *infoImage;
-            //Modified for support multi ios device.  @Jeanne. 2014.03.21
-            if ([self.CuriosDevice isEqualToString:@"ipad"])
-            {
-                infoImage = [UIImage imageNamed:@"info_ipad.png"];
-            }
-            else{
-                infoImage = [UIImage imageNamed:@"info.png"];
-            }
-            Custombtn = [UIButton buttonWithType:UIButtonTypeCustom];
-            CGRect frame = CGRectMake(0.0, 0.0, infoImage.size.width, infoImage.size.height);
-            Custombtn.frame = frame;
-            [Custombtn setBackgroundImage:infoImage forState:UIControlStateNormal];
-            Custombtn.backgroundColor= [UIColor clearColor];
-            [Custombtn addTarget:self action:@selector(btnClicked:event:)  forControlEvents:UIControlEventTouchUpInside];
-            
-            //[Custombtn setBackgroundImage:infoImage forState:UIControlStateNormal];
-            cell.accessoryType = UITableViewCellAccessoryDetailButton; //info button (i)
-            cell.accessoryView=Custombtn;
-            
         }
         
     }
@@ -2051,21 +2349,66 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     NSString *internetRadioId = [[NSString alloc] initWithFormat:@"%d",uiINTERNET_RADIO_MENU];
     NSString *PresetListId = [[NSString alloc] initWithFormat:@"%d",uiFAVEX_MENU];
     
-    //Paul Request: in main menu, items should be on fix pos. Jeanne. 2014.03.03
-    if([self.menuProperty.menuId isEqualToString:@"1"])
-    {//main menu
-        itemCell = [FixMainMenuItems objectAtIndex:indexPath.row];
-    }
-    else
-    {//other menu
-        //if is empty, show empty item.  @Jeanne. 2014.03.10
+    //Add for demo mode.  @Jeanne. 2014.04.04
+    if ([self.IsinDemomode isEqualToString:@"YES"]){
         if ([Items count]) {
             itemCell = [Items objectAtIndex:indexPath.row];
+        }
+    }
+    else{
+        //Paul Request: in main menu, items should be on fix pos. Jeanne. 2014.03.03
+        if([self.menuProperty.menuId isEqualToString:@"1"])
+        {//main menu
+           itemCell = [FixMainMenuItems objectAtIndex:indexPath.row];
+        }
+        else
+        {//other menu
+           //if is empty, show empty item.  @Jeanne. 2014.03.10
+           if ([Items count]) {
+              itemCell = [Items objectAtIndex:indexPath.row];
+           }
         }
     }
     
     //取消选中项
     [tableView deselectRowAtIndexPath:[tableView indexPathForSelectedRow] animated:YES];
+    
+    //Add for demo mode.  @Jeanne. 2014.04.04
+    if ([self.IsinDemomode isEqualToString:@"YES"]){
+        if ([itemCell.status isEqualToString:@"file"]) {
+            NSLog(@"demo: file play, to process!");
+            //Reset menu display ctrl @Jeanne. 2014.01.29
+            playName.text = itemCell.name; //set play name
+            [self menu_disp_ctrl:3];  //play menu ctrl
+            [self presetBtn_update:kNOCLOCK];
+        }
+        else if ([itemCell.status isEqualToString:@"content"])
+        {
+            NSLog(@"demo: content, goto sub menu");
+            //2014.02.11. Add for New Search menu
+            if(([self.menuProperty.menuId isEqualToString:internetRadioId])
+               &&([itemCell.submenuId isEqualToString:NewSearchMenuId])
+               )
+            {//will be go to New Search Menu, goto input first
+                SearchInputFlag = TRUE;
+                self.SearchField.text = @"";
+                [self menu_disp_ctrl:2]; //other menu ctrl
+            }
+            else
+            {
+                NSInteger mId;
+                self.menuProperty.menuId = [itemCell.submenuId mutableCopy];
+                mId = [self.menuProperty.menuId intValue];
+                [self getDemomenu:mId];
+                [self refresh_menu];
+            }
+            
+        }
+        
+        return;
+    }
+    
+    
     
     if (itemCell != nil) {
         gochildcmd = [[NSString alloc] initWithFormat:@"/gochild?id=%@",itemCell.submenuId];

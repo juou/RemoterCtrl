@@ -151,18 +151,6 @@ static NSMutableString *m_id;
     SSDPDBDevice_ObjC *ssdbdevice;
     NSString *deviceurl;
     int i;
-
-    /*
-    if ([mDevices count]) { //there is device
-        BasicUPnPDevice *device;
-        int cnt;
-        int i;
-        cnt = [mDevices count];
-        for (i=0; i < cnt; i++) {
-            device = [mDevices objectAtIndex:i];
-            NSLog(@"d[%d].url= %@",i,device.xmlLocation);
-        }
-    }*/
  
     if (!searched_flag) {
         if (search_cnt > 2) { //wait 3s to get the ssdp device
@@ -173,18 +161,13 @@ static NSMutableString *m_id;
                     NSLog(@"ssdb[%d].location:%@",i,ssdbdevice.location);
                     if([ssdbdevice.location rangeOfString:kMagic_AirMusic_Device].location !=NSNotFound) {
                         NSLog(@"Found Magic device : %d",i);
-                        /*
-                         if ([MagicUrl isEqualToString:@"magicinit"]) {
-                         MagicUrl = [[ssdbdevice.location stringByReplacingOccurrencesOfString:kMagic_AirMusic_Device withString:@""]mutableCopy];
-                         NSLog(@"Magicurl=%@",MagicUrl);
-                         searched_flag = TRUE;  //for search icon.  @Jeanne. 2014.02.26
-                         }
-                         break;
-                         */
                         deviceurl = [ssdbdevice.location stringByReplacingOccurrencesOfString:kMagic_AirMusic_Device withString:@""];
                         [deviceurls addObject:deviceurl];
                         //[deviceurls addObject:deviceurl]; //test
                         searched_flag = 1;  //for search icon.  @Jeanne. 2014.02.26
+                        
+                        //Add for demo mode.  @Jeanne. 2014.04.08
+                        self.IsinDemomode = [@"NO" mutableCopy];
                         
                     }// end if
                     
@@ -201,12 +184,32 @@ static NSMutableString *m_id;
         if (logstring != nil) {
             logLabel.text = logstring;
         }
-        //logLabel.text = [NSString stringWithFormat:@"search cnt: %d",search_cnt];
-        [[[UPnPManager GetInstance] SSDP] searchSSDP];
-        [[[UPnPManager GetInstance] SSDP] searchSSDP];
-        [[[UPnPManager GetInstance] SSDP] searchSSDP];
         
-        [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(searchip) userInfo:nil repeats:NO];
+        if(search_cnt > 5)
+        {//Show Not found alert, and select to goto demo mode.  @Jeanne. 2014.04.04
+            NSString *NotFoundStr = [self.strs valueForKey:@"NODEVICE_REMIND"];
+            NSString *RescanStr = [self.strs valueForKey:@"RESCAN_ONLY"];
+            NSString *DemoStr = [self.strs valueForKey:@"DEMO"];
+            
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle:nil
+                                  message:NotFoundStr
+                                  delegate:self
+                                  cancelButtonTitle:RescanStr
+                                  otherButtonTitles:DemoStr, nil];
+            
+            [alert show];
+            
+        }
+        else{
+            NSLog(@"Searching ...");
+           //logLabel.text = [NSString stringWithFormat:@"search cnt: %d",search_cnt];
+           [[[UPnPManager GetInstance] SSDP] searchSSDP];
+           [[[UPnPManager GetInstance] SSDP] searchSSDP];
+           [[[UPnPManager GetInstance] SSDP] searchSSDP];
+        
+           [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(searchip) userInfo:nil repeats:NO];
+        }
         
     }
     else{ //searched
@@ -275,11 +278,117 @@ static NSMutableString *m_id;
     }
 }
 
-
-- (void)viewDidLoad
+-(void)initMenu
 {
+    UITabBar *Tab = (id)[self.view viewWithTag:kMain_Tabbar_tag];
+    UITabBar *Tab_2 = (id)[self.view viewWithTag:kMain_2_Tabbar_tag];  //Add for wifisetting on tabbar.  @Jeanne. 2014.03.04
+    UILabel *verLabel = (id)[self.view viewWithTag:kVer_Label_tag];
     UILabel *logLabel = (id)[self.view viewWithTag:klog_Label_tag];
-    //UILabel *showLabel = (id)[self.view viewWithTag:kShow_Label_tag];
+    
+    
+    if (!([MagicUrl isEqualToString:@"magicinit"]))
+    {//if (found magic device) begin
+        
+        client = [ILHTTPClient clientWithBaseURL:MagicUrl showingHUDInView:self.view];
+        if(client.isNeedHUD == nil){
+            client.isNeedHUD = [[NSMutableString alloc] initWithString:@"YES"];
+        }
+        //client.isNeedHUD = [@"NO" mutableCopy];//2014.02.26
+        
+        [client getPath:@"/init"
+             parameters:nil
+            loadingText:nil
+            successText:nil
+                success:^(AFHTTPRequestOperation *operation, NSString *response)
+         {
+             NSLog(@"response: %@", response);
+             [self decode_response:response Forcmd:0 Forpos:0];
+             
+             self.menuProperty.menuId = [[NSMutableString alloc] initWithFormat: @"%@",m_id];
+             NSLog(@"m_id=%@",m_id);
+             NSLog(@"self.menuProperty.menuId = %@",self.menuProperty.menuId);
+             
+             
+             if (self.subViewController ==nil) {
+                 
+                 //Modified for support multi ios device.  @Jeanne. 2014.03.21
+                 if ([self.CuriosDevice isEqualToString:@"iphone4"]) {
+                     self.subViewController = [[BIDSubViewController alloc] initWithNibName:@"BIDSubViewController_iphone4" bundle:nil];
+                 }
+                 else if ([self.CuriosDevice isEqualToString:@"iphone5"]) {
+                     self.subViewController = [[BIDSubViewController alloc] initWithNibName:@"BIDSubViewController" bundle:nil];
+                 }
+                 else if ([self.CuriosDevice isEqualToString:@"ipad"]) {
+                     self.subViewController = [[BIDSubViewController alloc] initWithNibName:@"BIDSubViewController_ipad" bundle:nil];
+                 }
+                 else{
+                     self.subViewController = [[BIDSubViewController alloc] initWithNibName:@"BIDSubViewController" bundle:nil];
+                 }
+                 
+             }
+             else{
+                 
+             }
+             
+             //Modified for support multi ios device.  @Jeanne. 2014.03.21
+             if (self.subViewController.CuriosDevice == nil) {
+                 self.subViewController.CuriosDevice = [[NSMutableString alloc] initWithString:self.CuriosDevice];
+             }
+             self.subViewController.CuriosDevice = [self.CuriosDevice mutableCopy];
+             
+             
+             if (self.subViewController.toMagicUrl == nil) {
+                 self.subViewController.toMagicUrl = [[NSMutableString alloc] initWithString:MagicUrl];
+             }
+             self.subViewController.toMagicUrl = MagicUrl; //2014.03.06 for rescan
+             
+             //Add for multi languages.  @Jeanne.  2014.03.13
+             if (self.subViewController.strs == nil) {
+                 self.subViewController.strs = [[NSMutableDictionary alloc] initWithDictionary:self.strs];
+             }
+             else{
+                 self.subViewController.strs = [self.strs mutableCopy];
+             }
+             
+             //Add for demo mode.  @Jeanne. 2014.04.04
+             if (self.subViewController.IsinDemomode == nil) {
+                 self.subViewController.IsinDemomode = [[NSMutableString alloc] initWithString:self.IsinDemomode];
+             }
+             else{
+                 self.subViewController.IsinDemomode = [self.IsinDemomode mutableCopy];
+             }
+             
+             //showLabel.hidden = TRUE;
+             verLabel.hidden = TRUE;
+             logLabel.hidden = TRUE;
+             
+             //Add for wifisetting on tabbar.  @Jeanne. 2014.03.04
+             self.subViewController.wifiSetFlag = self.configViewController.wifiSetFlag;
+             if ([self.configViewController.wifiSetFlag isEqualToString:@"YES"]) {
+                 Tab_2.hidden = FALSE;
+             }
+             else{
+                 Tab.hidden = FALSE;
+             }
+             
+             [self addChildViewController:self.subViewController];
+             [self.view insertSubview:self.subViewController.view atIndex:1];
+             
+             
+         }
+                failure:^(AFHTTPRequestOperation *operation, NSError *error)
+         {
+             NSLog(@"Error: %@", error);
+         }];
+        
+        //client.isNeedHUD = [@"YES" mutableCopy];//2014.02.26
+        
+    } //if (found magic device) end
+    
+}
+
+-(void)initlanguage
+{
     NSArray *languageArray = [NSLocale preferredLanguages];
     NSString *language = [languageArray objectAtIndex:0];
     int i;
@@ -289,14 +398,14 @@ static NSMutableString *m_id;
     //Add for multi languages.  @Jeanne.  2014.03.13
     //#####################################################
     self.supportlanguages = @[
-                    @"en",   //English
-                    @"de",   //German
-                    @"fr",   //French
-                    @"da",   //Danish
-                    @"sv",   //Swedish
-                    @"nb",   //Norwegian
-                    @"ru",   //Russian
-                    ];
+                              @"en",   //English
+                              @"de",   //German
+                              @"fr",   //French
+                              @"da",   //Danish
+                              @"sv",   //Swedish
+                              @"nb",   //Norwegian
+                              @"ru",   //Russian
+                              ];
     
     NSString *supportlang;
     bSupportflag = FALSE;
@@ -312,66 +421,27 @@ static NSMutableString *m_id;
     NSString *path;
     if(bSupportflag == TRUE){
         NSLog(@"Use current language: %@",language);
-       path = [[NSBundle mainBundle] pathForResource:language ofType:@"plist"];
+        path = [[NSBundle mainBundle] pathForResource:language ofType:@"plist"];
     }
     else{
         NSLog(@"Use en language");
-       path = [[NSBundle mainBundle] pathForResource:@"en" ofType:@"plist"];
+        path = [[NSBundle mainBundle] pathForResource:@"en" ofType:@"plist"];
     }
     self.strs = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
     //#####################################################
     
-    /*
-    //test
-    int i;
-    NSString * fontName;
-    for (i=0; i< [[UIFont familyNames] count]; i++) {
-        fontName = [[UIFont familyNames] objectAtIndex:i];
-        NSLog(@"Font[%d]: %@",i, fontName);
-    }
-     */
-    
+}
 
-    
-    /*
-    //=================
-    int i;
-    for (i=0; i<([languageArray count]); i++) {
-        NSLog(@"语言［%d］: %@",i,[languageArray objectAtIndex:i]);
+-(void) initProperties
+{
+    //Add for demo mode.  @Jeanne. 2014.04.04
+    if (self.IsinDemomode == nil) {
+        self.IsinDemomode = [[NSMutableString alloc] initWithString:@"NO"];
     }
-    //=================
-     */
     
-    [super viewDidLoad];
-    
-	// Do any additional setup after loading the view, typically from a nib.
-    
-    //for multi devices found.  @Jeanne. 2014.02.26
-    //------------------------------------------
-    if (devicenames == nil) {
-        devicenames = [[NSMutableDictionary alloc] init];
+    if (self.menuProperty == nil) {
+        self.menuProperty = [[BIDMenuProperty alloc] init];
     }
-    if (deviceurls == nil) {
-        deviceurls = [[NSMutableArray alloc] initWithCapacity:0];
-    }
-    //------------------------------------------
-    
-    //for log.  @Jeanne. 2014.02.25
-    //自动折行设置
-    logLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    logLabel.numberOfLines = 0;
-    logLabel.textAlignment = NSTextAlignmentLeft;
-    [logLabel setText:@"test"];
-    search_cnt = 0; //for search count  @Jeanne.  2014.02.25
-    searched_flag = 0;  //for search icon.  @Jeanne. 2014.02.26
-    //showLabel.hidden = TRUE;  //for fade effect.  @Jeanne. 2014.2.26
-    
-    //先初始化对象
-    if (MagicUrl == nil) {
-        MagicUrl = [[NSMutableString alloc] initWithString:@"magicinit"];
-    }
-    m_id = [[NSMutableString alloc] init];
-    self.menuProperty = [[BIDMenuProperty alloc] init];
     
     //初始化config菜单 2014.02.12
     //==============================
@@ -401,7 +471,47 @@ static NSMutableString *m_id;
     }
     //==============================
     
+}
+
+-(void)initVar
+{
+    UILabel *logLabel = (id)[self.view viewWithTag:klog_Label_tag];
     
+    //for log.  @Jeanne. 2014.02.25
+    logLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    logLabel.numberOfLines = 0;
+    logLabel.textAlignment = NSTextAlignmentLeft;
+    [logLabel setText:@"test"];
+    
+    
+    //for multi devices found.  @Jeanne. 2014.02.26
+    //------------------------------------------
+    if (devicenames == nil) {
+        devicenames = [[NSMutableDictionary alloc] init];
+    }
+    if (deviceurls == nil) {
+        deviceurls = [[NSMutableArray alloc] initWithCapacity:0];
+    }
+    //------------------------------------------
+    
+    search_cnt = 0; //for search count  @Jeanne.  2014.02.25
+    searched_flag = 0;  //for search icon.  @Jeanne. 2014.02.26
+    
+    if (MagicUrl == nil) {
+        MagicUrl = [[NSMutableString alloc] initWithString:@"magicinit"];
+    }
+    m_id = [[NSMutableString alloc] init];
+    
+    //Check rescan flag
+    NSString *flag = @"NO";
+    [self addObserver:self forKeyPath:@"RESCAN" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:NULL];
+    [self setValue:flag forKey:@"RESCAN"];
+    
+    
+}
+
+-(void) initUpnp
+{
     //Search for UPNP First
     //===============================================
     UPnPDB* db = [[UPnPManager GetInstance] DB];
@@ -420,7 +530,7 @@ static NSMutableString *m_id;
     //===============================================
     
     mSSDPObjCDevices = [[UPnPManager GetInstance] SSDP].SSDPObjCDevices;  //Get ssdp device.  @Jeanne. 2014.02.27
-
+    
     
     //init timer to broadcast
     [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(searchip) userInfo:nil repeats:NO];
@@ -429,15 +539,28 @@ static NSMutableString *m_id;
     //Add for multi languages.  @Jeanne.  2014.03.13
     NSString *searchstr;
     searchstr = [self.strs valueForKey:@"SCANING"];
-    
     [MBProgressHUD fadeInHUDInView:self.view withText:searchstr];
-    //[MBProgressHUD fadeInHUDInView:self.view withText:@"Search for device..."];
     fadein_flag = TRUE;    //for fade in flag.  @Jeanne. 2014.02.26
     
-    //Check rescan flag
-    NSString *flag = @"NO";
-    [self addObserver:self forKeyPath:@"RESCAN" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:NULL];
-    [self setValue:flag forKey:@"RESCAN"];
+}
+
+
+- (void)viewDidLoad
+{
+    
+    [super viewDidLoad];
+    
+    //Init Language
+    [self initlanguage];
+    
+    //Init Var
+    [self initVar];
+    
+    //Init Properties
+    [self initProperties];
+    
+    //Init Upnp
+    [self initUpnp];
     
 }
 
@@ -512,107 +635,6 @@ static NSMutableString *m_id;
     [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(searchip) userInfo:nil repeats:NO];
 }
 
--(void)initMenu
-{
-    UITabBar *Tab = (id)[self.view viewWithTag:kMain_Tabbar_tag];
-    UITabBar *Tab_2 = (id)[self.view viewWithTag:kMain_2_Tabbar_tag];  //Add for wifisetting on tabbar.  @Jeanne. 2014.03.04
-    //UILabel *showLabel = (id)[self.view viewWithTag:kShow_Label_tag];
-    UILabel *verLabel = (id)[self.view viewWithTag:kVer_Label_tag];
-    UILabel *logLabel = (id)[self.view viewWithTag:klog_Label_tag];
-    
-
-    if (!([MagicUrl isEqualToString:@"magicinit"]))
-    {//if (found magic device) begin
-        
-        client = [ILHTTPClient clientWithBaseURL:MagicUrl showingHUDInView:self.view];
-        if(client.isNeedHUD == nil){
-            client.isNeedHUD = [[NSMutableString alloc] initWithString:@"YES"];
-        }
-        //client.isNeedHUD = [@"NO" mutableCopy];//2014.02.26
-        
-        [client getPath:@"/init"
-             parameters:nil
-            loadingText:nil
-            successText:nil
-                success:^(AFHTTPRequestOperation *operation, NSString *response)
-         {
-             NSLog(@"response: %@", response);
-             [self decode_response:response Forcmd:0 Forpos:0];
-             
-             self.menuProperty.menuId = [[NSMutableString alloc] initWithFormat: @"%@",m_id];
-             NSLog(@"m_id=%@",m_id);
-             NSLog(@"self.menuProperty.menuId = %@",self.menuProperty.menuId);
-             
-             
-             if (self.subViewController ==nil) {
-                 
-                 //Modified for support multi ios device.  @Jeanne. 2014.03.21
-                 if ([self.CuriosDevice isEqualToString:@"iphone4"]) {
-                    self.subViewController = [[BIDSubViewController alloc] initWithNibName:@"BIDSubViewController_iphone4" bundle:nil];
-                 }
-                 else if ([self.CuriosDevice isEqualToString:@"iphone5"]) {
-                     self.subViewController = [[BIDSubViewController alloc] initWithNibName:@"BIDSubViewController" bundle:nil];
-                 }
-                 else if ([self.CuriosDevice isEqualToString:@"ipad"]) {
-                     self.subViewController = [[BIDSubViewController alloc] initWithNibName:@"BIDSubViewController_ipad" bundle:nil];
-                 }
-                 else{
-                     self.subViewController = [[BIDSubViewController alloc] initWithNibName:@"BIDSubViewController" bundle:nil];
-                 }
-                 
-             }
-             else{
- 
-             }
-             
-             //Modified for support multi ios device.  @Jeanne. 2014.03.21
-             if (self.subViewController.CuriosDevice == nil) {
-                 self.subViewController.CuriosDevice = [[NSMutableString alloc] initWithString:self.CuriosDevice];
-             }
-             self.subViewController.CuriosDevice = [self.CuriosDevice mutableCopy];
-             
-             
-             if (self.subViewController.toMagicUrl == nil) {
-                 self.subViewController.toMagicUrl = [[NSMutableString alloc] initWithString:MagicUrl];
-             }
-             self.subViewController.toMagicUrl = MagicUrl; //2014.03.06 for rescan
-             
-             //Add for multi languages.  @Jeanne.  2014.03.13
-             if (self.subViewController.strs == nil) {
-                 self.subViewController.strs = [[NSMutableDictionary alloc] initWithDictionary:self.strs];
-             }
-             else{
-                 self.subViewController.strs = [self.strs mutableCopy];
-             }
-             
-             //showLabel.hidden = TRUE;
-             verLabel.hidden = TRUE;
-             logLabel.hidden = TRUE;
-             
-             //Add for wifisetting on tabbar.  @Jeanne. 2014.03.04
-             self.subViewController.wifiSetFlag = self.configViewController.wifiSetFlag;
-             if ([self.configViewController.wifiSetFlag isEqualToString:@"YES"]) {
-                 Tab_2.hidden = FALSE;
-             }
-             else{
-                 Tab.hidden = FALSE;
-             }
-             
-             [self addChildViewController:self.subViewController];
-             [self.view insertSubview:self.subViewController.view atIndex:1];
-             
-             
-         }
-                failure:^(AFHTTPRequestOperation *operation, NSError *error)
-         {
-             NSLog(@"Error: %@", error);
-         }];
-        
-        //client.isNeedHUD = [@"YES" mutableCopy];//2014.02.26
-        
-    } //if (found magic device) end
-
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -717,22 +739,32 @@ static NSMutableString *m_id;
             else
             {
                 NSString *gochildMaincmd = [[NSString alloc] initWithFormat:@"/gochild?id=%d",uiMAIN_MENU];
+                
+                //Add for demo mode.  @Jeanne. 2014.04.04
+                if ([self.IsinDemomode isEqualToString:@"YES"]){
+                    NSLog(@"demomode: goto main menu");
+                    self.subViewController.menuProperty.menuId = [@"1" mutableCopy];
+                    [self.subViewController getDemomenu:uiMAIN_MENU];
+                    [self.subViewController refresh_menu];
+                }
+                else{
             
-                [client getPath:gochildMaincmd
-                 parameters:nil
-                loadingText:nil
-                successText:nil
-                    success:^(AFHTTPRequestOperation *operation, NSString *response)
-                    {
-                        NSLog(@"response: %@", response);
-                        [self.subViewController decode_menu:response Forcmd:2]; //2:gochild decode
-                        [self.subViewController refresh_menu];
-                    }
-                    failure:^(AFHTTPRequestOperation *operation, NSError *error)
-                    {
-                        NSLog(@"Error: %@", error);
-                    }
+                    [client getPath:gochildMaincmd
+                            parameters:nil
+                            loadingText:nil
+                            successText:nil
+                            success:^(AFHTTPRequestOperation *operation, NSString *response)
+                            {
+                               NSLog(@"response: %@", response);
+                               [self.subViewController decode_menu:response Forcmd:2]; //2:gochild decode
+                               [self.subViewController refresh_menu];
+                            }
+                            failure:^(AFHTTPRequestOperation *operation, NSError *error)
+                            {
+                               NSLog(@"Error: %@", error);
+                            }
                 ];
+                }
             }
             
             homeitem.enabled = FALSE;
@@ -778,6 +810,14 @@ static NSMutableString *m_id;
         }
         else{
             self.configViewController.strs = [self.strs mutableCopy];
+        }
+        
+        //Add for demo mode.  @Jeanne. 2014.04.04
+        if (self.configViewController.IsinDemomode == nil) {
+            self.configViewController.IsinDemomode = [[NSMutableString alloc] initWithString:self.IsinDemomode];
+        }
+        else{
+            self.configViewController.IsinDemomode = [self.IsinDemomode mutableCopy];
         }
         
         [self.subViewController.view removeFromSuperview];
@@ -878,6 +918,97 @@ static NSMutableString *m_id;
 
 
     
+}
+
+//Add for Demo mode.  @Jeanne. 2014.04.04
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    UITabBar *Tab = (id)[self.view viewWithTag:kMain_Tabbar_tag];
+    UITabBar *Tab_2 = (id)[self.view viewWithTag:kMain_2_Tabbar_tag];  //Add for wifisetting on tabbar.  @Jeanne. 2014.03.04
+    UILabel *verLabel = (id)[self.view viewWithTag:kVer_Label_tag];
+    UILabel *logLabel = (id)[self.view viewWithTag:klog_Label_tag];
+    NSLog(@"click button: %ld (0:Rescan 1:demo)",(long)buttonIndex);
+    
+    if (1 == buttonIndex) {
+        NSLog(@"Go to demo mode");
+        
+        self.IsinDemomode = [@"YES" mutableCopy];
+        
+        //Fade out first
+        [MBProgressHUD fadeOutHUDInView:self.view withSuccessText:nil];
+        fadein_flag =FALSE;
+        
+        //goto demo mode
+        self.menuProperty.menuId = [[NSMutableString alloc] initWithFormat: @"1"];
+        NSLog(@"demo mode:self.menuProperty.menuId = %@",self.menuProperty.menuId);
+        
+        
+        if (self.subViewController ==nil) {
+            
+            //Modified for support multi ios device.  @Jeanne. 2014.03.21
+            if ([self.CuriosDevice isEqualToString:@"iphone4"]) {
+                self.subViewController = [[BIDSubViewController alloc] initWithNibName:@"BIDSubViewController_iphone4" bundle:nil];
+            }
+            else if ([self.CuriosDevice isEqualToString:@"iphone5"]) {
+                self.subViewController = [[BIDSubViewController alloc] initWithNibName:@"BIDSubViewController" bundle:nil];
+            }
+            else if ([self.CuriosDevice isEqualToString:@"ipad"]) {
+                self.subViewController = [[BIDSubViewController alloc] initWithNibName:@"BIDSubViewController_ipad" bundle:nil];
+            }
+            else{
+                self.subViewController = [[BIDSubViewController alloc] initWithNibName:@"BIDSubViewController" bundle:nil];
+            }
+            
+        }
+        
+        //Modified for support multi ios device.  @Jeanne. 2014.03.21
+        if (self.subViewController.CuriosDevice == nil) {
+            self.subViewController.CuriosDevice = [[NSMutableString alloc] initWithString:self.CuriosDevice];
+        }
+        self.subViewController.CuriosDevice = [self.CuriosDevice mutableCopy];
+        
+        
+        if (self.subViewController.toMagicUrl == nil) {
+            self.subViewController.toMagicUrl = [[NSMutableString alloc] initWithString:MagicUrl];
+        }
+        self.subViewController.toMagicUrl = MagicUrl; //2014.03.06 for rescan
+        
+        //Add for multi languages.  @Jeanne.  2014.03.13
+        if (self.subViewController.strs == nil) {
+            self.subViewController.strs = [[NSMutableDictionary alloc] initWithDictionary:self.strs];
+        }
+        else{
+            self.subViewController.strs = [self.strs mutableCopy];
+        }
+        
+        //Add for demo mode.  @Jeanne. 2014.04.04
+        if (self.subViewController.IsinDemomode == nil) {
+            self.subViewController.IsinDemomode = [[NSMutableString alloc] initWithString:self.IsinDemomode];
+        }
+        else{
+            self.subViewController.IsinDemomode = [self.IsinDemomode mutableCopy];
+        }
+        
+        verLabel.hidden = TRUE;
+        logLabel.hidden = TRUE;
+        
+        //Add for wifisetting on tabbar.  @Jeanne. 2014.03.04
+        self.subViewController.wifiSetFlag = self.configViewController.wifiSetFlag;
+        if ([self.configViewController.wifiSetFlag isEqualToString:@"YES"]) {
+            Tab_2.hidden = FALSE;
+        }
+        else{
+            Tab.hidden = FALSE;
+        }
+        
+        [self addChildViewController:self.subViewController];
+        [self.view insertSubview:self.subViewController.view atIndex:1];
+    }
+    else if(0 == buttonIndex){
+        NSLog(@"Rescan!");
+        search_cnt = 0;
+        [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(searchip) userInfo:nil repeats:NO];
+    }
 }
 
 /*  test control parent

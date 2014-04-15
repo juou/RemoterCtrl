@@ -24,6 +24,7 @@
 @property (copy, nonatomic) NSMutableString *ForceRefreshFlag;
 @property (strong, nonatomic) NSMutableDictionary *strs;  //Add for multi languages.  @Jeanne.  2014.03.13
 @property (copy, nonatomic) NSMutableString *CuriosDevice; //Add for support multi ios device.  @Jeanne. 2014.03.21
+@property (copy, nonatomic) NSMutableString *IsinDemomode;//Add for demo mode.  @Jeanne. 2014.04.04
 
 //@property (copy, nonatomic) BIDViewController * BIDctrl;  //test control parent. @Jeanne
 
@@ -44,5 +45,6 @@
 -(void) getPlayInfo;
 -(void) refresh_presetbtn:(NSString *)clickNo SyncFromdevice:(NSString *)Flag;
 -(void) clearSearchFlag;
+-(void) getDemomenu: (NSInteger) Menuid;  //Add for demo menu.  @Jeanne. 2014.04.4
 
 @end

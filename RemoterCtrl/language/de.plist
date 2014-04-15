@@ -78,5 +78,29 @@
 	<string>OK</string>
 	<key>ADD</key>
 	<string>Hinzufügen</string>
+	<key>RESCAN_ONLY</key>
+	<string>Rescan</string>
+	<key>DEMO</key>
+	<string>Demo</string>
+	<key>LOCAL_RADIO</key>
+	<string>Local Radio</string>
+	<key>INTERNET_RADIO</key>
+	<string>Internet Radio</string>
+	<key>MEDIA_CENTER</key>
+	<string>Media Center</string>
+	<key>STATION</key>
+	<string>Station</string>
+	<key>MY_FAV</key>
+	<string>My Favorite</string>
+	<key>RADIO_MUSIC</key>
+	<string>Radio Station/Music</string>
+	<key>HISTORY</key>
+	<string>History</string>
+	<key>SERVICE</key>
+	<string>Service</string>
+	<key>FAV_STATION</key>
+	<string>Favorite Station</string>
+	<key>LOCAL_STATION</key>
+	<string>Local Station</string>
 </dict>
 </plist>

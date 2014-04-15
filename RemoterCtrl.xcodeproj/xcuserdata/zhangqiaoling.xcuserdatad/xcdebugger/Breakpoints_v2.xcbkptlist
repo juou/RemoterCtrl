@@ -25,28 +25,12 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "RemoterCtrl/BIDViewController.m"
-            timestampString = "417082661.110419"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "541"
-            endingLineNumber = "541"
-            landmarkName = "-initMenu"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "RemoterCtrl/BIDSubViewController.m"
-            timestampString = "417365159.26719"
+            timestampString = "418618955.566312"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "382"
-            endingLineNumber = "382"
+            startingLineNumber = "585"
+            endingLineNumber = "585"
             landmarkName = "-init_playinfo"
             landmarkType = "5">
          </BreakpointContent>
@@ -58,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RemoterCtrl/BIDSubViewController.m"
-            timestampString = "417422852.914574"
+            timestampString = "418618955.566312"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1431"
-            endingLineNumber = "1431"
+            startingLineNumber = "1698"
+            endingLineNumber = "1698"
             landmarkName = "-getPlayInfo"
             landmarkType = "5">
          </BreakpointContent>
@@ -74,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RemoterCtrl/BIDSubViewController.m"
-            timestampString = "417422852.914574"
+            timestampString = "418618955.566312"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1265"
-            endingLineNumber = "1265"
+            startingLineNumber = "1526"
+            endingLineNumber = "1526"
             landmarkName = "-decode_menu:Forcmd:"
             landmarkType = "5">
          </BreakpointContent>
@@ -90,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RemoterCtrl/BIDSubViewController.m"
-            timestampString = "417365159.26719"
+            timestampString = "418618955.566312"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "538"
-            endingLineNumber = "538"
+            startingLineNumber = "741"
+            endingLineNumber = "741"
             landmarkName = "-menu_disp_ctrl:"
             landmarkType = "5">
          </BreakpointContent>
@@ -106,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RemoterCtrl/BIDSubViewController.m"
-            timestampString = "417419037.611235"
+            timestampString = "418618955.566312"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "570"
-            endingLineNumber = "570"
+            startingLineNumber = "773"
+            endingLineNumber = "773"
             landmarkName = "-menu_disp_ctrl:"
             landmarkType = "5">
          </BreakpointContent>
@@ -122,13 +106,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RemoterCtrl/BIDViewController.m"
-            timestampString = "417359871.709269"
+            timestampString = "418615236.831907"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "628"
-            endingLineNumber = "628"
-            landmarkName = "@implementation BIDViewController"
-            landmarkType = "3">
+            startingLineNumber = "651"
+            endingLineNumber = "651"
+            landmarkName = "-UPnPDBUpdated:"
+            landmarkType = "5">
             <Locations>
                <Location
                   shouldBeEnabled = "No"
@@ -168,11 +152,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RemoterCtrl/BIDSubViewController.m"
-            timestampString = "416738887.129695"
+            timestampString = "418308947.110232"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "117"
-            endingLineNumber = "117"
+            startingLineNumber = "296"
+            endingLineNumber = "296"
             landmarkName = "-MakeMainMenuItem"
             landmarkType = "5">
          </BreakpointContent>
@@ -184,27 +168,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RemoterCtrl/BIDViewController.m"
-            timestampString = "417359871.709269"
+            timestampString = "418615236.831907"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "594"
-            endingLineNumber = "594"
-            landmarkName = "-initMenu"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RemoterCtrl/BIDViewController.m"
-            timestampString = "417081726.788791"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "230"
-            endingLineNumber = "230"
+            startingLineNumber = "233"
+            endingLineNumber = "233"
             landmarkName = "-searchip"
             landmarkType = "5">
          </BreakpointContent>
@@ -216,27 +184,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RemoterCtrl/BIDViewController.m"
-            timestampString = "417081726.788791"
+            timestampString = "418615236.831907"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "362"
-            endingLineNumber = "362"
-            landmarkName = "-viewDidLoad"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RemoterCtrl/BIDViewController.m"
-            timestampString = "417359871.709269"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "816"
-            endingLineNumber = "816"
+            startingLineNumber = "857"
+            endingLineNumber = "857"
             landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -264,11 +216,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RemoterCtrl/BIDSubViewController.m"
-            timestampString = "417422852.914574"
+            timestampString = "418618955.566312"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1530"
-            endingLineNumber = "1530"
+            startingLineNumber = "1797"
+            endingLineNumber = "1797"
             landmarkName = "-presetBtn_update:"
             landmarkType = "5">
          </BreakpointContent>
@@ -280,11 +232,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RemoterCtrl/BIDSubViewController.m"
-            timestampString = "417422852.914574"
+            timestampString = "418618955.566312"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "991"
-            endingLineNumber = "991"
+            startingLineNumber = "1252"
+            endingLineNumber = "1252"
             landmarkName = "-decode_menu:Forcmd:"
             landmarkType = "5">
          </BreakpointContent>
@@ -296,11 +248,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RemoterCtrl/BIDSubViewController.m"
-            timestampString = "417422852.914574"
+            timestampString = "418618955.566312"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "993"
-            endingLineNumber = "993"
+            startingLineNumber = "1254"
+            endingLineNumber = "1254"
             landmarkName = "-decode_menu:Forcmd:"
             landmarkType = "5">
          </BreakpointContent>
@@ -311,28 +263,12 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "RemoterCtrl/BIDViewController.m"
-            timestampString = "417081726.788791"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "346"
-            endingLineNumber = "346"
-            landmarkName = "-viewDidLoad"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "RemoterCtrl/BIDSubViewController.m"
-            timestampString = "417422852.914574"
+            timestampString = "418618955.566312"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1809"
-            endingLineNumber = "1809"
+            startingLineNumber = "2100"
+            endingLineNumber = "2100"
             landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -344,11 +280,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RemoterCtrl/BIDSubViewController.m"
-            timestampString = "417422852.914574"
+            timestampString = "418618955.566312"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1837"
-            endingLineNumber = "1837"
+            startingLineNumber = "2130"
+            endingLineNumber = "2130"
             landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -359,44 +295,12 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "RemoterCtrl/BIDViewController.m"
-            timestampString = "417362719.841847"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "547"
-            endingLineNumber = "547"
-            landmarkName = "-initMenu"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RemoterCtrl/BIDViewController.m"
-            timestampString = "417362763.361244"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "569"
-            endingLineNumber = "569"
-            landmarkName = "-initMenu"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "RemoterCtrl/BIDSubViewController.m"
-            timestampString = "417422852.914574"
+            timestampString = "418618955.566312"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1659"
-            endingLineNumber = "1659"
+            startingLineNumber = "1934"
+            endingLineNumber = "1934"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
@@ -408,11 +312,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RemoterCtrl/BIDSubViewController.m"
-            timestampString = "417422852.914574"
+            timestampString = "418618955.566312"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1606"
-            endingLineNumber = "1606"
+            startingLineNumber = "1881"
+            endingLineNumber = "1881"
             landmarkName = "-viewWillAppear:"
             landmarkType = "5">
          </BreakpointContent>
@@ -424,11 +328,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RemoterCtrl/BIDSubViewController.m"
-            timestampString = "417422852.914574"
+            timestampString = "418618955.566312"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1702"
-            endingLineNumber = "1702"
+            startingLineNumber = "1981"
+            endingLineNumber = "1981"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
