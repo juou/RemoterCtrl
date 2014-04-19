@@ -974,42 +974,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon_ipad;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Sandy Chen (75CFMPERRK)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Sandy Chen (75CFMPERRK)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					/Users/zhangqiaoling/RemoterCtrl,
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "RemoterCtrl/RemoterCtrl-Prefix.pch";
-				INFOPLIST_FILE = "RemoterCtrl/RemoterCtrl-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				LIBRARY_SEARCH_PATHS = (
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Remoter-gmngbfwyysfhmyerbetubvdzvflo/Build/Products/Debug-iphoneos",
-					/Users/zhangqiaoling/Downloads/TestFlightSDK2,
-					/Users/zhangqiaoling/RemoterCtrl/RemoterCtrl,
-				);
-				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = (
-					"-lstdc++",
-					"-all_load",
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4E321554-6044-4B8C-9D2A-FE6729254F04";
-				SEPARATE_STRIP = NO;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				"USER_HEADER_SEARCH_PATHS[arch=*]" = "./src/api ./src/port/ios";
-				WRAPPER_EXTENSION = app;
-			};
-			name = Debug;
-		};
-		94F7DA63187A9BE20008A500 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon_ipad;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Sandy Chen (75CFMPERRK)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Sandy Chen (75CFMPERRK)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: MAGIC SYSTECH INC. (FZFH96B59P)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: MAGIC SYSTECH INC. (FZFH96B59P)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/zhangqiaoling/RemoterCtrl,
@@ -1029,7 +995,42 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4E321554-6044-4B8C-9D2A-FE6729254F04";
+				PROVISIONING_PROFILE = "D5C73381-ACBE-43EE-9AE0-C6CF97993D8B";
+				SEPARATE_STRIP = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				"USER_HEADER_SEARCH_PATHS[arch=*]" = "./src/api ./src/port/ios";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		94F7DA63187A9BE20008A500 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon_ipad;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: MAGIC SYSTECH INC. (FZFH96B59P)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: MAGIC SYSTECH INC. (FZFH96B59P)";
+				ENABLE_NS_ASSERTIONS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/zhangqiaoling/RemoterCtrl,
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RemoterCtrl/RemoterCtrl-Prefix.pch";
+				INFOPLIST_FILE = "RemoterCtrl/RemoterCtrl-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Remoter-gmngbfwyysfhmyerbetubvdzvflo/Build/Products/Debug-iphoneos",
+					/Users/zhangqiaoling/Downloads/TestFlightSDK2,
+					/Users/zhangqiaoling/RemoterCtrl/RemoterCtrl,
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-lstdc++",
+					"-all_load",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "D5C73381-ACBE-43EE-9AE0-C6CF97993D8B";
 				SEPARATE_STRIP = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "./src/api ./src/port/ios";

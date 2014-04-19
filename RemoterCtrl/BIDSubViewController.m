@@ -271,7 +271,7 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
 {
     NSString *item_subid = [[NSString alloc] init];
     BIDItemCell *itemCell;
-    int mainmenu_subid[3] = {uiLOCATIONRADIO_MENU,uiINTERNET_RADIO_MENU,uiUPNP_MENU};
+    int mainmenu_subid[4] = {uiLOCATIONRADIO_MENU,uiINTERNET_RADIO_MENU,uiUPNP_MENU,uiMEDIA_CENTER_MENU};
     int i,cnt;
     BOOL foundflag;
     
@@ -279,8 +279,8 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
         [FixMainMenuItems removeAllObjects];
     }
     
-    
-    for (i= 0; i<3; i++) {
+    //add media center for USB.  @Jeanne. 2014.04.19
+    for (i= 0; i<4; i++) {
         item_subid = [NSString stringWithFormat:@"%d",mainmenu_subid[i]];
         
         foundflag = FALSE;
@@ -815,6 +815,7 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
             case uiLOCATIONRADIO_MENU:
             case uiINTERNET_RADIO_MENU:
             case uiUPNP_MENU:
+            case uiMEDIA_CENTER_MENU://add media center for USB.  @Jeanne. 2014.04.19
                   mParentId = uiMAIN_MENU;
                 break;
             case uiFAVEX_MENU:
@@ -2175,6 +2176,7 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
                     cell.imageView.image = image;
                     break;
                 case uiUPNP_MENU:
+                case uiMEDIA_CENTER_MENU://add media center for USB.  @Jeanne. 2014.04.19
                     //NSLog(@"mediaCenter menu item\n");
                     image = [UIImage imageNamed:@"MediaCenter_icon_ipad.png"];
                     cell.imageView.image = image;
@@ -2195,6 +2197,7 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
                     cell.imageView.image = image;
                     break;
                 case uiUPNP_MENU:
+                case uiMEDIA_CENTER_MENU://add media center for USB.  @Jeanne. 2014.04.19
                     //NSLog(@"mediaCenter menu item\n");
                     image = [UIImage imageNamed:@"MediaCenter_icon.png"];
                     cell.imageView.image = image;
