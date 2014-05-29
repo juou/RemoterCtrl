@@ -43,6 +43,7 @@ static NSMutableString *m_id;
 
 @implementation BIDViewController
 
+
 //0: decode init
 //1: decode friendly name
 -(void) decode_response:(NSString *)response Forcmd: (NSInteger)cmd Forpos:(NSInteger)pos
@@ -284,7 +285,8 @@ static NSMutableString *m_id;
     UITabBar *Tab_2 = (id)[self.view viewWithTag:kMain_2_Tabbar_tag];  //Add for wifisetting on tabbar.  @Jeanne. 2014.03.04
     UILabel *verLabel = (id)[self.view viewWithTag:kVer_Label_tag];
     UILabel *logLabel = (id)[self.view viewWithTag:klog_Label_tag];
-    
+    //Add for tansfer Current language to device.  @Jeanne.  2014.05.26
+    NSString *path = [[NSString alloc] initWithFormat:@"/init?language=%@",Curlanguage];
     
     if (!([MagicUrl isEqualToString:@"magicinit"]))
     {//if (found magic device) begin
@@ -295,7 +297,8 @@ static NSMutableString *m_id;
         }
         //client.isNeedHUD = [@"NO" mutableCopy];//2014.02.26
         
-        [client getPath:@"/init"
+        //Add for tansfer Current language to device.  @Jeanne.  2014.05.26
+        [client getPath:path //@"/init"
              parameters:nil
             loadingText:nil
             successText:nil
@@ -421,10 +424,14 @@ static NSMutableString *m_id;
     NSString *path;
     if(bSupportflag == TRUE){
         NSLog(@"Use current language: %@",language);
+        //Add for tansfer Current language to device.  @Jeanne.  2014.05.26
+        Curlanguage = [[NSString alloc] initWithFormat:@"%@", language];
         path = [[NSBundle mainBundle] pathForResource:language ofType:@"plist"];
     }
     else{
         NSLog(@"Use en language");
+        //Add for tansfer Current language to device.  @Jeanne.  2014.05.26
+        Curlanguage = @"en";
         path = [[NSBundle mainBundle] pathForResource:@"en" ofType:@"plist"];
     }
     self.strs = [[NSMutableDictionary alloc] initWithContentsOfFile:path];

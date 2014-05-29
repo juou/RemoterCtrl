@@ -1101,7 +1101,7 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
 
 -(UIImage *) getImageFromURL:(NSString *)fileURL
 {
-    //NSLog(@"图片下载:%@",fileURL);
+    NSLog(@"图片下载:%@",fileURL);
     UIImage * result;
     
     NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:fileURL]];
@@ -1181,6 +1181,7 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     UILabel *playinfoLabel = (id)[self.view viewWithTag:kPlayinfo_Label_tag];
     UISlider *Volslider = (id)[self.view viewWithTag:kVol_Slider_tag];
     UIButton *MuteButton = (id)[self.view viewWithTag:kMute_Button_tag];
+    UILabel *playName = (id)[self.view viewWithTag:kPlayname_Label_tag];  //Add for upnp name change.  @Jeanne.  2014.05.26
     char *p,*p1;
     char id[10];
     char status[30],vol[5],mute[3];
@@ -1290,7 +1291,7 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     }//if cmd == 3
     else if(4==cmd){  // 4: playinfo
         NSString *playStatus;
-        
+        //NSString *playingStr = [self.strs valueForKey:@"PLAYING"];
         
         //get item status
         memset(status, 0, sizeof(status));
@@ -1303,7 +1304,10 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
         }
         
         playStatus = [[NSString alloc] initWithString:[NSString stringWithCString:status encoding:NSUTF8StringEncoding]];
-        if ([playStatus isEqualToString:@"Playing"])
+        
+        //Fix bug: it should be support by multilanguage.  @Jeanne.  2014.05.26
+        //Not in playing, also get playinfo, and refresh it.
+        //if ([playStatus isEqualToString:playingStr])
         {//in playing
             NSString *logourl;
             NSString *albumurl;
@@ -1312,6 +1316,22 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
             NSString *song;
             NSString *artist;
             NSString *playinfo;
+            NSString *newplaytitle;
+            
+            //Add for upnp name change.  @Jeanne.  2014.05.26
+            //==============================================
+            memset(infostr, 0, sizeof(infostr));
+            p1 = strstr(str, "<title>");
+            if(p1)
+            {
+                for (int i = 7; (p1[i]!=0)&&(p1[i]!='<'); i++) {
+                    infostr[i-7] = p1[i];
+                }
+                newplaytitle = [[NSString alloc] initWithString:[NSString stringWithCString:infostr encoding:NSUTF8StringEncoding]];
+                
+                playName.text = newplaytitle;
+            }
+            //==============================================
             
             //get logo img url
             memset(infostr, 0, sizeof(infostr));
@@ -1439,7 +1459,9 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
             playinfoLabel.numberOfLines = 0;
             playinfoLabel.textAlignment = NSTextAlignmentLeft;
             playinfoLabel.text = playinfo;
+            NSLog(@"playinfo: %@",playinfoLabel.text);
         }
+        /*
         else
         {//not in playing
             //Modified for support multi ios device.  @Jeanne. 2014.03.21
@@ -1449,7 +1471,7 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
             }
             playLabel.textAlignment = NSTextAlignmentCenter;
             playLabel.text = playStatus;
-        }
+        }*/
         
         //get vol //Jeanne.  2014.01.16
         memset(vol, 0, sizeof(vol));

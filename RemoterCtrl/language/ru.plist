@@ -80,6 +80,8 @@
 	<string>Добавить</string>
 	<key>RESCAN_ONLY</key>
 	<string>Rescan</string>
+	<key>PLAYING</key>
+	<string></string>
 	<key>DEMO</key>
 	<string>Demo</string>
 	<key>LOCAL_RADIO</key>

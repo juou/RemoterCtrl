@@ -102,5 +102,7 @@
 	<string>Favorite Station</string>
 	<key>LOCAL_STATION</key>
 	<string>Local Station</string>
+	<key>PLAYING</key>
+	<string>Playing</string>
 </dict>
 </plist>

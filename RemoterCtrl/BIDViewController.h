@@ -22,6 +22,7 @@
     NSMutableString *MagicUrl;
     NSMutableArray *mSSDPObjCDevices;  //basic ssdp device
     NSString *RESCAN;
+    NSString *Curlanguage;  //Add for tansfer Current language to device.  @Jeanne.  2014.05.26
 }
 
 

@@ -303,7 +303,7 @@
     
     UIAlertView *alert = [[UIAlertView alloc]
                           initWithTitle:aboutStr
-                          message:@"Version 1.0.0\nCopyright@2014 mediaU.\nAll rights reserved.\n2014.04.19"
+                          message:@"Version 1.0.0\nCopyright@2014 mediaU.\nAll rights reserved.\n2014.05.29"
                           delegate:nil
                           cancelButtonTitle:OKStr
                           otherButtonTitles:nil];
