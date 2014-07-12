@@ -12,6 +12,7 @@
 #import "ILHTTPClient.h"
 #import "BIDItemCell.h"
 #import "BIDViewController.h"
+#import "BIDFMViewController.h"  //Test FM.   @Jeanne. 2014.06.16
 
 //Add for wifisetting on tabbar.  @Jeanne. 2014.03.04
 #define kMain_Tabbar_tag       101
@@ -271,7 +272,7 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
 {
     NSString *item_subid = [[NSString alloc] init];
     BIDItemCell *itemCell;
-    int mainmenu_subid[4] = {uiLOCATIONRADIO_MENU,uiINTERNET_RADIO_MENU,uiUPNP_MENU,uiMEDIA_CENTER_MENU};
+    int mainmenu_subid[5] = {uiLOCATIONRADIO_MENU,uiINTERNET_RADIO_MENU,uiUPNP_MENU,uiMEDIA_CENTER_MENU,uiFM_MENU};
     int i,cnt;
     BOOL foundflag;
     
@@ -280,7 +281,7 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     }
     
     //add media center for USB.  @Jeanne. 2014.04.19
-    for (i= 0; i<4; i++) {
+    for (i= 0; i<5; i++) {
         item_subid = [NSString stringWithFormat:@"%d",mainmenu_subid[i]];
         
         foundflag = FALSE;
@@ -1987,6 +1988,7 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     //client.isNeedHUD = [@"NO" mutableCopy];//2014.02.26
     
     
+    
     //Reset menu display ctrl @Jeanne. 2014.01.29
     [self menu_disp_ctrl:1];  //main menu ctrl
     
@@ -2203,6 +2205,11 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
                     image = [UIImage imageNamed:@"MediaCenter_icon_ipad.png"];
                     cell.imageView.image = image;
                     break;
+                case uiFM_MENU:
+                    //NSLog(@"FM menu item\n");
+                    image = [UIImage imageNamed:@"FM_icon_ipad.png"];
+                    cell.imageView.image = image;
+                    break;
             }
             bgImage = [UIImage imageNamed:@"mainbar_bg_ipad"];
         }
@@ -2222,6 +2229,11 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
                 case uiMEDIA_CENTER_MENU://add media center for USB.  @Jeanne. 2014.04.19
                     //NSLog(@"mediaCenter menu item\n");
                     image = [UIImage imageNamed:@"MediaCenter_icon.png"];
+                    cell.imageView.image = image;
+                    break;
+                case uiFM_MENU:
+                    //NSLog(@"FM menu item\n");
+                    image = [UIImage imageNamed:@"FM_icon.png"];
                     cell.imageView.image = image;
                     break;
             }
@@ -2373,6 +2385,7 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     NSString *NewSearchMenuId = [[NSString alloc] initWithFormat:@"%d",uiNEWSEARCHRADIOEX_MENU];
     NSString *internetRadioId = [[NSString alloc] initWithFormat:@"%d",uiINTERNET_RADIO_MENU];
     NSString *PresetListId = [[NSString alloc] initWithFormat:@"%d",uiFAVEX_MENU];
+    NSString *FMId = [[NSString alloc] initWithFormat:@"%d",uiFM_MENU]; //Add for fm.  @Jeanne. 2014.06.11
     
     //Add for demo mode.  @Jeanne. 2014.04.04
     if ([self.IsinDemomode isEqualToString:@"YES"]){
@@ -2495,6 +2508,35 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
                 SearchInputFlag = TRUE;
                 self.SearchField.text = @"";
                 [self menu_disp_ctrl:2]; //other menu ctrl
+            }
+            else if ([itemCell.submenuId isEqualToString:FMId]) //Add for fm.  @Jeanne. 2014.06.11
+            {//go to FM menu
+                NSLog(@"select fm item, goto fm menu.");
+                BIDViewController *parent = (BIDViewController *)self.parentViewController;
+                
+                
+                [client getPath:gochildcmd
+                     parameters:nil
+                    loadingText:nil
+                    successText:nil
+                        success:^(AFHTTPRequestOperation *operation, NSString *response)
+                 {
+                     //NSLog(@"response: %@", response);
+                     [parent gotoFMMenu];
+                     
+                 }
+                        failure:^(AFHTTPRequestOperation *operation, NSError *error)
+                 {
+                     NSLog(@"Error: %@", error);
+                 }
+                 ];
+                
+                //Test FM.   @Jeanne. 2014.06.16
+                //这是要跳转的类的实例
+                //BIDFMViewController *FMCtrl =[[BIDFMViewController alloc]initWithNibName:@"BIDFMViewController" bundle:nil];
+                
+                //FMCtrl.delegate_subview=self;
+                //[self.navigationController pushViewController:FMCtrl animated:YES];
             }
             else
             {

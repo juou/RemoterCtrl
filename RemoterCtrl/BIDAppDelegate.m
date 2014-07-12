@@ -35,6 +35,7 @@
     
     //应用启动之后的一些自定义设置
    if (self.ViewController ==nil) {
+       
        if ((UIDevice_iPhoneStandardRes == CurResoloution)
            ||(UIDevice_iPhoneHiRes == CurResoloution))
        {
@@ -60,6 +61,10 @@
            self.ViewController = [[BIDViewController alloc] initWithNibName:@"Main_iphone5" bundle:nil];
            self.ViewController.CuriosDevice = [@"iphone5" mutableCopy];
        }
+       
+       //Test for iphone4
+       //self.ViewController = [[BIDViewController alloc] initWithNibName:@"Main_iphone4" bundle:nil];
+       //self.ViewController.CuriosDevice = [@"iphone4" mutableCopy];
 
     }
 

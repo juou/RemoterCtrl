@@ -43,6 +43,69 @@ static NSMutableString *m_id;
 
 @implementation BIDViewController
 
+//Add for FM.  @Jeanne.  2014.06.15
+-(void)gotoMainMenu
+{
+    UITabBar *Tab = (id)[self.view viewWithTag:kMain_Tabbar_tag];
+    UITabBar *Tab_2 = (id)[self.view viewWithTag:kMain_2_Tabbar_tag];
+    if ([self.configViewController.wifiSetFlag isEqualToString:@"YES"]) {
+        Tab_2.hidden = FALSE;
+    }
+    else{
+        Tab.hidden = FALSE;
+    }
+    [self.FMViewController.view removeFromSuperview];
+    [self addChildViewController:self.subViewController];
+    [self.view insertSubview:self.subViewController.view atIndex:1];
+}
+
+//Add for FM.  @Jeanne.  2014.06.11
+-(void)gotoFMMenu
+{ //config menu
+    UITabBar *Tab = (id)[self.view viewWithTag:kMain_Tabbar_tag];
+    UITabBar *Tab_2 = (id)[self.view viewWithTag:kMain_2_Tabbar_tag];
+    
+    Tab.hidden = YES;
+    Tab_2.hidden = YES;
+    
+    NSLog(@"go to FM menu\n");
+    if (self.FMViewController ==nil) {
+        //Modified for support multi ios device.  @Jeanne. 2014.03.21
+        if ([self.CuriosDevice isEqualToString:@"iphone4"]) {
+            self.FMViewController = [[BIDFMViewController alloc] initWithNibName:@"BIDFMViewController_iphone4" bundle:nil];
+        }
+        else if ([self.CuriosDevice isEqualToString:@"iphone5"]) {
+            self.FMViewController = [[BIDFMViewController alloc] initWithNibName:@"BIDFMViewController" bundle:nil];
+        }
+        else if ([self.CuriosDevice isEqualToString:@"ipad"]) {
+            self.FMViewController = [[BIDFMViewController alloc] initWithNibName:@"BIDFMViewController_ipad" bundle:nil];
+        }
+        else{
+            self.FMViewController = [[BIDFMViewController alloc] initWithNibName:@"BIDFMViewController" bundle:nil];
+        }
+        
+    }
+    
+    if (self.FMViewController.toMagicUrl == nil) {
+        self.FMViewController.toMagicUrl = [[NSMutableString alloc] initWithString:MagicUrl];
+    }
+    else{
+        self.FMViewController.toMagicUrl = [MagicUrl mutableCopy];
+    }
+    
+    //Add for multi languages.  @Jeanne.  2014.03.13
+    if (self.FMViewController.strs == nil) {
+        self.FMViewController.strs = [[NSMutableDictionary alloc] initWithDictionary:self.strs];
+    }
+    else{
+        self.FMViewController.strs = [self.strs mutableCopy];
+    }
+    
+    [self.subViewController.view removeFromSuperview];
+    [self addChildViewController:self.FMViewController]; //2014.03.06
+    [self.view insertSubview:self.FMViewController.view atIndex:1];
+}
+
 
 //0: decode init
 //1: decode friendly name
@@ -374,6 +437,8 @@ static NSMutableString *m_id;
                  Tab.hidden = FALSE;
              }
              
+             //self.subViewController.BIDctrl = self;
+             //[self passSelf: self.subViewController.BIDctrl]; //test control parent.  @Jeanne
              [self addChildViewController:self.subViewController];
              [self.view insertSubview:self.subViewController.view atIndex:1];
              
@@ -1018,10 +1083,11 @@ static NSMutableString *m_id;
     }
 }
 
-/*  test control parent
+/*
+//  test control parent
 -(void)passSelf:(id)sender
 {
-    sender = self;
+    sender = (BIDViewController *)self;
 }
 */
 

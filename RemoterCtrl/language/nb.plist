@@ -102,7 +102,15 @@
 	<string>Favorite Station</string>
 	<key>LOCAL_STATION</key>
 	<string>Local Station</string>
-	<key>PLAYING</key>
-	<string></string>
+    <key>AUDIO_MODE</key>
+	<string>Stereoinnstillinger</string>
+	<key>AUTO</key>
+	<string>Automatisk</string>
+	<key>MONO</key>
+	<string>Mono</string>
+	<key>AUTO_REMIND</key>
+	<string>Når autosøk er ferdig, vil all data i FM-forhåndsinnstillinger bli nullstilt.</string>
+    <key>WAIT_REMIND</key>
+	<string>Vent litt…</string>
 </dict>
 </plist>

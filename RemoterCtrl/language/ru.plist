@@ -104,5 +104,15 @@
 	<string>Favorite Station</string>
 	<key>LOCAL_STATION</key>
 	<string>Local Station</string>
+    <key>AUDIO_MODE</key>
+	<string>Настройка стереозвука</string>
+    <key>AUTO</key>
+	<string>Автоматический</string>
+	<key>MONO</key>
+	<string>Моно</string>
+	<key>AUTO_REMIND</key>
+	<string>По окончании автоматического поиска будут сброшены все FM-станции.</string>
+    <key>WAIT_REMIND</key>
+	<string>Подождите,пожалуйста…</string>
 </dict>
 </plist>

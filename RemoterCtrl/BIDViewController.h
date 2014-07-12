@@ -11,6 +11,7 @@
 #import "BIDSubViewController.h"
 #import "BIDConfigViewController.h"
 #import "BIDPlayViewController.h"
+#import "BIDFMViewController.h"
 #import "UPnPDB.h"
 #import "ILHTTPClient.h"
 #import "BIDUIDevice.h"
@@ -29,6 +30,7 @@
 @property (strong, nonatomic) BIDMenuProperty *menuProperty;
 @property (strong, nonatomic) BIDSubViewController *subViewController;
 @property (strong, nonatomic) BIDConfigViewController *configViewController;
+@property (strong, nonatomic) BIDFMViewController *FMViewController; //Add for FM.  @Jeanne.  2014.06.11
 @property (copy, nonatomic) NSMutableString *wifiSettingUrl;
 @property (copy, nonatomic) NSMutableString *CuriosDevice; //Add for support multi ios device.  @Jeanne. 2014.03.21
 @property (strong, nonatomic) NSMutableDictionary *strs;  //Add for multi languages.  @Jeanne.  2014.03.13
@@ -45,4 +47,6 @@
 -(void)searchip;
 -(void)Rescandevice;
 //-(void)passSelf:(id)sender;  //test control parent.  @Jeanne
+-(void)gotoFMMenu; //Add for FM.  @Jeanne.  2014.06.11
+-(void)gotoMainMenu; //Add for FM.  @Jeanne.  2014.06.15
 @end
