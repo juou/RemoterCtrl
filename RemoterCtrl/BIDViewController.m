@@ -43,8 +43,115 @@ static NSMutableString *m_id;
 
 @implementation BIDViewController
 
+//Test for Active/Background.  @Jeanne. 2014.08.10
+-(void) regotoMainMenu
+{
+    UITabBar *Tab = (id)[self.view viewWithTag:kMain_Tabbar_tag];
+    UITabBar *Tab_2 = (id)[self.view viewWithTag:kMain_2_Tabbar_tag];
+    UITabBarItem *homeitem;
+    UITabBarItem *configitem;
+    NSString *path = [[NSString alloc] initWithFormat:@"/init?language=%@",Curlanguage];
+    NSString *gochildMaincmd = [[NSString alloc] initWithFormat:@"/gochild?id=%d",uiMAIN_MENU];
+    
+    if ([self.configViewController.wifiSetFlag isEqualToString:@"YES"]) {
+        homeitem = [Tab_2.items objectAtIndex:0];
+        configitem = [Tab_2.items objectAtIndex:2];
+    }
+    else{
+        homeitem = [Tab.items objectAtIndex:0];
+        configitem = [Tab.items objectAtIndex:2];
+    }
+    
+    configitem.enabled = TRUE;
+    homeitem.enabled = FALSE;
+    homeitem.image = [UIImage imageNamed:@"home"];
+    
+    
+    //clear Search flag
+    [self.subViewController clearSearchFlag];
+    
+    [client getPath:path //@"/init"
+         parameters:nil
+        loadingText:nil
+        successText:nil
+            success:^(AFHTTPRequestOperation *operation, NSString *response)
+     {
+         NSLog(@"response: %@", response);
+         [self decode_response:response Forcmd:0 Forpos:0];
+         
+         self.menuProperty.menuId = [[NSMutableString alloc] initWithFormat: @"%@",m_id];
+         NSLog(@"m_id=%@",m_id);
+         NSLog(@"self.menuProperty.menuId = %@",self.menuProperty.menuId);
+         
+         if ([self.subViewController.view superview]==nil) {
+             NSLog(@"No sub view insert yet, insert first!");
+             [self addChildViewController:self.subViewController];
+             [self.view insertSubview:self.subViewController.view atIndex:1];
+         }
+
+         
+         
+         [client getPath:gochildMaincmd
+              parameters:nil
+             loadingText:nil
+             successText:nil
+                 success:^(AFHTTPRequestOperation *operation, NSString *response)
+          {
+              NSLog(@"response: %@", response);
+              [self.subViewController decode_menu:response Forcmd:2]; //2:gochild decode
+              [self.subViewController refresh_menu];
+          }
+                 failure:^(AFHTTPRequestOperation *operation, NSError *error)
+          {
+              NSLog(@"Error: %@", error);
+          }
+          ];
+         
+         
+     }
+            failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         NSLog(@"Error: %@", error);
+     }];
+    
+}
+
+//Test for Active/Background.  @Jeanne. 2014.08.10
+-(void) QuitAppMode
+{
+    NSString *path = @"/exit";
+    
+    if (!([MagicUrl isEqualToString:@"magicinit"]))
+    {//if (found magic device) begin
+        
+        client.isNeedHUD = [@"NO" mutableCopy];//2014.02.26
+        
+        //Add for tansfer Current language to device.  @Jeanne.  2014.05.26
+        [client getPath:path
+             parameters:nil
+            loadingText:nil
+            successText:nil
+                success:^(AFHTTPRequestOperation *operation, NSString *response)
+         {
+             NSLog(@"Quit response: %@", response);
+         }
+                failure:^(AFHTTPRequestOperation *operation, NSError *error)
+         {
+             NSLog(@"Error: %@", error);
+         }];
+        
+        client.isNeedHUD = [@"YES" mutableCopy];//2014.02.26
+        
+    } //if (found magic device) end
+    
+}
+
 //Add for FM.  @Jeanne.  2014.06.15
--(void)gotoMainMenu
+//Modified for BT/AUX   @Jeanne. 2014.08.09
+//index = 1: FM
+//      = 2: BT
+//      = 3: AUX
+-(void)gotoMainMenu: (NSInteger)index
 {
     UITabBar *Tab = (id)[self.view viewWithTag:kMain_Tabbar_tag];
     UITabBar *Tab_2 = (id)[self.view viewWithTag:kMain_2_Tabbar_tag];
@@ -54,9 +161,112 @@ static NSMutableString *m_id;
     else{
         Tab.hidden = FALSE;
     }
-    [self.FMViewController.view removeFromSuperview];
+    if (index == 1) {
+        [self.FMViewController.view removeFromSuperview];
+    }
+    else if (index == 2) {
+        [self.BTViewController.view removeFromSuperview];
+    }
+    else if (index == 3) {
+        [self.AUXViewController.view removeFromSuperview];
+    }
+    
     [self addChildViewController:self.subViewController];
     [self.view insertSubview:self.subViewController.view atIndex:1];
+}
+
+//Add for BT/AUX   @Jeanne. 2014.08.09
+-(void)gotoAUXMenu
+{ //config menu
+    UITabBar *Tab = (id)[self.view viewWithTag:kMain_Tabbar_tag];
+    UITabBar *Tab_2 = (id)[self.view viewWithTag:kMain_2_Tabbar_tag];
+    
+    Tab.hidden = YES;
+    Tab_2.hidden = YES;
+    
+    NSLog(@"go to AUX menu\n");
+    if (self.AUXViewController ==nil) {
+        //Modified for support multi ios device.  @Jeanne. 2014.03.21
+        if ([self.CuriosDevice isEqualToString:@"iphone4"]) {
+            self.AUXViewController = [[BIDAUXViewController alloc] initWithNibName:@"BIDAUXViewController_iphone4" bundle:nil];
+        }
+        else if ([self.CuriosDevice isEqualToString:@"iphone5"]) {
+            self.AUXViewController = [[BIDAUXViewController alloc] initWithNibName:@"BIDAUXViewController" bundle:nil];
+        }
+        else if ([self.CuriosDevice isEqualToString:@"ipad"]) {
+            self.AUXViewController = [[BIDAUXViewController alloc] initWithNibName:@"BIDAUXViewController_ipad" bundle:nil];
+        }
+        else{
+            self.AUXViewController = [[BIDAUXViewController alloc] initWithNibName:@"BIDAUXViewController" bundle:nil];
+        }
+        
+    }
+    
+    if (self.AUXViewController.toMagicUrl == nil) {
+        self.AUXViewController.toMagicUrl = [[NSMutableString alloc] initWithString:MagicUrl];
+    }
+    else{
+        self.AUXViewController.toMagicUrl = [MagicUrl mutableCopy];
+    }
+    
+    //Add for multi languages.  @Jeanne.  2014.03.13
+    if (self.AUXViewController.strs == nil) {
+        self.AUXViewController.strs = [[NSMutableDictionary alloc] initWithDictionary:self.strs];
+    }
+    else{
+        self.AUXViewController.strs = [self.strs mutableCopy];
+    }
+    
+    [self.subViewController.view removeFromSuperview];
+    [self addChildViewController:self.AUXViewController]; //2014.03.06
+    [self.view insertSubview:self.AUXViewController.view atIndex:1];
+}
+
+//Add for BT/AUX   @Jeanne. 2014.08.09
+-(void)gotoBTMenu
+{ //config menu
+    UITabBar *Tab = (id)[self.view viewWithTag:kMain_Tabbar_tag];
+    UITabBar *Tab_2 = (id)[self.view viewWithTag:kMain_2_Tabbar_tag];
+    
+    Tab.hidden = YES;
+    Tab_2.hidden = YES;
+    
+    NSLog(@"go to BT menu\n");
+    if (self.BTViewController ==nil) {
+        //Modified for support multi ios device.  @Jeanne. 2014.03.21
+        if ([self.CuriosDevice isEqualToString:@"iphone4"]) {
+            self.BTViewController = [[BIDBTViewController alloc] initWithNibName:@"BIDBTViewController_iphone4" bundle:nil];
+        }
+        else if ([self.CuriosDevice isEqualToString:@"iphone5"]) {
+            self.BTViewController = [[BIDBTViewController alloc] initWithNibName:@"BIDBTViewController" bundle:nil];
+        }
+        else if ([self.CuriosDevice isEqualToString:@"ipad"]) {
+            self.BTViewController = [[BIDBTViewController alloc] initWithNibName:@"BIDFMViewController_ipad" bundle:nil];
+        }
+        else{
+            self.BTViewController = [[BIDBTViewController alloc] initWithNibName:@"BIDBTViewController" bundle:nil];
+        }
+        
+    }
+    
+    if (self.BTViewController.toMagicUrl == nil) {
+        self.BTViewController.toMagicUrl = [[NSMutableString alloc] initWithString:MagicUrl];
+    }
+    else{
+        self.BTViewController.toMagicUrl = [MagicUrl mutableCopy];
+    }
+    
+    //Add for multi languages.  @Jeanne.  2014.03.13
+    if (self.BTViewController.strs == nil) {
+        self.BTViewController.strs = [[NSMutableDictionary alloc] initWithDictionary:self.strs];
+    }
+    else{
+        self.BTViewController.strs = [self.strs mutableCopy];
+    }
+    
+    [self.subViewController.view removeFromSuperview];
+    [self addChildViewController:self.BTViewController]; //2014.03.06
+    [self.view insertSubview:self.BTViewController.view atIndex:1];
 }
 
 //Add for FM.  @Jeanne.  2014.06.11

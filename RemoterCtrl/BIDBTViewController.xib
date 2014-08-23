@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BIDBTViewController">
+            <connections>
+                <outlet property="BTStatusImageView" destination="l65-t6-XhH" id="qLu-CB-FqM"/>
+                <outlet property="BackwordButton" destination="n5w-Nd-PoJ" id="t40-iq-dDs"/>
+                <outlet property="ForwordButton" destination="1Ey-4m-OeX" id="8z3-cl-GmT"/>
+                <outlet property="PlaypauseButton" destination="ZhC-Or-idA" id="dAW-2o-eGT"/>
+                <outlet property="StopButton" destination="bP7-qN-GKY" id="FYE-Ua-5VS"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="start.png" translatesAutoresizingMaskIntoConstraints="NO" id="hbp-lF-dED">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bar_play_middle.png" translatesAutoresizingMaskIntoConstraints="NO" id="cbp-AH-t64">
+                    <rect key="frame" x="0.0" y="55" width="320" height="394"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bar_play_bottom.png" translatesAutoresizingMaskIntoConstraints="NO" id="YCo-Mn-rXG">
+                    <rect key="frame" x="0.0" y="514" width="320" height="54"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Bluetooth.png" translatesAutoresizingMaskIntoConstraints="NO" id="bnN-lY-hzc">
+                    <rect key="frame" x="13" y="250" width="295" height="45"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Bluetooth_pic.png" translatesAutoresizingMaskIntoConstraints="NO" id="c4x-dx-2fr">
+                    <rect key="frame" x="7" y="96" width="65" height="60"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" tag="90" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="matched.png" translatesAutoresizingMaskIntoConstraints="NO" id="l65-t6-XhH">
+                    <rect key="frame" x="75" y="108" width="45" height="35"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <button opaque="NO" tag="91" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mhf-KC-JZO">
+                    <rect key="frame" x="4" y="18" width="60" height="35"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                    <state key="normal" image="btn_back.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="backButtonPressed" destination="-1" eventType="touchUpInside" id="kzJ-pp-6ig"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="92" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CcC-gu-UK8">
+                    <rect key="frame" x="247" y="373" width="53" height="53"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="btn_pairing.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="StartBTMatchPressed" destination="-1" eventType="touchUpInside" id="IZq-1v-Wgq"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="93" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n5w-Nd-PoJ">
+                    <rect key="frame" x="0.0" y="449" width="80" height="65"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="btn_prev.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="CMDButtonPressed:" destination="-1" eventType="touchUpInside" id="Q0L-bG-N4I"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="94" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bP7-qN-GKY">
+                    <rect key="frame" x="80" y="449" width="80" height="65"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="btn_stop.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="CMDButtonPressed:" destination="-1" eventType="touchUpInside" id="z1L-8S-IXp"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="95" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZhC-Or-idA">
+                    <rect key="frame" x="160" y="449" width="80" height="65"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="btn_play_pause.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="CMDButtonPressed:" destination="-1" eventType="touchUpInside" id="Je2-N9-50N"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="96" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Ey-4m-OeX">
+                    <rect key="frame" x="240" y="449" width="80" height="65"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="btn_nt.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="CMDButtonPressed:" destination="-1" eventType="touchUpInside" id="0v1-jU-Wmn"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="97" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QoF-XM-ebE">
+                    <rect key="frame" x="18" y="526" width="28" height="28"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="vol.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="MuteButtonPressed" destination="-1" eventType="touchUpInside" id="T4u-a8-uCP"/>
+                    </connections>
+                </button>
+                <slider opaque="NO" tag="98" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="16" minValue="0.0" maxValue="31" continuous="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FcF-LV-U2h">
+                    <rect key="frame" x="63" y="525" width="230" height="31"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="volChange:" destination="-1" eventType="valueChanged" id="Yi0-zS-qwT"/>
+                    </connections>
+                </slider>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="Bluetooth.png" width="295" height="45"/>
+        <image name="Bluetooth_pic.png" width="70" height="70"/>
+        <image name="bar_play_bottom.png" width="10" height="200"/>
+        <image name="bar_play_middle.png" width="10" height="730"/>
+        <image name="btn_back.png" width="100" height="70"/>
+        <image name="btn_nt.png" width="80" height="65"/>
+        <image name="btn_pairing.png" width="53" height="53"/>
+        <image name="btn_play_pause.png" width="80" height="65"/>
+        <image name="btn_prev.png" width="80" height="65"/>
+        <image name="btn_stop.png" width="240" height="200"/>
+        <image name="matched.png" width="45" height="35"/>
+        <image name="start.png" width="320" height="568"/>
+        <image name="vol.png" width="32" height="32"/>
+    </resources>
+</document>

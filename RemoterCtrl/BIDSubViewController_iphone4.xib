@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BIDSubViewController">
             <connections>
+                <outlet property="Homebtn" destination="JgJ-ew-of8" id="8fF-QV-fAZ"/>
                 <outlet property="SearchField" destination="TNo-4u-Kfq" id="RS5-Le-4TI"/>
                 <outlet property="singlePicker" destination="QHW-4G-ThX" id="bKa-EX-Egv"/>
                 <outlet property="view" destination="1" id="hLB-kr-IZg"/>
@@ -321,6 +322,16 @@
                         <action selector="CancelPressed" destination="-1" eventType="touchUpInside" id="ud6-mO-sLU"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JgJ-ew-of8">
+                    <rect key="frame" x="258" y="18" width="50" height="35"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="btn_home.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="HomeButtonPressed" destination="-1" eventType="touchUpInside" id="wBG-qG-UJx"/>
+                    </connections>
+                </button>
             </subviews>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
@@ -334,6 +345,7 @@
         <image name="bar_play_top.png" width="10" height="120"/>
         <image name="btn_add.png" width="55" height="42"/>
         <image name="btn_back.png" width="100" height="70"/>
+        <image name="btn_home.png" width="50" height="35"/>
         <image name="btn_preset_s.png" width="53" height="42"/>
         <image name="btn_stop.png" width="240" height="200"/>
         <image name="radio.png" width="208" height="160"/>

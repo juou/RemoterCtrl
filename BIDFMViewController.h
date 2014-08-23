@@ -18,6 +18,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *FMFavTable;
 @property (strong,nonatomic) IBOutlet UIPickerView *singlePicker;
+@property (strong,nonatomic) IBOutlet UIImageView *MarkImageView;
 
 -(IBAction)volChange:(UISlider *)sender;
 -(IBAction)backButtonPressed;

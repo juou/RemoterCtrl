@@ -13,6 +13,8 @@
 #import "BIDItemCell.h"
 #import "BIDViewController.h"
 #import "BIDFMViewController.h"  //Test FM.   @Jeanne. 2014.06.16
+#import "BIDBTViewController.h"  //Add for BT/AUX  @Jeanne.  2014.08.09
+#import "BIDAUXViewController.h" //Add for BT/AUX  @Jeanne.  2014.08.09
 
 //Add for wifisetting on tabbar.  @Jeanne. 2014.03.04
 #define kMain_Tabbar_tag       101
@@ -94,6 +96,20 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
 @end
 
 @implementation BIDSubViewController
+
+@synthesize Homebtn; //Jeanne. 2014.08.10
+
+//Jeanne. 2014.08.10
+-(IBAction)HomeButtonPressed
+{
+    BIDViewController *parent = (BIDViewController *)self.parentViewController;
+    NSLog(@"HomeButtonPressed");
+    if ([self.IsinDemomode isEqualToString:@"NO"]){
+        NSLog(@"Regoto Main Menu");
+      [parent regotoMainMenu];
+    }
+}
+
 
 //Add for demo menu.  @Jeanne. 2014.04.4
 -(void) getDemomenu: (NSInteger) Menuid
@@ -272,7 +288,14 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
 {
     NSString *item_subid = [[NSString alloc] init];
     BIDItemCell *itemCell;
-    int mainmenu_subid[5] = {uiLOCATIONRADIO_MENU,uiINTERNET_RADIO_MENU,uiUPNP_MENU,uiMEDIA_CENTER_MENU,uiFM_MENU};
+    int mainmenu_subid[7] = {uiLOCATIONRADIO_MENU,
+                             uiINTERNET_RADIO_MENU,
+                             uiUPNP_MENU,
+                             uiMEDIA_CENTER_MENU,
+                             uiFM_MENU,
+                             uiLINEIN_MENU,
+                             uiBLUETOOTH_MENU,
+                            };
     int i,cnt;
     BOOL foundflag;
     
@@ -281,7 +304,7 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     }
     
     //add media center for USB.  @Jeanne. 2014.04.19
-    for (i= 0; i<5; i++) {
+    for (i= 0; i<7; i++) {
         item_subid = [NSString stringWithFormat:@"%d",mainmenu_subid[i]];
         
         foundflag = FALSE;
@@ -694,6 +717,7 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
         case 1: //main menu
             tableView.hidden = FALSE;//TRUE;   //2014.02.07
             BackButton.hidden = TRUE;
+            Homebtn.hidden = TRUE;   //Jeanne. 2014.08.10
             MuteButton.hidden = TRUE;
             Volslider.hidden = TRUE;
             tabBar.hidden = FALSE;
@@ -716,6 +740,7 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
         case 2: //other menu
             tableView.hidden = FALSE;
             BackButton.hidden = FALSE;
+            Homebtn.hidden = TRUE;   //Jeanne. 2014.08.10
             MuteButton.hidden = TRUE;
             Volslider.hidden = TRUE;
             tabBar.hidden = FALSE;
@@ -734,6 +759,7 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
         case 3: //play menu
             tableView.hidden = TRUE;
             BackButton.hidden = FALSE;
+            Homebtn.hidden = FALSE;   //Jeanne. 2014.08.10
             MuteButton.hidden = FALSE;
             Volslider.hidden = FALSE;
             tabBar.hidden = TRUE;
@@ -1251,6 +1277,11 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
             item_subid = [NSString stringWithCString:id encoding:NSUTF8StringEncoding];
             item_name= [NSString stringWithCString:infostr encoding:NSUTF8StringEncoding];
             item_status= [NSString stringWithCString:status encoding:NSUTF8StringEncoding];
+            
+            //fix display bug.  @Jeanne. 2014.08.10
+            if([item_name rangeOfString:@"\xc3\x83\xc2\xb6"].location !=NSNotFound){
+                item_name = [item_name stringByReplacingOccurrencesOfString:@"\xc3\x83\xc2\xb6" withString:@"ö"];
+            }
             
             //test
             //NSData* xmlData =[item_name dataUsingEncoding:NSUTF8StringEncoding];
@@ -2210,6 +2241,16 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
                     image = [UIImage imageNamed:@"FM_icon_ipad.png"];
                     cell.imageView.image = image;
                     break;
+                case uiLINEIN_MENU:
+                    NSLog(@"Aux menu item\n");
+                    image = [UIImage imageNamed:@"AUX_icon_ipad.png"];
+                    cell.imageView.image = image;
+                    break;
+                case uiBLUETOOTH_MENU:
+                    NSLog(@"BT menu item\n");
+                    image = [UIImage imageNamed:@"BT_icon_ipad.png"];
+                    cell.imageView.image = image;
+                    break;
             }
             bgImage = [UIImage imageNamed:@"mainbar_bg_ipad"];
         }
@@ -2234,6 +2275,16 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
                 case uiFM_MENU:
                     //NSLog(@"FM menu item\n");
                     image = [UIImage imageNamed:@"FM_icon.png"];
+                    cell.imageView.image = image;
+                    break;
+                case uiLINEIN_MENU:
+                    NSLog(@"Aux menu item\n");
+                    image = [UIImage imageNamed:@"AUX_icon.png"];
+                    cell.imageView.image = image;
+                    break;
+                case uiBLUETOOTH_MENU:
+                    NSLog(@"BT menu item\n");
+                    image = [UIImage imageNamed:@"BT_icon.png"];
                     cell.imageView.image = image;
                     break;
             }
@@ -2386,6 +2437,10 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
     NSString *internetRadioId = [[NSString alloc] initWithFormat:@"%d",uiINTERNET_RADIO_MENU];
     NSString *PresetListId = [[NSString alloc] initWithFormat:@"%d",uiFAVEX_MENU];
     NSString *FMId = [[NSString alloc] initWithFormat:@"%d",uiFM_MENU]; //Add for fm.  @Jeanne. 2014.06.11
+    //Add for BT/AUX.  @Jeanne. 2014.08.09
+    NSString *BTId = [[NSString alloc] initWithFormat:@"%d",uiBLUETOOTH_MENU];
+    NSString *AUXId = [[NSString alloc] initWithFormat:@"%d",uiLINEIN_MENU];
+    
     
     //Add for demo mode.  @Jeanne. 2014.04.04
     if ([self.IsinDemomode isEqualToString:@"YES"]){
@@ -2531,12 +2586,52 @@ BIDItemCell *makeItemCell(NSString *submenuId, NSString *name, NSString *status)
                  }
                  ];
                 
-                //Test FM.   @Jeanne. 2014.06.16
-                //这是要跳转的类的实例
-                //BIDFMViewController *FMCtrl =[[BIDFMViewController alloc]initWithNibName:@"BIDFMViewController" bundle:nil];
+            }
+            else if ([itemCell.submenuId isEqualToString:BTId]) //Add for BT/AUX.  @Jeanne. 2014.08.09
+            {//go to BT menu
+                NSLog(@"select bt item, goto BT menu.");
+                BIDViewController *parent = (BIDViewController *)self.parentViewController;
                 
-                //FMCtrl.delegate_subview=self;
-                //[self.navigationController pushViewController:FMCtrl animated:YES];
+                
+                [client getPath:gochildcmd
+                     parameters:nil
+                    loadingText:nil
+                    successText:nil
+                        success:^(AFHTTPRequestOperation *operation, NSString *response)
+                 {
+                     //NSLog(@"response: %@", response);
+                     [parent gotoBTMenu];
+                     
+                 }
+                        failure:^(AFHTTPRequestOperation *operation, NSError *error)
+                 {
+                     NSLog(@"Error: %@", error);
+                 }
+                 ];
+                
+            }
+            else if ([itemCell.submenuId isEqualToString:AUXId]) //Add for BT/AUX.  @Jeanne. 2014.08.09
+            {//go to AUX menu
+                NSLog(@"select bt item, goto AUX menu.");
+                BIDViewController *parent = (BIDViewController *)self.parentViewController;
+                
+                
+                [client getPath:gochildcmd
+                     parameters:nil
+                    loadingText:nil
+                    successText:nil
+                        success:^(AFHTTPRequestOperation *operation, NSString *response)
+                 {
+                     //NSLog(@"response: %@", response);
+                     [parent gotoAUXMenu];
+                     
+                 }
+                        failure:^(AFHTTPRequestOperation *operation, NSError *error)
+                 {
+                     NSLog(@"Error: %@", error);
+                 }
+                 ];
+                
             }
             else
             {

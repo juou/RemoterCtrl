@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -7,6 +7,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BIDFMViewController">
             <connections>
                 <outlet property="FMFavTable" destination="ZFt-ZR-8au" id="SK7-gp-toX"/>
+                <outlet property="MarkImageView" destination="HHp-1q-fuW" id="U6M-3S-e6I"/>
                 <outlet property="singlePicker" destination="1sg-Aj-Q4A" id="I2F-dv-laj"/>
                 <outlet property="view" destination="iN0-l3-epB" id="R5b-Me-EYJ"/>
             </connections>

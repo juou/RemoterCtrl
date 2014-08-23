@@ -7,6 +7,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BIDFMViewController">
             <connections>
                 <outlet property="FMFavTable" destination="EHE-F8-vVK" id="YrL-y2-Q2a"/>
+                <outlet property="MarkImageView" destination="y95-5s-uiW" id="Abw-WV-kSc"/>
                 <outlet property="singlePicker" destination="9d6-k0-dZm" id="Z2P-9T-tDp"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>

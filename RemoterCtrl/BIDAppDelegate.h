@@ -17,4 +17,7 @@
 @property (strong, nonatomic) BIDViewController *ViewController;
 @property (strong, nonatomic) BIDUIDevice *CurDevice;
 
+//Test for Active/Background.  @Jeanne. 2014.08.10
+@property (strong, nonatomic) NSString *EnterBackground;
+
 @end

@@ -10,7 +10,7 @@
 #import "BIDViewController.h"
 #import "BIDFMItemCell.h"
 
-#define kMark_image_tag           80
+//#define kMark_image_tag           80
 #define kSignal_image_tag         51
 #define kVol_Slider_tag           52
 #define kBack_Button_tag          53
@@ -51,6 +51,7 @@ static NSString *CellIdentifier = @"Cell";
     BOOL FreqStatusGetFlag;
     BOOL StopGetStatus;
     BOOL AutoSearchRemind;
+    BOOL MaunalSearchRemind;
     BOOL AutoSearchMsgShow;
     BOOL QuitRefresh;
 }
@@ -61,6 +62,7 @@ static NSString *CellIdentifier = @"Cell";
 
 @synthesize FMFavTable;
 @synthesize singlePicker;
+@synthesize MarkImageView;
 
 +(BIDFMItemCell *)makeItemCell:(NSString *)FavNo SetName:(NSString *)name SetFreq: (NSString *)freq
 {
@@ -96,7 +98,8 @@ static NSString *CellIdentifier = @"Cell";
 {
     BIDViewController *parent = (BIDViewController *)self.parentViewController;
     UILabel *CurFreq = (id)[self.view viewWithTag:kFreq_Label_tag];
-    UIImageView *MarkImage = (id)[self.view viewWithTag:kMark_image_tag];
+    //UIImageView *MarkImage = (id)[self.view viewWithTag:kMark_image_tag];
+    
     CGFloat x;
     float freq;
     int i;
@@ -136,6 +139,7 @@ static NSString *CellIdentifier = @"Cell";
 
     if (updateMark)
     {
+        CGRect btnRect;
         //For iphone: Mark width: 18,  320/24 = 13.3333
         //For ipad:   Mark width: 42   768/24 = 32
         //MarkImage.hidden = TRUE;
@@ -146,7 +150,9 @@ static NSString *CellIdentifier = @"Cell";
             }else{
                 x = (Float32)(((freq - 85)*32)-21);
             }
-            MarkImage.frame =CGRectMake(x, 630, 42, 90);
+            //MarkImage.frame = CGRectMake(x, 630, 42, 90);
+            btnRect = CGRectMake(x, 630, 42, 90);
+            MarkImageView.frame = btnRect;
         }
         else if([parent.CuriosDevice isEqualToString:@"iphone4"])
         {
@@ -155,7 +161,9 @@ static NSString *CellIdentifier = @"Cell";
             }else{
                 x = (Float32)(((freq - 85)*13.3333)-9);
             }
-            MarkImage.frame =CGRectMake(x, 284, 18, 40);
+            //MarkImage.frame =CGRectMake(x, 284, 18, 40);
+            btnRect = CGRectMake(x, 284, 18, 40);
+            MarkImageView.frame = btnRect;
         }
         else
         {
@@ -164,12 +172,14 @@ static NSString *CellIdentifier = @"Cell";
             }else{
                 x = (Float32)(((freq - 85)*13.3333)-9);
             }
-            MarkImage.frame =CGRectMake(x, 326, 18, 40);
+            //MarkImage.frame =CGRectMake(x, 326, 18, 40);
+            btnRect = CGRectMake(x, 326, 18, 40);
+            MarkImageView.frame = btnRect;
         }
-        MarkImage.hidden = FALSE;
+        MarkImageView.hidden = FALSE;
     }
     else{
-        MarkImage.hidden = TRUE;
+        MarkImageView.hidden = TRUE;
     }
 
 }
@@ -370,27 +380,6 @@ static NSString *CellIdentifier = @"Cell";
         //===================
         
         
-        //Get Search Flag
-        //@@@@@@@@@@@@@@@@@@@@@
-        memset(tmp, 0, sizeof(tmp));
-        p1 = strstr(str, "<Search>");
-        if(p1)
-        {
-            for (int i = 8; (p1[i]!=0)&&(p1[i]!='<'); i++) {
-                tmp[i-8] = p1[i];
-            }
-            
-            if(strstr(tmp, "TRUE")){
-                searchflag = TRUE;
-            }else{
-                if (AutoSearchRemind == TRUE) {
-                    [self QuitForSearch];
-                }
-                searchflag = FALSE;
-            }
-        }
-        //@@@@@@@@@@@@@@@@@@@@@
-        
         
         //Get Freq
         memset(tmp, 0, sizeof(tmp));
@@ -416,8 +405,38 @@ static NSString *CellIdentifier = @"Cell";
             FreqLow =[FreqLow_str intValue];
             
             //Update Mark Freq image
-            [self UpdateFreqDisp: 1];
+            if (MaunalSearchRemind) {
+                [self UpdateFreqDisp: 0];
+            }else{
+                [self UpdateFreqDisp: 1];
+            }
         }
+        
+        //Get Search Flag
+        //@@@@@@@@@@@@@@@@@@@@@
+        memset(tmp, 0, sizeof(tmp));
+        p1 = strstr(str, "<Search>");
+        if(p1)
+        {
+            for (int i = 8; (p1[i]!=0)&&(p1[i]!='<'); i++) {
+                tmp[i-8] = p1[i];
+            }
+            
+            if(strstr(tmp, "TRUE")){
+                searchflag = TRUE;
+            }else{
+                if (AutoSearchRemind == TRUE) {
+                    AutoSearchRemind = FALSE;
+                    [self QuitForSearch];
+                }
+                if (MaunalSearchRemind == TRUE) {
+                    MaunalSearchRemind = FALSE;
+                    [MBProgressHUD fadeOutHUDInView:self.view withSuccessText:nil];
+                }
+                searchflag = FALSE;
+            }
+        }
+        //@@@@@@@@@@@@@@@@@@@@@
         
         
         
@@ -474,7 +493,7 @@ static NSString *CellIdentifier = @"Cell";
     }
     
     if (StopGetStatus) {
-        [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(FMRefreshTimer) userInfo:nil repeats:NO];
+        [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(FMRefreshTimer) userInfo:nil repeats:NO];
         return;
     }
     
@@ -486,7 +505,7 @@ static NSString *CellIdentifier = @"Cell";
     if(searchflag){
        [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(FMRefreshTimer) userInfo:nil repeats:NO];
     }else{
-       [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(FMRefreshTimer) userInfo:nil repeats:NO];
+       [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(FMRefreshTimer) userInfo:nil repeats:NO];
     }
 }
 
@@ -500,7 +519,7 @@ static NSString *CellIdentifier = @"Cell";
 -(void) viewWillAppear:(BOOL)animated
 {
     NSString *path = @"/GetFMFAVlist";
-    UIImageView *MarkImage = (id)[self.view viewWithTag:kMark_image_tag];
+    //UIImageView *MarkImage = (id)[self.view viewWithTag:kMark_image_tag];
     
     //Init Params
     StopGetStatus = TRUE;
@@ -508,8 +527,9 @@ static NSString *CellIdentifier = @"Cell";
     FreqSetFlag = FALSE;
     volSettingFlag = FALSE;
     muteFlag = FALSE;
-    MarkImage.hidden = TRUE;
+    MarkImageView.hidden = TRUE;
     AutoSearchRemind = FALSE;
+    MaunalSearchRemind = FALSE;
     QuitRefresh = FALSE;
     
     client = [ILHTTPClient clientWithBaseURL:self.toMagicUrl
@@ -604,7 +624,7 @@ static NSString *CellIdentifier = @"Cell";
                 success:^(AFHTTPRequestOperation *operation, NSString *response)
          {
              NSLog(@"response: %@", response);
-             [parent gotoMainMenu];
+             [parent gotoMainMenu: 1];
          }
                 failure:^(AFHTTPRequestOperation *operation, NSError *error)
          {
@@ -624,6 +644,7 @@ static NSString *CellIdentifier = @"Cell";
 
 -(IBAction)ManaulsearchButtonPressed:(UIButton *)button
 {
+    //UIImageView *MarkImage = (id)[self.view viewWithTag:kMark_image_tag];
     NSString *cmd;
     if (button.tag == kBackword_Button_tag) { //backword
         cmd = @"/SetFMManualsearch?direction=backword";
@@ -632,8 +653,9 @@ static NSString *CellIdentifier = @"Cell";
         cmd = @"/SetFMManualsearch?direction=forword";
     }
     
+    MarkImageView.hidden = TRUE;
     [MBProgressHUD fadeInHUDInView:self.view withText:@"Please wait..."];
-    AutoSearchRemind = TRUE;
+    MaunalSearchRemind = TRUE;
     
     client.isNeedHUD = [@"NO" mutableCopy];
     
@@ -679,7 +701,9 @@ static NSString *CellIdentifier = @"Cell";
     //Set Freq to FM
     cmd = [NSString stringWithFormat:@"/SetFMFreq?freqhigh=%d&freqlow=%d", FreqHigh,FreqLow];
     
-    //client.isNeedHUD = [@"NO" mutableCopy];
+    MarkImageView.hidden = TRUE;
+    [MBProgressHUD fadeInHUDInView:self.view withText:nil];
+    client.isNeedHUD = [@"NO" mutableCopy];
     [client getPath:cmd
          parameters:nil
         loadingText:nil
@@ -687,16 +711,18 @@ static NSString *CellIdentifier = @"Cell";
             success:^(AFHTTPRequestOperation *operation, NSString *response)
      {
          NSLog(@"Set freq response: %@", response);
-         [self FMStatusGet];
+         //[self FMStatusGet];
          FreqSetFlag = FALSE;
+         [MBProgressHUD fadeOutHUDInView:self.view withSuccessText:nil];
      }
             failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
          NSLog(@"Error: %@", error);
          FreqSetFlag = FALSE;
+         [MBProgressHUD fadeOutHUDInView:self.view withSuccessText:nil];
      }
      ];
-    //client.isNeedHUD = [@"YES" mutableCopy];
+    client.isNeedHUD = [@"YES" mutableCopy];
 }
 
 -(IBAction)FortuneButtonPressed
@@ -722,8 +748,12 @@ static NSString *CellIdentifier = @"Cell";
     //Update Mark Freq image
     [self UpdateFreqDisp : 0];
     
+    MarkImageView.hidden = TRUE;
     //Set Freq to FM
     cmd = [NSString stringWithFormat:@"/SetFMFreq?freqhigh=%d&freqlow=%d", FreqHigh,FreqLow];
+    
+    [MBProgressHUD fadeInHUDInView:self.view withText:nil];
+    client.isNeedHUD = [@"NO" mutableCopy];
     
     [client getPath:cmd
          parameters:nil
@@ -731,16 +761,21 @@ static NSString *CellIdentifier = @"Cell";
         successText:nil
             success:^(AFHTTPRequestOperation *operation, NSString *response)
      {
-         [self FMStatusGet];
+         //[self FMStatusGet];
          FreqSetFlag = FALSE;
          NSLog(@"Set freq response: %@", response);
+         [MBProgressHUD fadeOutHUDInView:self.view withSuccessText:nil];
+         
      }
             failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
          FreqSetFlag = FALSE;
          NSLog(@"Error: %@", error);
+         [MBProgressHUD fadeOutHUDInView:self.view withSuccessText:nil];
      }
      ];
+    
+    client.isNeedHUD = [@"YES" mutableCopy];
 }
 
 -(void) QuitForSearch
@@ -877,9 +912,12 @@ static NSString *CellIdentifier = @"Cell";
     
     FavNo = button.tag - kFAV1_Button_tag + 1;
     
+    MarkImageView.hidden = TRUE;
+    
     //goto fav no
     NSString *cmd = [NSString stringWithFormat:@"/GotoFMfav?fav=%ld",FavNo];
     
+    StopGetStatus = TRUE;
     [client getPath:cmd
          parameters:nil
         loadingText:nil
@@ -887,10 +925,12 @@ static NSString *CellIdentifier = @"Cell";
             success:^(AFHTTPRequestOperation *operation, NSString *response)
      {
          NSLog(@"goto favno %ld response: %@",FavNo,response);
+         StopGetStatus = FALSE;
      }
             failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
          NSLog(@"Error: %@", error);
+         StopGetStatus = FALSE;
      }
      ];
     

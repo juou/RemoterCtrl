@@ -7,6 +7,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BIDFMViewController">
             <connections>
                 <outlet property="FMFavTable" destination="EHE-F8-vVK" id="YrL-y2-Q2a"/>
+                <outlet property="MarkImageView" destination="y95-5s-uiW" id="6qP-f5-ksQ"/>
                 <outlet property="singlePicker" destination="9d6-k0-dZm" id="Z2P-9T-tDp"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -36,7 +37,7 @@
                     <rect key="frame" x="0.0" y="267" width="320" height="100"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
-                <imageView userInteractionEnabled="NO" tag="80" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="mark.png" translatesAutoresizingMaskIntoConstraints="NO" id="y95-5s-uiW">
+                <imageView autoresizesSubviews="NO" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" tag="80" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="mark.png" translatesAutoresizingMaskIntoConstraints="NO" id="y95-5s-uiW">
                     <rect key="frame" x="9" y="326" width="18" height="40"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>

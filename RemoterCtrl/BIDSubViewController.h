@@ -16,6 +16,7 @@
 @property (copy, nonatomic) NSMutableString *toMagicUrl;
 @property (weak, nonatomic) IBOutlet UITextField *SearchField;
 @property (strong,nonatomic) IBOutlet UIPickerView *singlePicker;
+@property (strong,nonatomic) IBOutlet UIButton *Homebtn;  //@Jeanne. 2014.08.10
 //Paul Request: in main menu, items should be on fix pos. Jeanne. 2014.03.03
 //@property (copy, nonatomic) NSMutableArray *FixMainMenuItems;
 //Add for wifisetting on tabbar.  @Jeanne. 2014.03.04
@@ -29,6 +30,7 @@
 @property (copy, nonatomic) BIDViewController * BIDctrl;  //test control parent. @Jeanne
 
 -(void) menu_disp_ctrl:(int)index;
+-(IBAction)HomeButtonPressed;
 -(IBAction)backgroundTap:(id)sender;
 -(IBAction)textFieldDoneEditing:(id)sender;
 -(IBAction)backButtonPressed;
